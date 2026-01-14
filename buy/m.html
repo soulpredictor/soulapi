@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Payment</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #111;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 1.1em;
+            border-radius: 6px;
+        }
+
+        input {
+            width: 300px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Verify Payment</h1>
+    <input type="text" id="trackId" placeholder="Enter Track ID" />
+    <button onclick="verify()">Check Payment</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function verify() {
+            const trackId = document.getElementById('trackId').value.trim();
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = "⏳ Checking...";
+
+            const inboxUrl = 'https://webhookinbox.com/view/NRtWLUgD/';
+            try {
+                const res = await fetch(inboxUrl);
+                const html = await res.text();
+                const preMatches = [...html.matchAll(/<pre.*?>(.*?)<\/pre>/gs)];
+                
+                let found = false;
+
+                for (const match of preMatches) {
+                    try {
+                        const jsonData = JSON.parse(match[1]);
+                        if (jsonData.track_id === trackId) {
+                            found = true;
+                            if (jsonData.status === "Paid" || jsonData.status === "confirmed") {
+                                resultDiv.innerHTML = `✅ Payment confirmed<br><b>Amount:</b> ${jsonData.amount} ${jsonData.currency}`;
+                            } else {
+                                resultDiv.innerHTML = `❌ Payment found but status: ${jsonData.status}`;
+                            }
+                            break;
+                        }
+                    } catch (e) {
+                        // skip invalid JSON
+                    }
+                }
+
+                if (!found) {
+                    resultDiv.textContent = "❌ Track ID not found.";
+                }
+            } catch (err) {
+                console.error(err);
+                resultDiv.textContent = "❌ Error fetching data.";
+            }
+        }
+    </script>
+</body>
+</html>

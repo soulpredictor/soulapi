@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Connection</title>
+</head>
+<body>
+    <h1>Testing Server Connection</h1>
+    <button onclick="testConnection()">Test Connection</button>
+    <div id="result"></div>
+
+    <script>
+        async function testConnection() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/health');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = 
+                    `<p>Status: ${response.status}</p><p>Response: ${JSON.stringify(data)}</p>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    `<p>Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testStakeData() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/stake_game_data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        access_token: 'test123'
+                    })
+                });
+                const data = await response.json();
+                document.getElementById('result').innerHTML = 
+                    `<p>Status: ${response.status}</p><p>Response: ${JSON.stringify(data)}</p>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    `<p>Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+    
+    <button onclick="testStakeData()">Test Stake Data</button>
+</body>
+</html>

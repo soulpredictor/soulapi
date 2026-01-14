@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Payment - SoulPayGate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030303;
+            overflow-x: hidden;
+            color: #888;
+            min-height: 100vh;
+        }
+
+        /* Premium Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #030303;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+
+        /* Ambient Background */
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-bg .gradient-1 {
+            position: absolute;
+            top: -20%;
+            left: 10%;
+            width: 800px;
+            height: 800px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.4;
+        }
+
+        .ambient-bg .gradient-2 {
+            position: absolute;
+            bottom: -10%;
+            right: 5%;
+            width: 600px;
+            height: 600px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.3;
+        }
+
+        .bg-grid-premium {
+            position: absolute;
+            inset: 0;
+            background-size: 60px 60px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        }
+
+        /* Premium Glass Effect */
+        .premium-glass {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 4px 24px -1px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+        }
+
+        .verify-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .verify-box {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow:
+                0 4px 24px -1px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+        }
+
+        .verify-title {
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .verify-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #a8b2d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .verify-title p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+
+        .verify-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(139, 92, 246, 0.05);
+            box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.2);
+        }
+
+        .verify-btn {
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .verify-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .verify-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .result-message {
+            margin-top: 1.5rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .result-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-message.success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .result-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .verify-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .verify-title h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="gradient-1"></div>
+        <div class="gradient-2"></div>
+        <div class="bg-grid-premium"></div>
+        <div id="canvas-container" class="absolute inset-0 z-0 opacity-100"></div>
+    </div>
+    
+    <div class="verify-container">
+        <div class="verify-box premium-glass">
+            <div class="verify-title">
+                <h1>Verify Payment</h1>
+                <p>Enter your Track ID to verify payment and receive your keys</p>
+            </div>
+            
+            <div class="verify-form">
+                <div class="input-group">
+                    <input type="text" id="trackInput" placeholder="Enter your Track ID" autocomplete="off">
+                </div>
+                
+                <button id="verifyBtn" class="verify-btn" onclick="verifyPayment()">
+                    Verify Payment
+                    <span id="loadingSpinner" class="loading" style="display: none;"></span>
+                </button>
+                
+                <div id="resultMessage" class="result-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showMessage(message, type) {
+            const resultBox = document.getElementById('resultMessage');
+            resultBox.textContent = message;
+            resultBox.className = `result-message ${type} show`;
+        }
+
+        function setLoading(isLoading) {
+            const btn = document.getElementById('verifyBtn');
+            const spinner = document.getElementById('loadingSpinner');
+            btn.disabled = isLoading;
+            spinner.style.display = isLoading ? 'inline-block' : 'none';
+        }
+
+        async function generateTimedKeys(count, days) {
+            try {
+                const response = await fetch('https://soulogapi.vercel.app/generate_timed_keys', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        duration: days,
+                        unit: 'd',
+                        count: count
+                    })
+                });
+
+                const data = await response.json();
+                if (data.status === 'success') {
+                    return data.keys;
+                } else {
+                    throw new Error(data.message || 'Failed to generate keys');
+                }
+            } catch (error) {
+                console.error('Error generating keys:', error);
+                throw error;
+            }
+        }
+
+        function getStoredKeysForTrackId(trackId) {
+            try {
+                const stored = localStorage.getItem(`keys_${trackId}`);
+                if (stored) {
+                    return JSON.parse(stored);
+                }
+            } catch (e) {
+                console.error('Error reading stored keys:', e);
+            }
+            return null;
+        }
+
+        function storeKeysForTrackId(trackId, keysData) {
+            try {
+                localStorage.setItem(`keys_${trackId}`, JSON.stringify(keysData));
+            } catch (e) {
+                console.error('Error storing keys:', e);
+            }
+        }
+
+        async function verifyPayment() {
+            const trackId = document.getElementById('trackInput').value.trim();
+            
+            if (!trackId) {
+                showMessage('❌ Please enter your Track ID', 'error');
+                return;
+            }
+
+            // Check if keys already exist for this Track ID
+            const existingKeys = getStoredKeysForTrackId(trackId);
+            if (existingKeys) {
+                showMessage('✅ Found existing keys for this Track ID. Redirecting...', 'success');
+                // Store in sessionStorage for success page
+                sessionStorage.setItem('generatedKeys', JSON.stringify(existingKeys));
+                setTimeout(() => {
+                    window.location.href = 'success.html';
+                }, 1000);
+                return;
+            }
+
+            setLoading(true);
+            showMessage('Verifying payment...', '');
+
+            try {
+                const inboxId = "NRtWLUgD";
+                const inboxUrl = `https://api.webhookinbox.com/i/${inboxId}/items/?order=-created`;
+                
+                console.log('Fetching from URL:', inboxUrl);
+                
+                const res = await fetch(inboxUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                const data = await res.json();
+                let found = false;
+                let paymentData = null;
+
+                // Loop through items to find the payment
+                for (const item of data.items) {
+                    try {
+                        const content = JSON.parse(item.body);
+                        if (content.track_id === trackId) {
+                            found = true;
+                            paymentData = content;
+                            if (content.status === "Paid" || content.status === "confirmed") {
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        console.log('Error parsing payment data:', e);
+                        continue;
+                    }
+                }
+
+                if (!found) {
+                    showMessage('❌ Payment not found for this Track ID', 'error');
+                    setLoading(false);
+                    return;
+                }
+
+                if (paymentData.status !== 'Paid' && paymentData.status !== 'confirmed') {
+                    showMessage(`❌ Payment status: ${paymentData.status}. Please wait for confirmation.`, 'error');
+                    setLoading(false);
+                    return;
+                }
+
+                // Automatically get amount from payment data
+                const paymentAmount = parseFloat(paymentData.amount);
+                
+                if (!paymentAmount || paymentAmount <= 0) {
+                    showMessage('❌ Invalid payment amount in payment data', 'error');
+                    setLoading(false);
+                    return;
+                }
+
+                // Determine number of keys based on payment amount
+                let keyCount = 0;
+                let validityDays = 0;
+                let plan = '';
+
+                // Use the payment amount from the API, not the entered amount
+                const finalAmount = paymentAmount;
+                
+                // For amounts around $6 (including fees, so 6-6.5)
+                if (finalAmount >= 6 && finalAmount <= 6.5) {
+                    keyCount = 2;
+                    validityDays = 35;
+                    plan = 'basic';
+                } 
+                // For amounts around $7
+                else if (finalAmount > 6.5 && finalAmount <= 7.5) {
+                    keyCount = 5;
+                    validityDays = 35;
+                    plan = 'premium';
+                }
+                // For amounts around $10
+                else if (finalAmount > 7.5 && finalAmount <= 10.5) {
+                    keyCount = 5;
+                    validityDays = 35;
+                    plan = 'premium';
+                }
+                // For amounts around $12
+                else if (finalAmount > 10.5 && finalAmount <= 12.5) {
+                    keyCount = 2;
+                    validityDays = 65;
+                    plan = 'advanced';
+                }
+
+                if (keyCount === 0) {
+                    showMessage('❌ Invalid payment amount. Please contact support.', 'error');
+                    setLoading(false);
+                    return;
+                }
+
+                // Generate the keys
+                try {
+                    showMessage('Generating keys...', '');
+                    const keys = await generateTimedKeys(keyCount, validityDays);
+                    
+                    const keysData = {
+                        keys: keys,
+                        validityDays: validityDays,
+                        amount: finalAmount,
+                        plan: plan,
+                        trackId: trackId,
+                        timestamp: Date.now()
+                    };
+                    
+                    // Store in localStorage for future use with same Track ID
+                    storeKeysForTrackId(trackId, keysData);
+                    
+                    // Store in sessionStorage for success page
+                    sessionStorage.setItem('generatedKeys', JSON.stringify(keysData));
+                    
+                    showMessage('✅ Payment verified! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'success.html';
+                    }, 1000);
+                } catch (error) {
+                    showMessage('❌ Error generating keys. Please try again.', 'error');
+                    setLoading(false);
+                }
+
+            } catch (err) {
+                showMessage('❌ Error verifying payment. Please try again.', 'error');
+                console.error(err);
+                setLoading(false);
+            }
+        }
+
+        // Initialize Three.js background
+        function initBackground() {
+            const container = document.getElementById('canvas-container');
+            if (!container || typeof THREE === 'undefined') return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            const SEPARATION = 40;
+            const AMOUNTX = 60;
+            const AMOUNTY = 60;
+
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+
+            for (let ix = 0; ix < AMOUNTX; ix++) {
+                for (let iy = 0; iy < AMOUNTY; iy++) {
+                    const x = ix * SEPARATION - ((AMOUNTX * SEPARATION) / 2);
+                    const z = iy * SEPARATION - ((AMOUNTY * SEPARATION) / 2);
+                    const y = 0;
+                    vertices.push(x, y, z);
+                }
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0x8b5cf6,
+                size: 3,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            camera.position.y = 300;
+            camera.position.z = 800;
+            camera.lookAt(0, 0, 0);
+
+            let count = 0;
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                const positions = particles.geometry.attributes.position.array;
+                let i = 0;
+
+                for (let ix = 0; ix < AMOUNTX; ix++) {
+                    for (let iy = 0; iy < AMOUNTY; iy++) {
+                        const value = (Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50);
+                        positions[i + 1] = value;
+                        i += 3;
+                    }
+                }
+
+                particles.geometry.attributes.position.needsUpdate = true;
+                particles.rotation.y += 0.002;
+                count += 0.1;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initBackground();
+        });
+
+        // Initialize snowfall effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('.snowfall-container');
+            
+            containers.forEach(container => {
+                for (let i = 0; i < 50; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.classList.add('snowflake');
+                    
+                    const size = Math.random() * 4 + 1;
+                    const left = Math.random() * 100;
+                    const animationDuration = Math.random() * 20 + 10;
+                    const delay = Math.random() * 10;
+                    const opacity = Math.random() * 0.5 + 0.5;
+                    
+                    if (Math.random() > 0.8) {
+                        snowflake.classList.add('glow');
+                    }
+                    
+                    snowflake.style.width = `${size}px`;
+                    snowflake.style.height = `${size}px`;
+                    snowflake.style.left = `${left}%`;
+                    snowflake.style.opacity = opacity;
+                    snowflake.style.animationDuration = `${animationDuration}s`;
+                    snowflake.style.animationDelay = `${delay}s`;
+                    
+                    container.appendChild(snowflake);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

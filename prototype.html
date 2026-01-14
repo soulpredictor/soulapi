@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HQAdz - Premium Telegram Automation Platform</title>
+    <meta name="description" content="Premium Telegram automation with AI-powered messaging and enterprise-grade analytics">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="hqadz.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Manrope', 'sans-serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 1s ease-out',
+                        'slide-down': 'slideDown 1s ease-out',
+                        'slide-left': 'slideLeft 1s ease-out',
+                        'slide-right': 'slideRight 1s ease-out',
+                        'scale-in': 'scaleIn 0.6s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'rain-drop': 'rainDrop 3s linear infinite',
+                        'shimmer': 'shimmer 2s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'scroll-reveal': 'scrollReveal 0.8s ease-out',
+                        'counter-pulse': 'counterPulse 0.3s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(40px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        slideRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-40px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        rainDrop: {
+                            '0%': { transform: 'translateY(-100vh)', opacity: '0' },
+                            '10%': { opacity: '0.6' },
+                            '90%': { opacity: '0.6' },
+                            '100%': { transform: 'translateY(100vh)', opacity: '0' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% center' },
+                            '100%': { backgroundPosition: '200% center' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(192, 192, 192, 0.3)' },
+                            '100%': { boxShadow: '0 0 40px rgba(192, 192, 192, 0.6)' },
+                        },
+                        scrollReveal: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        counterPulse: {
+                            '0%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.1)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar for premium feel */
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.3);
+            border-radius: 2px;
+            transition: background 0.3s ease;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.5);
+        }
+        
+        /* Premium glow effects */
+        .premium-glow {
+            box-shadow: 0 0 20px rgba(156, 163, 175, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .premium-glow:hover {
+            box-shadow: 0 0 30px rgba(156, 163, 175, 0.2);
+        }
+        
+        /* Responsive adjustments for mobile */
+        @media (max-width: 640px) {
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 3px;
+            }
+        }
+    </style>
+</head>
+<<body class="bg-black text-white font-sans overflow-x-hidden">
+    <!-- Realistic Rain Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute inset-0 bg-black"></div>
+        <!-- Rain container for dynamic drops -->
+        <div class="rain-container absolute inset-0"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-4xl px-6">
+        <div class="bg-black/40 backdrop-blur-md border border-gray-600/60 rounded-2xl px-6 py-4 shadow-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center">
+                        <img src="hqadz.jpg" alt="HQAdz Logo" class="w-full h-full object-contain rounded-xl">
+                    </div>
+                    <span class="text-2xl font-sans font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                        HQAdz
+                    </span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-300 relative group">
+                        <span>Features</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-400 to-emerald-400 group-hover:w-full transition-all duration-300"></div>
+                    </a>
+                    <a href="#demo-panel" class="text-gray-300 hover:text-white transition-colors duration-300 relative group">
+                        <span>Demo</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-400 to-emerald-400 group-hover:w-full transition-all duration-300"></div>
+                    </a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors duration-300 relative group">
+                        <span>Pricing</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-400 to-emerald-400 group-hover:w-full transition-all duration-300"></div>
+                    </a>
+                    <a href="#use-cases" class="text-gray-300 hover:text-white transition-colors duration-300 relative group">
+                        <span>Use Cases</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-400 to-emerald-400 group-hover:w-full transition-all duration-300"></div>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-xl font-medium hover:from-green-400 hover:to-emerald-500 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Login
+                    </a>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="lg:hidden text-white focus:outline-none" aria-label="Toggle mobile menu">
+                        <i id="menu-icon" class="fas fa-bars text-xl transition-transform duration-300"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-6 pt-6 border-t border-gray-600/40">
+                <div class="flex flex-col space-y-4">
+                    <a href="#features" class="mobile-menu-link text-gray-300 hover:text-white transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-black/20">
+                        Features
+                    </a>
+                    <a href="#demo-panel" class="mobile-menu-link text-gray-300 hover:text-white transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-black/20">
+                        Demo
+                    </a>
+                    <a href="#pricing" class="mobile-menu-link text-gray-300 hover:text-white transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-black/20">
+                        Pricing
+                    </a>
+                    <a href="#use-cases" class="mobile-menu-link text-gray-300 hover:text-white transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-black/20">
+                        Use Cases
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 min-h-screen flex items-center justify-start pt-32 pb-20">
+        <div class="container mx-auto px-6">
+            <!-- Premium Badge -->
+            <div class="inline-flex items-center px-6 py-3 rounded-full bg-black/40 backdrop-blur-md border border-green-500/30 mb-8 animate-fade-in">
+                <i class="fas fa-crown text-green-400 mr-3 animate-float"></i>
+                <span class="text-sm font-medium bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                    Premium Telegram Automation Platform
+                </span>
+            </div>
+            
+            <!-- Main Heading with Alternating Colors -->
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-sans font-bold mb-8 animate-slide-up">
+                <span class="block">
+                    <span class="text-white">Elevate</span>
+                    <span class="bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent"> Your</span>
+                </span>
+                <span class="block mt-2">
+                    <span class="bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent">Telegram</span>
+                    <span class="text-white"> Presence</span>
+                </span>
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mb-12 leading-relaxed animate-slide-up" style="animation-delay: 0.2s;">
+                Experience premium automation with enterprise-grade precision. 
+                Reach millions across Telegram with unmatched sophistication.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-6 items-start mb-16 animate-slide-up" style="animation-delay: 0.4s;">
+                <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-10 py-4 rounded-2xl font-semibold text-lg shadow-2xl hover:from-green-400 hover:to-emerald-500 transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-rocket mr-3"></i>
+                    Start Premium Journey
+                </button>
+                <button class="bg-black/30 backdrop-blur-md border border-green-500/30 text-white px-10 py-4 rounded-2xl font-semibold text-lg hover:bg-black/50 transition-all duration-300">
+                    <i class="fas fa-play mr-3"></i>
+                    Watch Demo
+                </button>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl animate-scale-in" style="animation-delay: 0.6s;">
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group">
+                    <div class="text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-3" id="uptimeStat" data-target="99.9">0</div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Uptime</h3>
+                    <p class="text-gray-400 text-sm">Enterprise reliability</p>
+                </div>
+                
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group">
+                    <div class="text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-3" id="messagesStat" data-target="10">0M+</div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Messages</h3>
+                    <p class="text-gray-400 text-sm">Daily automation</p>
+                </div>
+                
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group">
+                    <div class="text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-3" id="supportStat" data-target="24">0/7</div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Support</h3>
+                    <p class="text-gray-400 text-sm">Premium assistance</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-float">
+            <i class="fas fa-chevron-down text-gray-400 text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="relative z-10 py-24">
+        <div class="container mx-auto px-6">
+            <!-- Section Header -->
+            <div class="mb-20">
+                <h2 class="text-4xl md:text-6xl font-sans font-bold mb-6">
+                    <span class="text-white">Premium</span>
+                    <span class="bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent"> Features</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl leading-relaxed">
+                    Experience enterprise-grade automation with unparalleled precision and control
+                </p>
+            </div>
+            
+            <!-- Feature Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <!-- AI Automation -->
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-brain text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">AI-Powered Automation</h3>
+                    <p class="text-gray-400 leading-relaxed">Advanced machine learning algorithms optimize message delivery and audience targeting for maximum engagement.</p>
+                </div>
+                
+                <!-- Analytics -->
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.1s;">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chart-line text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Real-time Analytics</h3>
+                    <p class="text-gray-400 leading-relaxed">Comprehensive insights and performance metrics to track your campaign success in real-time.</p>
+                </div>
+                
+                <!-- Enterprise Security -->
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-shield-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Enterprise Security</h3>
+                    <p class="text-gray-400 leading-relaxed">Military-grade encryption and GDPR compliance ensure your data remains secure and private.</p>
+                </div>
+                
+                <!-- Smart Targeting -->
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-bullseye text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Smart Targeting</h3>
+                    <p class="text-gray-400 leading-relaxed">Precision audience targeting with demographic analysis for optimal message delivery.</p>
+                </div>
+                
+                <!-- Cloud Infrastructure -->
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-cloud text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Global Infrastructure</h3>
+                    <p class="text-gray-400 leading-relaxed">Worldwide server network ensures lightning-fast performance and 99.9% uptime guarantee.</p>
+                </div>
+                
+                <!-- Premium Support -->
+                <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.5s;">
+                    <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-headset text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-white">24/7 Premium Support</h3>
+                    <p class="text-gray-400 leading-relaxed">Dedicated support team available around the clock for all your automation needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>ass="flex items-center text-sm text-gray-400 mb-3">
+
+
+        <!-- Use Cases Section -->
+        <section id="use-cases" class="relative z-10 py-24">
+            <div class="container mx-auto px-6">
+                <div class="mb-20">
+                    <h2 class="text-4xl md:text-6xl font-sans font-bold mb-6">
+                        <span class="text-white">Perfect for</span>
+                        <span class="bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent"> Every</span>
+                        <span class="text-white"> Business</span>
+                    </h2>
+                    <p class="text-xl text-gray-400 max-w-2xl leading-relaxed">
+                        Discover how different industries leverage our premium platform for growth
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                    <!-- E-commerce Card -->
+                    <div class="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in">
+                        <div class="w-16 h-16 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-store text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">E-commerce</h3>
+                        <p class="text-gray-400 leading-relaxed mb-6">Promote products, manage customer support, and drive sales through automated campaigns.</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Product launches
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Customer support
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Crypto Card -->
+                    <div class="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.1s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-coins text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Crypto Projects</h3>
+                        <p class="text-gray-400 leading-relaxed mb-6">Build communities, announce updates, and engage with investors across multiple channels.</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Token launches
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Community building
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Marketing Card -->
+                    <div class="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-bullhorn text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Marketing Agencies</h3>
+                        <p class="text-gray-400 leading-relaxed mb-6">Scale client campaigns, manage multiple accounts, and deliver results efficiently.</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Multi-client management
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Campaign automation
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enterprise Card -->
+                    <div class="bg-black/30 backdrop-blur-md border border-gray-700/50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 group animate-fade-in" style="animation-delay: 0.3s;">
+                        <div class="w-16 h-16 bg-gradient-to-r from-slate-500 to-slate-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-building text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Enterprise</h3>
+                        <p class="text-gray-400 leading-relaxed mb-6">Scale your enterprise communications with advanced automation and compliance features.</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Mass communications
+                            </div>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-check text-green-400 mr-3"></i>
+                                Enterprise compliance
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="relative z-10 py-24">
+            <div class="container mx-auto px-6">
+                <div class="mb-20">
+                    <h2 class="text-4xl md:text-6xl font-sans font-bold mb-6">
+                        <span class="bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent">How It</span>
+                        <span class="text-white"> Works</span>
+                    </h2>
+                    <p class="text-xl text-gray-400 max-w-2xl leading-relaxed">
+                        Get started with our powerful automation in just a few simple steps
+                    </p>
+                </div>
+
+                <div class="relative max-w-7xl mx-auto">
+                    <!-- Flow Path Line -->
+                    <div class="absolute inset-0">
+                        <svg class="w-full h-full" viewBox="0 0 1200 400" fill="none">
+                            <!-- Desktop path -->
+                            <path d="M150 80 Q300 80 450 200 Q600 320 750 200 Q900 80 1050 320" 
+                                  stroke="url(#worksGradient)" 
+                                  stroke-width="3" 
+                                  stroke-dasharray="10,5" 
+                                  opacity="0.8"
+                                  filter="url(#worksGlow)"
+                                  class="hidden sm:block">
+                                <animate attributeName="stroke-dashoffset" 
+                                         values="0;-15" 
+                                         dur="2s" 
+                                         repeatCount="indefinite"/>
+                            </path>
+                            <!-- Mobile path -->
+                            <path d="M150 100 Q400 50 650 100 Q900 150 1050 200" 
+                                  stroke="url(#worksGradient)" 
+                                  stroke-width="2" 
+                                  stroke-dasharray="8,4" 
+                                  opacity="0.7"
+                                  filter="url(#worksGlow)"
+                                  class="sm:hidden">
+                                <animate attributeName="stroke-dashoffset" 
+                                         values="0;-12" 
+                                         dur="1.5s" 
+                                         repeatCount="indefinite"/>
+                            </path>
+                            <defs>
+                                <linearGradient id="worksGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#059669;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#047857;stop-opacity:1" />
+                                </linearGradient>
+                                <filter id="worksGlow">
+                                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/> 
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <!-- Step Cards with Modern Flow Layout -->
+                    <div class="relative grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
+                        <!-- Step 1 - Top Left -->
+                        <div class="lg:pt-0 animate-fade-in">
+                            <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 group text-center shadow-xl hover:shadow-2xl relative">
+                                <div class="w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-user-plus text-lg sm:text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-white">Sign Up</h3>
+                                <p class="text-sm sm:text-base text-gray-400 leading-relaxed mb-4 sm:mb-6">Create your account and choose your plan in under 2 minutes</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        Email verification
+                                    </div>
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        Plan selection
+                                    </div>
+                                </div>
+                                <!-- Arrow -->
+                                <div class="absolute -right-6 top-1/2 transform -translate-y-1/2">
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                                        <i class="fas fa-arrow-right text-white text-sm sm:text-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 - Bottom Center -->
+                        <div class="lg:pt-32 animate-fade-in" style="animation-delay: 0.1s;">
+                            <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 group text-center shadow-xl hover:shadow-2xl relative">
+                                <div class="w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-cog text-lg sm:text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-white">Configure</h3>
+                                <p class="text-sm sm:text-base text-gray-400 leading-relaxed mb-4 sm:mb-6">Set up your bots and automation rules with our visual editor</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        Bot creation wizard
+                                    </div>
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        Message templates
+                                    </div>
+                                </div>
+                                <!-- Arrow -->
+                                <div class="absolute -right-6 -top-16 transform">
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                                        <i class="fas fa-arrow-up text-white text-sm sm:text-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 - Top Right -->
+                        <div class="lg:pt-0 animate-fade-in" style="animation-delay: 0.2s;">
+                            <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 group text-center shadow-xl hover:shadow-2xl relative">
+                                <div class="w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-r from-red-500 to-red-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-rocket text-lg sm:text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-white">Launch</h3>
+                                <p class="text-sm sm:text-base text-gray-400 leading-relaxed mb-4 sm:mb-6">Start your automation campaigns with one-click deployment</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        One-click launch
+                                    </div>
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        Real-time monitoring
+                                    </div>
+                                </div>
+                                <!-- Arrow -->
+                                <div class="absolute -right-6 bottom-8 transform">
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                                        <i class="fas fa-arrow-down text-white text-sm sm:text-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 - Bottom Right -->
+                        <div class="lg:pt-32 animate-fade-in" style="animation-delay: 0.3s;">
+                            <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 group text-center shadow-xl hover:shadow-2xl relative">
+                                <div class="w-12 h-12 sm:w-20 sm:h-20 bg-gradient-to-r from-violet-500 to-violet-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-chart-bar text-lg sm:text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-white">Analyze</h3>
+                                <p class="text-sm sm:text-base text-gray-400 leading-relaxed mb-4 sm:mb-6">Monitor performance and optimize with detailed analytics</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        Performance metrics
+                                    </div>
+                                    <div class="flex items-center justify-center text-xs sm:text-sm text-gray-400">
+                                        <i class="fas fa-check text-green-400 mr-2 sm:mr-3"></i>
+                                        ROI tracking
+                                    </div>
+                                </div>
+                                <!-- Success Badge -->
+                                <div class="absolute -right-4 -top-4 transform">
+                                    <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs sm:text-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Demo Section -->
+
+        <!-- Live Demo Section -->
+        <section id="demo-panel" class="relative z-10 py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="mb-12 sm:mb-20">
+                    <h2 class="text-3xl sm:text-4xl md:text-6xl font-sans font-bold mb-4 sm:mb-6">
+                        <span class="text-white">Live</span>
+                        <span class="text-white"> Demo</span>
+                        <span class="text-white"> Panel</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-400 max-w-2xl leading-relaxed">
+                        Watch our automation system in action with real-time updates and live statistics
+                    </p>
+                    <!-- Live Status Indicator -->
+                    <div class="flex flex-wrap items-center mt-6 sm:mt-8 gap-4 sm:space-x-6">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse"></div>
+                            <span class="text-green-400 font-semibold text-sm sm:text-base">System Online</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                            <span class="text-green-400 font-semibold text-sm sm:text-base">Live Data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Dashboard -->
+                <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-2xl p-4 sm:p-6 md:p-8 max-w-7xl mx-auto shadow-2xl">
+                    <!-- Real-time Stats Grid with Flow Layout -->
+                    <div class="relative">
+                        <!-- Flow Path Line -->
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+                            <defs>
+                                <linearGradient id="demoPathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.8" />
+                                    <stop offset="25%" style="stop-color:#059669;stop-opacity:0.9" />
+                                    <stop offset="50%" style="stop-color:#047857;stop-opacity:1" />
+                                    <stop offset="75%" style="stop-color:#059669;stop-opacity:0.9" />
+                                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.8" />
+                                </linearGradient>
+                                <filter id="demoGlow">
+                                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/> 
+                                    </feMerge>
+                                </filter>
+                                <animate id="flowAnimation" attributeName="stroke-dashoffset" values="0;-20" dur="1s" repeatCount="indefinite"/>
+                            </defs>
+                            
+                            <!-- Main connecting path - hidden on mobile -->
+                            <path d="M 200,150 
+                                     L 350,150 
+                                     Q 375,150 375,175
+                                     L 375,300
+                                     Q 375,325 400,325
+                                     L 600,325
+                                     Q 625,325 625,300
+                                     L 625,175
+                                     Q 625,150 650,150
+                                     L 800,150" 
+                                  stroke="url(#demoPathGradient)" 
+                                  stroke-width="3" 
+                                  fill="none" 
+                                  filter="url(#demoGlow)"
+                                  stroke-dasharray="10,5"
+                                  opacity="0.9"
+                                  class="hidden sm:block">
+                                <animate attributeName="stroke-dashoffset" 
+                                         values="0;-15" 
+                                         dur="2s" 
+                                         repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Mobile/tablet curved path - simplified for mobile -->
+                            <path d="M 150,100 
+                                     Q 300,50 500,100
+                                     Q 700,150 850,200" 
+                                  stroke="url(#demoPathGradient)" 
+                                  stroke-width="2" 
+                                  fill="none" 
+                                  filter="url(#demoGlow)"
+                                  stroke-dasharray="8,4"
+                                  opacity="0.7"
+                                  class="sm:hidden">
+                                <animate attributeName="stroke-dashoffset" 
+                                         values="0;-12" 
+                                         dur="1.5s" 
+                                         repeatCount="indefinite"/>
+                            </path>
+                        </svg>
+
+                        <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                            <!-- Active Sessions - Top Left -->
+                            <div class="lg:pt-0 animate-fade-in">
+                                <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-2xl p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group relative">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-users text-lg sm:text-2xl text-white"></i>
+                                    </div>
+                                    <div class="text-2xl sm:text-3xl font-bold text-white mb-2" id="activeSessionsCount">12</div>
+                                    <div class="text-sm sm:text-base text-gray-300 mb-2 sm:mb-3 font-medium">Active Sessions</div>
+                                    <div class="w-full bg-gray-700/50 rounded-full h-3 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full transition-all duration-1000 animate-pulse shadow-lg shadow-blue-400/30" style="width: 80%"></div>
+                                    </div>
+                                    <div class="text-xs sm:text-sm text-gray-400 mt-2">+2.3% from last hour</div>
+                                    <!-- Arrow -->
+                                    <div class="absolute -right-6 top-1/2 transform -translate-y-1/2">
+                                        <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                                            <i class="fas fa-arrow-right text-white text-lg"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Messages Today - Bottom Center -->
+                            <div class="lg:pt-32 animate-fade-in" style="animation-delay: 0.1s;">
+                                <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group relative">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-paper-plane text-lg sm:text-2xl text-white"></i>
+                                    </div>
+                                    <div class="text-2xl sm:text-3xl font-bold text-white mb-2" id="messagesSentCount">1,247</div>
+                                    <div class="text-sm sm:text-base text-gray-300 mb-2 sm:mb-3 font-medium">Messages Today</div>
+                                    <div class="w-full bg-gray-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-purple-400 to-purple-600 h-2 sm:h-3 rounded-full transition-all duration-1000 animate-pulse shadow-lg shadow-purple-400/30" style="width: 65%"></div>
+                                    </div>
+                                    <div class="text-xs sm:text-sm text-gray-400 mt-2">+47 in last 10 min</div>
+                                    <!-- Arrow -->
+                                    <div class="absolute -right-6 -top-16 transform">
+                                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                                            <i class="fas fa-arrow-up text-white text-sm sm:text-lg"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Groups Joined - Top Right -->
+                            <div class="lg:pt-0 animate-fade-in" style="animation-delay: 0.2s;">
+                                <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group relative">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-layer-group text-lg sm:text-2xl text-white"></i>
+                                    </div>
+                                    <div class="text-2xl sm:text-3xl font-bold text-white mb-2" id="groupsJoinedCount">89</div>
+                                    <div class="text-sm sm:text-base text-gray-300 mb-2 sm:mb-3 font-medium">Groups Joined</div>
+                                    <div class="w-full bg-gray-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-orange-400 to-orange-600 h-2 sm:h-3 rounded-full transition-all duration-1000 animate-pulse shadow-lg shadow-orange-400/30" style="width: 90%"></div>
+                                    </div>
+                                    <div class="text-xs sm:text-sm text-gray-400 mt-2">Target: 100 groups</div>
+                                    <!-- Arrow -->
+                                    <div class="absolute -right-6 bottom-8 transform">
+                                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                                            <i class="fas fa-arrow-down text-white text-sm sm:text-lg"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Success Rate - Bottom Right -->
+                            <div class="lg:pt-32 animate-fade-in" style="animation-delay: 0.3s;">
+                                <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl group relative">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-lg sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <i class="fas fa-chart-line text-lg sm:text-2xl text-white"></i>
+                                    </div>
+                                    <div class="text-2xl sm:text-3xl font-bold text-white mb-2" id="engagementRate">94.7%</div>
+                                    <div class="text-sm sm:text-base text-gray-300 mb-2 sm:mb-3 font-medium">Success Rate</div>
+                                    <div class="w-full bg-gray-700/50 rounded-full h-2 sm:h-3 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-green-400 to-green-600 h-2 sm:h-3 rounded-full transition-all duration-1000 animate-pulse shadow-lg shadow-green-400/30" style="width: 95%"></div>
+                                    </div>
+                                    <div class="text-xs sm:text-sm text-green-400 mt-2">Exceeding targets</div>
+                                    <!-- Success Badge -->
+                                    <div class="absolute -right-4 -top-4 transform">
+                                        <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-check text-white text-xs sm:text-sm"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Activity Feed -->
+                    <div class="bg-black/30 backdrop-blur-md border border-gray-600/80 rounded-2xl p-4 sm:p-6 shadow-xl">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 sm:mb-6">
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white flex items-center">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-xl sm:rounded-2xl flex items-center justify-center mr-3">
+                                    <i class="fas fa-satellite text-white animate-pulse"></i>
+                                </div>
+                                Live Enterprise Feed
+                            </h3>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                                    <span class="text-green-400 text-xs sm:text-sm font-medium">LIVE</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-shield-alt text-gray-400 text-xs"></i>
+                                    <span class="text-gray-400 text-xs whitespace-nowrap">Military-Grade Secure</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="demoLogs" class="space-y-3 max-h-60 sm:max-h-72 overflow-y-auto custom-scrollbar">
+                            <!-- Dynamic premium logs will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="relative z-10 py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-6xl font-sans font-bold mb-6">
+                        <span class="bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent">Premium</span>
+                        <span class="text-white"> Plans</span>
+                    </h2>
+                    <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                        Choose the perfect plan for your automation needs
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Starter</h3>
+                        <div class="text-4xl font-bold text-white mb-6">$99<span class="text-lg text-gray-400">/month</span></div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>10K messages/day</li>
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>Basic analytics</li>
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>Email support</li>
+                        </ul>
+                        <button class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:from-green-400 hover:to-emerald-500 transition-all duration-300">Get Started</button>
+                    </div>
+                    
+                    <div class="bg-black/50 backdrop-blur-md border border-green-400/70 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 relative">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-400 to-emerald-500 text-black px-6 py-2 rounded-full text-sm font-semibold">Most Popular</div>
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Professional</h3>
+                        <div class="text-4xl font-bold text-white mb-6">$299<span class="text-lg text-gray-400">/month</span></div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>100K messages/day</li>
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>Advanced analytics</li>
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>24/7 support</li>
+                        </ul>
+                        <button class="w-full bg-gradient-to-r from-green-400 to-emerald-500 text-black py-3 rounded-xl font-semibold hover:from-green-300 hover:to-emerald-400 transition-all duration-300">Start Professional</button>
+                    </div>
+                    
+                    <div class="bg-black/50 backdrop-blur-md border border-gray-600/60 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-2xl font-semibold mb-4 text-white">Enterprise</h3>
+                        <div class="text-4xl font-bold text-white mb-6">$999<span class="text-lg text-gray-400">/month</span></div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>Unlimited messages</li>
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>Custom analytics</li>
+                            <li class="flex items-center text-gray-300"><i class="fas fa-check text-green-400 mr-3"></i>Dedicated support</li>
+                        </ul>
+                        <button class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:from-green-400 hover:to-emerald-500 transition-all duration-300">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="relative z-10 py-16 border-t border-gray-800/50">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                    <!-- Company Info -->
+                    <div>
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center">
+                                <img src="hqadz.jpg" alt="HQAdz Logo" class="w-full h-full object-contain rounded-xl">
+                            </div>
+                            <span class="text-3xl font-sans font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">HQAdz</span>
+                        </div>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            The premier Telegram automation platform trusted by thousands of marketers worldwide.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-black/40 backdrop-blur-md border border-gray-700/50 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors duration-300">
+                                <i class="fab fa-telegram text-gray-300"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-black/40 backdrop-blur-md border border-gray-700/50 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors duration-300">
+                                <i class="fab fa-twitter text-gray-300"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-black/40 backdrop-blur-md border border-gray-700/50 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors duration-300">
+                                <i class="fab fa-discord text-gray-300"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Platform Links -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Platform</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-300">Features</a></li>
+                            <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors duration-300">Pricing</a></li>
+                            <li><a href="#demo-panel" class="text-gray-400 hover:text-white transition-colors duration-300">Live Demo</a></li>
+                            <li><a href="#use-cases" class="text-gray-400 hover:text-white transition-colors duration-300">Use Cases</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support Links -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Support</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Help Center</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Documentation</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">API Reference</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Legal Links -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-6 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Legal</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Cookie Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">GDPR</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div class="border-t border-gray-800/50 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400">
+                        © 2025 HQAdz All rights reserved
+                    </p>
+                    <div class="flex items-center space-x-6 mt-4 md:mt-0">
+                        <span class="text-gray-400">Powered by HqAdz</span>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span class="text-green-400 font-medium">All Systems Operational</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        <!-- Scripts -->
+        <script>
+            // Premium Live Demo Configuration
+            const premiumDemoActivities = [
+                '🚀 Military-grade protocol initiated',
+                '💎 Neural network optimized targeting: 312% ROI',
+                '⚡ Quantum-encrypted session joined group',
+                '🎯 AI-powered sentiment analysis: 97.3%',
+                '🔮 Predictive analytics detected opportunity',
+                '🛡️ Advanced stealth protocols bypassed 15 layers',
+                '💰 Premium automation generated $47,892 leads',
+                '🌟 Elite VIP proxy rotation: Zero detection',
+                '📊 Real-time behavioral mimicry 99.1% score',
+                '🏆 Enterprise dashboard updated',
+                '⭐ Platinum-level engagement boost: 450%',
+                '🔥 Machine learning adapted to 12 patterns'
+            ];
+
+            // Realistic Rain Animation
+            function createRainDrop() {
+                const rainContainer = document.querySelector('.rain-container');
+                if (!rainContainer) return;
+                
+                const drop = document.createElement('div');
+                const sizes = ['w-0.5 h-6', 'w-0.5 h-8', 'w-0.5 h-10'];
+                const opacities = ['opacity-20', 'opacity-25', 'opacity-30', 'opacity-35', 'opacity-40'];
+                
+                drop.className = `${sizes[Math.floor(Math.random() * sizes.length)]} ${opacities[Math.floor(Math.random() * opacities.length)]} bg-gradient-to-b from-transparent via-gray-300 to-transparent absolute animate-rain-drop`;
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+                drop.style.animationDelay = '0s';
+                rainContainer.appendChild(drop);
+                
+                setTimeout(() => {
+                    if (drop.parentNode) drop.remove();
+                }, 6000);
+            }
+            
+            // Create burst of drops
+            function createRainBurst() {
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createRainDrop();
+                    }, i * 20);
+                }
+            }
+            
+            // Enhanced Live Demo functionality
+            function startPremiumLiveDemo() {
+                const logsContainer = document.getElementById('demoLogs');
+                if (!logsContainer) return;
+                
+                let activityIndex = 0;
+
+                // Initialize with premium activities
+                for (let i = 0; i < 6; i++) {
+                    setTimeout(() => {
+                        addPremiumDemoActivity(premiumDemoActivities[activityIndex % premiumDemoActivities.length]);
+                        activityIndex++;
+                    }, i * 800);
+                }
+
+                // Continue adding premium activities with enhanced timing
+                setInterval(() => {
+                    addPremiumDemoActivity(premiumDemoActivities[activityIndex % premiumDemoActivities.length]);
+                    activityIndex++;
+                    updatePremiumDemoStats();
+                }, 4000);
+
+                // Additional fast updates for realism
+                setInterval(() => {
+                    updateRealtimeMetrics();
+                }, 2000);
+            }
+
+            function addPremiumDemoActivity(activity) {
+                const logsContainer = document.getElementById('demoLogs');
+                if (!logsContainer) return;
+                
+                const timestamp = new Date().toLocaleTimeString();
+                
+                const logEntry = document.createElement('div');
+                logEntry.className = 'flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 bg-black/50 backdrop-blur-lg border border-gray-500/40 rounded-xl transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl animate-fade-in';
+                logEntry.innerHTML = `
+                    <div class="flex-shrink-0 w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full mt-1.5 sm:mt-2 animate-pulse shadow-lg shadow-green-400/30"></div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs sm:text-sm font-medium text-gray-200 break-words leading-relaxed">${activity}</p>
+                        <div class="flex items-center justify-between mt-2">
+                            <p class="text-xs text-gray-400">${timestamp}</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-1 h-1 bg-green-400 rounded-full animate-pulse"></div>
+                                <span class="text-xs text-green-400 font-semibold">LIVE</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                logsContainer.insertBefore(logEntry, logsContainer.firstChild);
+                
+                // Enhanced entry animation
+                setTimeout(() => {
+                    logEntry.style.transform = 'translateX(0)';
+                }, 10);
+                
+                // Keep only the latest 10 entries for better UX
+                while (logsContainer.children.length > 10) {
+                    const lastChild = logsContainer.lastChild;
+                    lastChild.style.opacity = '0';
+                    lastChild.style.transform = 'translateX(-100%)';
+                    setTimeout(() => {
+                        if (lastChild.parentNode) lastChild.remove();
+                    }, 300);
+                }
+            }
+
+            function updatePremiumDemoStats() {
+                // Update active sessions with premium animations
+                const sessionsElement = document.getElementById('activeSessionsCount');
+                if (sessionsElement) {
+                    const currentSessions = parseInt(sessionsElement.textContent);
+                    const newSessions = Math.max(8, Math.min(25, currentSessions + Math.floor(Math.random() * 4) - 1));
+                    animateCounterUpdate(sessionsElement, newSessions);
+                }
+
+                // Update messages sent with realistic increments
+                const messagesElement = document.getElementById('messagesSentCount');
+                if (messagesElement) {
+                    const currentMessages = parseInt(messagesElement.textContent.replace(/,/g, ''));
+                    const increment = Math.floor(Math.random() * 25) + 10;
+                    const newMessages = currentMessages + increment;
+                    animateCounterUpdate(messagesElement, newMessages.toLocaleString());
+                }
+
+                // Update groups joined
+                const groupsElement = document.getElementById('groupsJoinedCount');
+                if (groupsElement) {
+                    const currentGroups = parseInt(groupsElement.textContent);
+                    if (Math.random() > 0.7) { // 30% chance to increase
+                        const newGroups = currentGroups + Math.floor(Math.random() * 2) + 1;
+                        animateCounterUpdate(groupsElement, newGroups);
+                    }
+                }
+            }
+
+            function updateRealtimeMetrics() {
+                // Update engagement rate with subtle variations
+                const engagementElement = document.getElementById('engagementRate');
+                if (engagementElement) {
+                    const baseRate = 94.7;
+                    const variation = (Math.random() - 0.5) * 1.5; // ±0.75%
+                    const newRate = Math.max(92, Math.min(97.5, baseRate + variation));
+                    animateCounterUpdate(engagementElement, newRate.toFixed(1) + '%');
+                }
+
+                // Update progress bars with subtle animations
+                updateProgressBars();
+            }
+
+            function animateCounterUpdate(element, newValue) {
+                element.style.transform = 'scale(1.1)';
+                element.style.color = '#ffffff';
+                setTimeout(() => {
+                    element.textContent = newValue;
+                    element.style.transform = 'scale(1)';
+                    element.style.color = '';
+                }, 150);
+            }
+
+            function updateProgressBars() {
+                const progressBars = document.querySelectorAll('.bg-gradient-to-r.from-gray-400.to-gray-600');
+                progressBars.forEach((bar, index) => {
+                    const currentWidth = parseInt(bar.style.width) || [80, 65, 90, 95][index];
+                    const variation = (Math.random() - 0.5) * 4; // ±2%
+                    const newWidth = Math.max(60, Math.min(98, currentWidth + variation));
+                    bar.style.width = newWidth + '%';
+                    bar.style.transition = 'width 1s ease-in-out';
+                });
+            }
+            
+            // Create continuous realistic rain
+            setInterval(createRainDrop, 100);
+            setInterval(createRainBurst, 3000);
+            
+            // Mobile Menu Functionality
+            function initializeMobileMenu() {
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuIcon = document.getElementById('menu-icon');
+                const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+                
+                let isMenuOpen = false;
+                
+                function toggleMenu() {
+                    isMenuOpen = !isMenuOpen;
+                    
+                    if (isMenuOpen) {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('animate-fade-in');
+                        menuIcon.className = 'fas fa-times text-xl transition-transform duration-300 rotate-180';
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('animate-fade-in');
+                        menuIcon.className = 'fas fa-bars text-xl transition-transform duration-300';
+                    }
+                }
+                
+                function closeMenu() {
+                    if (isMenuOpen) {
+                        isMenuOpen = false;
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('animate-fade-in');
+                        menuIcon.className = 'fas fa-bars text-xl transition-transform duration-300';
+                    }
+                }
+                
+                // Toggle menu on button click
+                if (mobileMenuButton) {
+                    mobileMenuButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleMenu();
+                    });
+                }
+                
+                // Close menu when clicking menu links
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        closeMenu();
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (isMenuOpen && !mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                        closeMenu();
+                    }
+                });
+                
+                // Close menu on escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && isMenuOpen) {
+                        closeMenu();
+                    }
+                });
+                
+                // Close menu on window resize to desktop size
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth >= 1024 && isMenuOpen) {
+                        closeMenu();
+                    }
+                });
+            }
+            
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-scroll-reveal');
+                    }
+                });
+            }, observerOptions);
+            
+            // Create continuous realistic rain
+            setInterval(createRainDrop, 100);
+            setInterval(createRainBurst, 3000);
+            
+            // Counter animation function
+            function animateCounter(element, target, suffix = '', duration = 2000) {
+                const start = 0;
+                const increment = target / (duration / 16); // 16ms per frame
+                let current = start;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        clearInterval(timer);
+                        current = target;
+                    }
+                    
+                    if (suffix === 'M+') {
+                        element.textContent = Math.floor(current) + suffix;
+                    } else if (suffix === '/7') {
+                        element.textContent = Math.floor(current) + suffix;
+                    } else {
+                        element.textContent = current.toFixed(1) + suffix;
+                    }
+                }, 16);
+            }
+            
+            // Initialize counters when page loads
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initialize mobile menu
+                initializeMobileMenu();
+                
+                // Observe all animated elements
+                const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-scale-in');
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+                
+                // Start counters after a short delay
+                setTimeout(() => {
+                    const uptimeStat = document.getElementById('uptimeStat');
+                    const messagesStat = document.getElementById('messagesStat');
+                    const supportStat = document.getElementById('supportStat');
+                    
+                    if (uptimeStat) animateCounter(uptimeStat, 99.9, '%');
+                    if (messagesStat) animateCounter(messagesStat, 10, 'M+');
+                    if (supportStat) animateCounter(supportStat, 24, '/7');
+                }, 500);
+                
+                // Start premium live demo
+                setTimeout(() => {
+                    startPremiumLiveDemo();
+                }, 1000);
+            });
+        </script>
+
+</body>
+</html>

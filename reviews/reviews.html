@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soul Predictor - Reviews</title>
+  <link rel="icon" href="../favicon.png">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="reviews.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div id="particles-background"></div>
+  
+  <!-- Header -->
+  <header id="header">
+    <div class="logo">Soul Predictor</div>
+    <div class="header-title">
+      <h2>Customer Testimonials</h2>
+      <button id="addReviewBtn" class="button primary add-review-btn">
+        <i class="fas fa-plus"></i> Add Review
+      </button>
+    </div>
+    <div class="header-social">
+      <a href="https://t.me/stakelibrarian" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+      <a href="https://discord.gg/Tg9jQYaemF" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+      <a href="https://www.youtube.com/@soulpredictor" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="reviews-section">
+      <div class="reviews-container">
+        <div class="total-reviews-card">
+          <div id="totalReviews" class="total-reviews"></div>
+        </div>
+        <div class="reviews-grid" id="reviewsGrid">
+          <!-- Reviews will be dynamically loaded here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Review Submission Modal -->
+  <div id="reviewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header-row">
+        <span class="modal-title-icon">✍️</span>
+        <h3 class="modal-title">Submit Your Review</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-divider"></div>
+      <form id="reviewForm" class="review-form">
+        <div class="form-group floating-label">
+          <input type="text" id="reviewName" name="reviewName" required placeholder=" ">
+          <label for="reviewName">Name</label>
+        </div>
+        <div class="form-group floating-label">
+          <div class="social-handle-group">
+            <div class="social-select-wrapper">
+              <select id="reviewPlatform" name="reviewPlatform" required>
+                <option value="telegram" data-icon="fab fa-telegram-plane">Telegram</option>
+                <option value="instagram" data-icon="fab fa-instagram">Instagram</option>
+                <option value="twitter" data-icon="fab fa-twitter">Twitter</option>
+                <option value="discord" data-icon="fab fa-discord">Discord</option>
+              </select>
+              <span class="social-select-icon"><i class="fab fa-telegram-plane"></i></span>
+            </div>
+            <div class="floating-label">
+              <input type="text" id="reviewUsername" name="reviewUsername" required placeholder=" ">
+              <label for="reviewUsername">Username</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reviewRating">Rating</label>
+          <div class="star-rating modern-stars">
+            <i class="far fa-star" data-rating="1"></i>
+            <i class="far fa-star" data-rating="2"></i>
+            <i class="far fa-star" data-rating="3"></i>
+            <i class="far fa-star" data-rating="4"></i>
+            <i class="far fa-star" data-rating="5"></i>
+          </div>
+          <input type="hidden" id="reviewRating" name="reviewRating" required value="">
+        </div>
+        <div class="form-group floating-label">
+          <textarea id="reviewComment" name="reviewComment" rows="4" required placeholder=" "></textarea>
+          <label for="reviewComment">Your Review</label>
+        </div>
+        <button type="submit" class="button primary submit-btn modern-btn">
+          <span class="btn-icon">🚀</span>
+          <span class="btn-text">Submit Review</span>
+          <div class="btn-loader">
+            <div class="spinner"></div>
+          </div>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../script3.js"></script>
+  <script src="reviews.js"></script>
+</body>
+</html> 

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librarian Keys Guardian</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="particles-background"></div>
+    
+    <div class="container">
+        <div class="login-container glass">
+            <div class="login-header">
+                <h1><i class="fas fa-key"></i> Librarian Keys</h1>
+                <p>Login to access key management system</p>
+            </div>
+            <div class="login-form">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password">
+                </div>
+                <button id="login-btn" class="btn">Login</button>
+                <div id="login-error" class="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+    
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore-compat.js"></script>
+    
+    <!-- Initialize Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqJXk0fwnLzrCwuZ-7cCyQO2Iq3qnObFs",
+            authDomain: "keysys-c6c15.firebaseapp.com",
+            projectId: "keysys-c6c15",
+            storageBucket: "keysys-c6c15.firebasestorage.app",
+            messagingSenderId: "395850816811",
+            appId: "1:395850816811:web:5cbfacc35edbfecd65796e",
+            measurementId: "G-8H287Q7RNF"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    
+    <script src="login.js"></script>
+    <script>
+        // Create particles for background
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles-background');
+            const particleCount = Math.min(window.innerWidth / 10, 50); // Responsive particle count
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position
+                const left = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                
+                // Random opacity
+                const opacity = Math.random() * 0.5 + 0.2;
+                
+                // Random animation delay
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${left}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.opacity = opacity;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles on load
+        document.addEventListener('DOMContentLoaded', createParticles);
+        
+        // Recreate particles on window resize
+        window.addEventListener('resize', () => {
+            const particlesContainer = document.getElementById('particles-background');
+            particlesContainer.innerHTML = '';
+            createParticles();
+        });
+    </script>
+</body>
+</html>

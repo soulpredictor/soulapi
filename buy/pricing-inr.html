@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoulPayGate - INR Payment Gateway</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        .selection-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .selection-title {
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .selection-cards {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .selection-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 300px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .selection-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .selection-card h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .selection-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .selection-btn {
+            background: linear-gradient(45deg, #6b21a8, #3730a3);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .selection-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="snowfall-container main-snow"></div>
+    
+    <div class="main-container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-exchange-alt logo-icon"></i>
+                <span>SoulPayGate</span>
+            </div>
+            <div class="menu">
+                <a href="#predictor">Predictor</a>
+                <a href="#fbi">Fake Balance Injector</a>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="snowfall-container section-snow"></div>
+            <div class="hero-content">
+                <h1>Premium Payment Solutions</h1>
+                <p>Fast, Secure, and Reliable Payment Gateway for Indian Users</p>
+                <div class="hero-buttons">
+                    <a href="#predictor" class="btn primary">View Predictor Plans</a>
+                    <a href="#fbi" class="btn secondary">FBI Solutions</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Predictor Section -->
+        <section id="predictor" class="pricing-section">
+            <div class="snowfall-container section-snow"></div>
+            <div class="section-header">
+                <h2>Predictor Plans</h2>
+                <p>Choose the plan that works best for you</p>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-highlight">Popular</div>
+                    <div class="card-header">
+                        <h3>Basic Plan</h3>
+                        <div class="price">₹300</div>
+                        <div class="duration">25 Days Access</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> High Accuracy Rate</li>
+                            <li><i class="fas fa-check"></i> Fast & Secure Setup</li>
+                            <li><i class="fas fa-check"></i> 24/7 Support</li>
+                            <li><i class="fas fa-check"></i> Instant Activation</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn primary payment-btn" data-amount="300" data-plan="Weekly Predictor">Pay Now</button>
+                    </div>
+                </div>
+                
+                <div class="card featured">
+                    <div class="card-highlight">Best Value</div>
+                    <div class="card-header">
+                        <h3>Elite Plan</h3>
+                        <div class="price">₹400</div>
+                        <div class="duration">35 Days Access</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> High Accuracy Rate</li>
+                            <li><i class="fas fa-check"></i> Fast & Secure Setup</li>
+                            <li><i class="fas fa-check"></i> 24/7 Premium Support</li>
+                            <li><i class="fas fa-check"></i> Instant Activation</li>
+                            <li><i class="fas fa-check"></i> Advanced Features</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn primary payment-btn" data-amount="400" data-plan="Elite Predictor">Pay Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="other-payment">
+                <a href="https://t.me/librarian1337" class="btn outline">Other Payment Methods</a>
+            </div>
+        </section>
+        
+        <!-- Fake Balance Injector Section -->
+        <section id="fbi" class="pricing-section">
+            <div class="snowfall-container section-snow"></div>
+            <div class="section-header">
+                <h2>Fake Balance Injector</h2>
+                <p>Reliable and secure solutions</p>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-highlight">Standard</div>
+                    <div class="card-header">
+                        <h3>Monthly FBI</h3>
+                        <div class="price">₹400</div>
+                        <div class="duration">30 Days Access</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Reliable Performance</li>
+                            <li><i class="fas fa-check"></i> Fast & Secure Setup</li>
+                            <li><i class="fas fa-check"></i> Dedicated Support</li>
+                            <li><i class="fas fa-check"></i> Instant Activation</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn primary payment-btn" data-amount="400" data-plan="Monthly FBI">Pay Now</button>
+                    </div>
+                </div>
+                
+                <div class="card featured">
+                    <div class="card-highlight">Most Popular</div>
+                    <div class="card-header">
+                        <h3>Extended FBI</h3>
+                        <div class="price">₹600</div>
+                        <div class="duration">60 Days Access</div>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Reliable Performance</li>
+                            <li><i class="fas fa-check"></i> Fast & Secure Setup</li>
+                            <li><i class="fas fa-check"></i> 24/7 Premium Support</li>
+                            <li><i class="fas fa-check"></i> Instant Activation</li>
+                            <li><i class="fas fa-check"></i> Extended Features</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn primary payment-btn" data-amount="600" data-plan="Extended FBI">Pay Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="other-payment">
+                <a href="https://t.me/librarian1337" class="btn outline">Other Payment Methods</a>
+            </div>
+        </section>
+        
+        <!-- QR Code Modal -->
+        <div id="qrModal" class="modal">
+            <div class="snowfall-container modal-snow"></div>
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Complete Your Payment</h2>
+                <div class="qr-wrapper">
+                    <div id="qrPlaceholder">
+                        <p>Click a payment button to generate QR code</p>
+                    </div>
+                    <div id="qrCodeContainer" class="hidden">
+                        <div class="loader"></div>
+                        <div id="qrCode"></div>
+                        <div id="timer" class="hidden"></div>
+                        <button id="downloadQR" class="btn primary hidden">Download QR</button>
+                    </div>
+                </div>
+                <div id="paymentConfirmation" class="hidden">
+                    <p>Have you completed the payment?</p>
+                    <div class="confirmation-buttons">
+                        <button id="confirmYes" class="btn primary">Yes, I've Paid</button>
+                        <button id="confirmNo" class="btn secondary">No, Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Notification Container -->
+        <div id="notificationContainer" class="notification hidden">
+            <div class="notification-content">
+                <i class="fas fa-info-circle"></i>
+                <span id="notificationMessage"></span>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="snowfall-container footer-snow"></div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-exchange-alt logo-icon"></i>
+                <span>SoulPayGate</span>
+            </div>
+            <div class="footer-links">
+                <a href="#predictor">Predictor</a>
+                <a href="#fbi">Fake Balance Injector</a>
+                <a href="https://t.me/librarian1337">Contact Support</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-bitcoin"></i></a>
+                <a href="#"><i class="fab fa-ethereum"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SoulPayGate. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

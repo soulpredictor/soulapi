@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon Tower Predictor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 20px;
+        }
+        #login-container {
+            background-color: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            width: 400px;
+            max-width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #login-container h1 {
+            color: #f1f5f9;
+            text-align: center;
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        #login-form input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background-color: #334155;
+            border: 1px solid #475569;
+            color: #f1f5f9;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        #login-form input[type="password"]::placeholder {
+            color: #94a3b8;
+        }
+        #login-form button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4ade80;
+            color: #1e293b;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        #login-form button:hover {
+            background-color: #22c55e;
+        }
+        .game-interface {
+            display: flex;
+            gap: 40px;
+            background-color: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .controls {
+            flex: 1;
+        }
+        .game-board {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            font-size: 24px;
+            color: #f1f5f9;
+            margin: 0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            background-color: #334155;
+            border: 1px solid #475569;
+            border-radius: 5px;
+            color: #f1f5f9;
+            font-size: 16px;
+        }
+        .generate-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4ade80;
+            color: #1e293b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .generate-btn:hover {
+            background-color: #22c55e;
+        }
+        .tiles {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 440px;
+        }
+        .tile {
+            aspect-ratio: 1;
+            background-color: #334155;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        .tile:hover {
+            transform: scale(1.05);
+        }
+        .tile.active {
+            background-color: #4ade80;
+            animation: pulse 0.5s ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container" class="container">
+        <h1>Dragon Tower Predictor</h1>
+        <form id="login-form">
+            <input type="password" id="activation-key" placeholder="Enter Activation Key" required>
+            <button type="submit" id="submit">Activate</button>
+        </form>
+    </div>
+    <div id="game-container" class="container" style="display: none;">
+        <div class="game-interface">
+            <div class="controls">
+                <div class="header">
+                    <h2>Dragon Tower Game</h2>
+                </div>
+                <div class="input-group">
+                    <label for="server-seed">Server Seed</label>
+                    <input type="text" id="server-seed" placeholder="Enter 64-character seed" required>
+                </div>
+                <div class="input-group">
+                    <label for="client-seed">Client Seed</label>
+                    <input type="text" id="client-seed" placeholder="Enter 10-character seed" required>
+                </div>
+                <div class="input-group">
+                    <label for="user-input">Number of Tiles (1-4)</label>
+                    <input type="number" id="user-input" min="1" max="4" value="1" required>
+                </div>
+                <button class="generate-btn" onclick="generateTiles()">Generate Pattern</button>
+            </div>
+            <div class="game-board">
+                <div class="tiles" id="tileContainer"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const API_BASE_URL = 'https://soultool.pythonanywhere.com/api';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('login-form');
+            const loginContainer = document.getElementById('login-container');
+            const gameContainer = document.getElementById('game-container');
+
+            // Create 16 tiles (4 rows of 4)
+            const tileContainer = document.getElementById('tileContainer');
+            for (let i = 0; i < 16; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tileContainer.appendChild(tile);
+            }
+
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const activationKey = document.getElementById('activation-key').value;
+                try {
+                    const response = await fetch(`${API_BASE_URL}/validate_key`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ key: activationKey }),
+                    });
+                    const data = await response.json();
+                    if (data.valid) {
+                        loginContainer.style.display = 'none';
+                        gameContainer.style.display = 'block';
+                    } else {
+                        alert('Invalid activation key. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+
+        async function generateTiles() {
+            const serverSeed = document.getElementById('server-seed').value;
+            const clientSeed = document.getElementById('client-seed').value;
+            const userInput = document.getElementById('user-input').value;
+            const tiles = document.querySelectorAll('.tile');
+            
+            // Reset all tiles
+            tiles.forEach(tile => tile.classList.remove('active'));
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/generate_pattern`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ serverSeed, clientSeed, userInput }),
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    for (let i = 0; i < data.pattern.length; i++) {
+                        const tileIndex = data.pattern[i];
+                        await new Promise(resolve => setTimeout(() => {
+                            tiles[tileIndex].classList.add('active');
+                            resolve();
+                        }, 300)); // 300ms delay between each tile activation
+                    }
+                } else {
+                    alert(data.error || 'An error occurred while generating the pattern.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>

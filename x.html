@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoulAI</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="description" content="Soul Predictor">
+  <style>
+    @media (min-width: 768px) {
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Updated Button Styles */
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .button {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      min-width: 140px;
+      text-align: center;
+      height:55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button.primary {
+      background: #8B5CF6;
+      color: white;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+      background: #7C3AED;
+    }
+
+    @media (max-width: 768px) {
+      .hero-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .button {
+        width: calc(50% - 0.5rem);
+        min-width: unset;
+      }
+    }
+
+    /* Updated Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      background: #13111C;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 16px;
+      margin: 15% auto;
+      padding: 32px;
+      width: 90%;
+      max-width: 440px;
+      position: relative;
+      color: #E2E8F0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content h2 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: white;
+    }
+
+    .close {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      color: #6B7280;
+      font-size: 24px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: #8B5CF6;
+    }
+
+    .key-input {
+      width: 100%;
+      padding: 16px;
+      margin: 8px 0 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .key-input:focus {
+      outline: none;
+      border-color: #8B5CF6;
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    }
+
+    .key-input::placeholder {
+      color: #6B7280;
+    }
+
+    .check-key-btn {
+      width: 100%;
+      padding: 16px;
+      background: #8B5CF6;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .check-key-btn:hover {
+      background: #7C3AED;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+    }
+
+    .key-status-result {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      display: none;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .key-status-result i {
+      margin-right: 8px;
+    }
+
+    .key-status-result.success {
+      background: rgba(56, 161, 105, 0.1);
+      border: 1px solid rgba(56, 161, 105, 0.2);
+      color: #48BB78;
+    }
+
+    .key-status-result.error {
+      background: rgba(229, 62, 62, 0.1);
+      border: 1px solid rgba(229, 62, 62, 0.2);
+      color: #F56565;
+    }
+
+    .key-status-result.warning {
+      background: rgba(236, 201, 75, 0.1);
+      border: 1px solid rgba(236, 201, 75, 0.2);
+      color: #ECC94B;
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-background"></div>
+  
+  <!-- Header with Navigation -->
+  <header id="header">
+    <div class="logo">Soul Predictor</div>
+    <nav>
+      <ul>
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Features</a></li>
+        <li><a href="#projects" class="nav-link">Predictors</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-social">
+      <a href="https://t.me/stakelibrarian" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+      <a href="https://discord.gg/Tg9jQYaemF" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+      <a href="https://www.youtube.com/@soulpredictor" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="glass-card hero-content">
+        <div class="hero-text">
+          <p class="intro-text">Welcome to</p>
+          <h1>Soul <span class="accent">Predictor</span></h1>
+          <h2 class="typewriter">The Next Level Predictor</h2>
+          <p class="hero-description">Experience unprecedented accuracy and reliability with our AI-powered prediction system. Join thousands of successful users who have transformed their gambling experience.</p>
+          <div class="hero-buttons">
+            <a href="buy/index.html" class="button primary">Buy Now</a>
+            <a href="https://discord.gg/Tg9jQYaemF" class="button primary">Join Discord</a>
+            <button class="button primary" id="keyStatusBtn">Key Status</button>
+            <a href="reviews/reviews.html" class="button primary">Reviews</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="blob"></div>
+          <div class="tech-stack">
+            <span class="tech-item">Accurate</span>
+            <span class="tech-item">Fast</span>
+            <span class="tech-item">24/7 Support</span>
+            <span class="tech-item">AI</span>
+            <span class="tech-item">500+ Reviews</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="section-header">
+        <h2>About Soul Predictor</h2>
+        <span class="section-line"></span>
+      </div>
+      
+      <div class="glass-card about-content">
+        <div class="about-text">
+          <p>Soul Predictor is a cutting-edge prediction platform that combines advanced AI algorithms with real-time data analysis to provide highly accurate predictions for various games.</p>
+          
+          <p>Our system has been developed and refined over years, achieving an industry-leading 95% accuracy rate that has helped thousands of users worldwide.</p>
+          
+          <div class="personal-info">
+            <div class="info-item">
+              <h3>Key Features</h3>
+              <ul>
+                <li>Advanced AI Algorithms</li>
+                <li>Real-time Predictions</li>
+                <li>95% Success Rate</li>
+                <li>24/7 Support</li>
+              </ul>
+            </div>
+            
+            <div class="info-item">
+              <h3>Our Focus</h3>
+              <ul>
+                <li>Continuous Improvement</li>
+                <li>User Success</li>
+                <li>Reliable Predictions</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hero-buttons" style="margin-top: 2rem; justify-content: center;">
+            <a href="#projects" class="button primary">View Predictors</a>
+            <a href="https://t.me/stakelibrarian" class="button secondary">Get Free Demo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="skills" class="skills">
+      <div class="section-header">
+        <h2>Our Features</h2>
+        <span class="section-line"></span>
+      </div>
+      
+      <div class="skills-container">
+        <div class="glass-card skill-category">
+          <div class="category-header">
+            <i class="fas fa-robot"></i>
+            <h3>AI Technology</h3>
+          </div>
+          <div class="skill-list">
+            <div class="skill-item">
+              <span>Prediction Accuracy</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span>Real-time Analysis</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span>Pattern Recognition</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 92%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card skill-category">
+          <div class="category-header">
+            <i class="fas fa-chart-line"></i>
+            <h3>Performance</h3>
+          </div>
+          <div class="skill-list">
+            <div class="skill-item">
+              <span>Success Rate</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span>Response Time</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 98%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span>User Satisfaction</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 94%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card skill-category">
+          <div class="category-header">
+            <i class="fas fa-shield-alt"></i>
+            <h3>System Security</h3>
+          </div>
+          <div class="skill-list">
+            <div class="skill-item">
+              <span>Data Protection</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 100%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span>Secure Access</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 100%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span>Privacy Control</span>
+              <div class="skill-bar">
+                <div class="skill-level" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+      <div class="section-header">
+        <h2>Predictors</h2>
+        <span class="section-line"></span>
+      </div>
+      
+      <div class="projects-grid">
+        <div class="glass-card project-card">
+          <div class="project-content">
+            <h3>Crash Predictor</h3>
+            <p>Advanced algorithm for crash game predictions with high accuracy rate.</p>
+            <div class="project-tech">
+              <span>AI</span>
+              <span>Python</span>
+              <span>Predictions</span>
+            </div>
+            <div class="project-links">
+              <a href="https://soultools.pythonanywhere.com/" class="button primary">Access Now</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card project-card">
+          <div class="project-content">
+            <h3>Mines Predictor</h3>
+            <p>Strategic mine game predictions with proven success rate.</p>
+            <div class="project-tech">
+              <span>AI</span>
+              <span>Strategy</span>
+              <span>Analysis</span>
+            </div>
+            <div class="project-links">
+              <a href="/mines/login.html" class="button primary">Access Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card project-card">
+          <div class="project-content">
+            <h3>Dice Predictor</h3>
+            <p>Advanced dice roll prediction system with high accuracy.</p>
+            <div class="project-tech">
+              <span>AI</span>
+              <span>Python</span>
+              <span>Analytics</span>
+            </div>
+            <div class="project-links">
+              <a href="https://diceapi.pythonanywhere.com/" class="button primary">Access Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card project-card">
+          <div class="project-content">
+            <h3>Pump Predictor</h3>
+            <p>Real-time pump prediction alerts and analysis.</p>
+            <div class="project-tech">
+              <span>Real-time</span>
+              <span>ML</span>
+              <span>Alerts</span>
+            </div>
+            <div class="project-links">
+              <a href="https://t.me/SoulPredictor_bot" class="button primary">Access Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <div class="section-header">
+        <h2>Get In Touch</h2>
+        <span class="section-line"></span>
+      </div>
+      
+      <div class="contact-container">
+        <div class="glass-card contact-form-container">
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="button primary">Send Message</button>
+          </form>
+        </div>
+        
+        <div class="glass-card contact-info">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="https://t.me/stakelibrarian" class="social-link" target="_blank">
+              <i class="fab fa-telegram"></i>
+              <span>Telegram Support</span>
+            </a>
+            <a href="https://t.me/librarian1337" class="social-link" target="_blank">
+              <i class="fab fa-telegram"></i>
+              <span>Talk with Owner</span>
+            </a>
+            <a href="https://discord.gg/Tg9jQYaemF" class="social-link" target="_blank">
+              <i class="fab fa-discord"></i>
+              <span>Discord Community</span>
+            </a>
+            <a href="https://www.youtube.com/@soulpredictor" class="social-link" target="_blank">
+              <i class="fab fa-youtube"></i>
+              <span>YouTube Channel</span>
+            </a>
+            <a href="https://t.me/SoulPredictor_bot" class="social-link" target="_blank">
+              <i class="fas fa-robot"></i>
+              <span>Prediction Bot</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">Soul Predictor</div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Features</a>
+        <a href="#projects">Predictors</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://t.me/stakelibrarian" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://discord.gg/Tg9jQYaemF" target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="https://www.youtube.com/@soulpredictor" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://t.me/SoulPredictor_bot" target="_blank"><i class="fas fa-robot"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Soul Predictor. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script3.js"></script>
+
+  <!-- Key Status Modal -->
+  <div id="keyStatusModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Check Key Status</h2>
+      <input type="text" id="keyInput" class="key-input" placeholder="Enter your key">
+      <button id="checkKeyBtn" class="check-key-btn">Check Status</button>
+      <div id="keyStatusResult" class="key-status-result"></div>
+    </div>
+  </div>
+
+  <!-- Key Status Script -->
+  <script>
+    // Get modal elements
+    const modal = document.getElementById('keyStatusModal');
+    const keyStatusBtn = document.getElementById('keyStatusBtn');
+    const closeBtn = document.getElementsByClassName('close')[0];
+    const checkKeyBtn = document.getElementById('checkKeyBtn');
+    const keyInput = document.getElementById('keyInput');
+    const keyStatusResult = document.getElementById('keyStatusResult');
+
+    // Open modal
+    keyStatusBtn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // Close modal
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+      keyInput.value = "";
+      keyStatusResult.style.display = "none";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+        keyInput.value = "";
+        keyStatusResult.style.display = "none";
+      }
+    }
+
+    // Check key status
+    checkKeyBtn.onclick = function() {
+      const key = keyInput.value.trim();
+      if (!key) {
+        keyStatusResult.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a key';
+        keyStatusResult.className = 'key-status-result error';
+        keyStatusResult.style.display = 'block';
+        return;
+      }
+
+      // Show loading state
+      keyStatusResult.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking key status...';
+      keyStatusResult.className = 'key-status-result';
+      keyStatusResult.style.display = 'block';
+
+      // Make API request
+      fetch('https://soulogapi.vercel.app/check-key-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ key })
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === 'success') {
+          let statusClass = '';
+          let icon = '';
+          
+          switch (result.key_status) {
+            case 'unused':
+              statusClass = 'success';
+              icon = 'check-circle';
+              break;
+            case 'bound':
+              statusClass = 'warning';
+              icon = 'link';
+              break;
+            case 'invalidated':
+              statusClass = 'error';
+              icon = 'times-circle';
+              break;
+            case 'expired':
+              statusClass = 'error';
+              icon = 'clock';
+              break;
+            default:
+              statusClass = 'error';
+              icon = 'question-circle';
+          }
+
+          keyStatusResult.className = `key-status-result ${statusClass}`;
+          keyStatusResult.innerHTML = `<i class="fas fa-${icon}"></i> ${result.message}`;
+          
+          if (result.key_status === 'timed' && result.expiry) {
+            const expiry = new Date(result.expiry);
+            keyStatusResult.innerHTML += `<br>Expires on: ${expiry.toLocaleString()}`;
+          }
+        } else {
+          throw new Error(result.message || 'Failed to check key status');
+        }
+      })
+      .catch(error => {
+        keyStatusResult.className = 'key-status-result error';
+        keyStatusResult.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${error.message}`;
+      });
+    }
+  </script>
+</body>
+</html>
+

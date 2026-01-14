@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles and Variables */
+        :root {
+            --bg-color: #0F0A1E;
+            --primary-color: #8B5CF6;
+            --primary-dark: #6D28D9;
+            --primary-light: #A78BFA;
+            --secondary-color: #F472B6;
+            --text-color: #E2E8F0;
+            --text-muted: #94A3B8;
+            --danger-color: #e53e3e;
+            --success-color: #38a169;
+            --warning-color: #e9b949;
+            --glass-bg: rgba(15, 10, 30, 0.7);
+            --glass-border: rgba(139, 92, 246, 0.2);
+            --card-bg: rgba(17, 12, 34, 0.7);
+            --card-border: rgba(139, 92, 246, 0.15);
+            --transition-speed: 0.3s;
+            --border-radius: 8px;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --chart-bg: rgba(255, 255, 255, 0.05);
+            --success-bg: rgba(56, 161, 105, 0.1);
+            --warning-bg: rgba(233, 185, 73, 0.1);
+            --danger-bg: rgba(229, 62, 62, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-sans);
+        }
+
+        html, body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(15, 10, 30, 0.95), rgba(15, 10, 30, 0.97));
+        }
+
+        .sidebar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--glass-border);
+            width: 250px;
+            padding: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            background: var(--bg-color);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+        }
+
+        .key-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .key-details {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .analytics-stats {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .stat-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 15px;
+            color: var(--text-color);
+        }
+
+        .stat-value {
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        #key-details-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        #key-details-content .key-item {
+            background: var(--glass-bg);
+            margin: 10px 0;
+        }
+
+        .key-item.key-bound {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .key-item.key-unused {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .key-item.key-invalid {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        h3 {
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        strong {
+            color: var(--text-muted);
+        }
+
+        .placeholder-text {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Override any white backgrounds */
+        input, select, button {
+            background: var(--glass-bg);
+            color: var(--text-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            padding: 8px 12px;
+        }
+
+        input:focus, select:focus, button:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .key-status-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .key-status-item.bound {
+            background: rgba(56, 161, 105, 0.1);
+            border-left: 4px solid #38A169;
+        }
+
+        .key-status-item.unused {
+            background: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid #8B5CF6;
+        }
+
+        .key-status-item.invalidated {
+            background: rgba(229, 62, 62, 0.1);
+            border-left: 4px solid #E53E3E;
+        }
+
+        .key-status-item.expired {
+            background: rgba(233, 185, 73, 0.1);
+            border-left: 4px solid #E9B949;
+        }
+
+        .key-id {
+            font-family: monospace;
+            color: var(--text-color);
+        }
+
+        .key-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+        }
+
+        .status-result, .invalidate-result, .boost-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .results-container {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-background"></div>
+    
+    <div class="dashboard-container">
+        <div class="sidebar glass">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-key"></i> Librarian system</h2>
+            </div>
+            <div class="sidebar-menu">
+                <button class="menu-item active" data-section="keys-section">
+                    <i class="fas fa-key"></i>
+                    <span>View Keys</span>
+                </button>
+                <button class="menu-item" data-section="generate-section">
+                    <i class="fas fa-plus"></i>
+                    <span>Generate Keys</span>
+                </button>
+                <button class="menu-item" data-section="invalidate-section">
+                    <i class="fas fa-trash"></i>
+                    <span>Invalidate Key</span>
+                </button>
+                <button class="menu-item" data-section="check-expiry-section">
+                    <i class="fas fa-clock"></i>
+                    <span>Check Expiration</span>
+                </button>
+                <button class="menu-item" data-section="check-status-section">
+                    <i class="fas fa-search"></i>
+                    <span>Check Key Status</span>
+                </button>
+                <button class="menu-item" data-section="validity-booster-section">
+                    <i class="fas fa-hourglass"></i>
+                    <span>Validity Booster</span>
+                </button>
+                <button class="menu-item" data-section="analytics-section">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header glass">
+                <h2>Key Management Dashboard</h2>
+                <div class="user-info">
+                    <span id="username-display">Admin</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+            
+            <div id="keys-section" class="content-section active">
+                <div class="section-header">
+                    <h3>Available Keys</h3>
+                    <button id="refresh-keys" class="btn refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <div class="keys-container glass">
+                    <div class="loader" id="keys-loader"></div>
+                    <div id="keys-list" class="keys-list">
+                        <!-- Keys will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="generate-section" class="content-section">
+                <div class="section-header">
+                    <h3>Generate Timed Keys</h3>
+                </div>
+                <div class="generate-container glass">
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <div class="input-with-select">
+                            <input type="number" id="duration-value" min="1" value="1">
+                            <select id="duration-unit">
+                                <option value="m">Minutes</option>
+                                <option value="h" selected>Hours</option>
+                                <option value="d">Days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Keys</label>
+                        <input type="number" id="keys-count" min="1" max="10" value="1">
+                    </div>
+                    <button id="generate-btn" class="btn generate-btn">
+                        <i class="fas fa-plus"></i> Generate Keys
+                    </button>
+                    <div class="generated-keys-container" style="display: none;">
+                        <h4>Generated Keys:</h4>
+                        <div id="generated-keys" class="generated-keys">
+                            <!-- Generated keys will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="invalidate-section" class="content-section">
+                <div class="section-header">
+                    <h3>Invalidate Keys</h3>
+                </div>
+                <div class="invalidate-container glass">
+                    <div class="form-group">
+                        <label>Enter Keys (one per line)</label>
+                        <textarea id="invalidate-key" placeholder="Enter keys to invalidate" rows="5"></textarea>
+                    </div>
+                    <button id="invalidate-btn" class="btn invalidate-btn">
+                        <i class="fas fa-trash"></i> Invalidate Keys
+                    </button>
+                    <div id="invalidate-result" class="invalidate-result"></div>
+                </div>
+            </div>
+            
+            <div id="check-expiry-section" class="content-section">
+                <div class="section-header">
+                    <h3>Check Key Expiration</h3>
+                </div>
+                <div class="check-expiry-container glass">
+                    <div class="form-group">
+                        <label>Enter Key</label>
+                        <input type="text" id="check-expiry-key" placeholder="Enter key to check expiration">
+                    </div>
+                    <button id="check-expiry-btn" class="btn check-expiry-btn">
+                        <i class="fas fa-clock"></i> Check Expiration
+                    </button>
+                    <div id="expiry-result" class="expiry-result"></div>
+                </div>
+            </div>
+
+            <!-- Check Key Status Section -->
+            <div id="check-status-section" class="content-section">
+                <div class="section-header">
+                    <h3>Check Key Status</h3>
+                </div>
+                <div class="check-status-container glass">
+                    <div class="form-group">
+                        <label>Enter Keys (one per line)</label>
+                        <textarea id="check-status-key" placeholder="Enter keys to check status" rows="5"></textarea>
+                    </div>
+                    <button id="check-status-btn" class="btn check-status-btn">
+                        <i class="fas fa-search"></i> Check Status
+                    </button>
+                    <div id="status-result" class="status-result"></div>
+                </div>
+            </div>
+
+            <!-- Validity Booster Section -->
+            <div id="validity-booster-section" class="content-section">
+                <div class="section-header">
+                    <h3>Validity Booster</h3>
+                </div>
+                <div class="validity-booster-container glass">
+                    <div class="form-group">
+                        <label>Enter Keys (one per line)</label>
+                        <textarea id="boost-key" placeholder="Enter keys to boost validity" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Time</label>
+                        <div class="input-with-select">
+                            <input type="number" id="boost-duration-value" min="1" value="1">
+                            <select id="boost-duration-unit">
+                                <option value="m">Minutes</option>
+                                <option value="h" selected>Hours</option>
+                                <option value="d">Days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="boost-validity-btn" class="btn boost-btn">
+                        <i class="fas fa-hourglass"></i> Boost Validity
+                    </button>
+                    <div id="boost-result" class="boost-result"></div>
+                </div>
+            </div>
+
+            <!-- Modify Analytics Section -->
+            <div id="analytics-section" class="content-section">
+                <div class="section-header">
+                    <h3>System Analytics</h3>
+                </div>
+                <div class="analytics-container">
+                    <div class="analytics-stats glass">
+                        <div class="stats-grid">
+                            <div class="stat-item clickable" onclick="showKeyDetails('total')">
+                                <div class="stat-label">Total Keys</div>
+                                <div class="stat-value" id="total-keys">0</div>
+                            </div>
+                            <div class="stat-item clickable" onclick="showKeyDetails('bound')">
+                                <div class="stat-label">Bound Keys</div>
+                                <div class="stat-value" id="bound-keys">0</div>
+                            </div>
+                            <div class="stat-item clickable" onclick="showKeyDetails('unused')">
+                                <div class="stat-label">Unused Keys</div>
+                                <div class="stat-value" id="unused-keys">0</div>
+                            </div>
+                            <div class="stat-item clickable" onclick="showKeyDetails('invalidated')">
+                                <div class="stat-label">Invalidated Keys</div>
+                                <div class="stat-value" id="invalidated-keys">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analytics-details glass">
+                        <div id="key-details" class="key-details">
+                            <h4>Key Details</h4>
+                            <div id="key-details-content" class="key-details-content">
+                                <!-- Key details will be loaded here -->
+                                <div class="placeholder-text">Click on a stat to view details</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+    
+    <!-- Supabase Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <!-- Initialize Supabase -->
+    <script>
+        // Supabase configuration - replace with your project details
+        const supabaseUrl = 'https://zivchqddkiysjvjifrnv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppdmNocWRka2l5c2p2amlmcm52Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDgwNjQyMywiZXhwIjoyMDYwMzgyNDIzfQ.wm2ffRacJsWcPJc2mDWKiziODWO6QWuor-LDizLIRoU';
+        
+        // Create Supabase client
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // Create a compatibility layer for database operations
+        // This will make it easier to migrate from Firebase to Supabase without changing all your code
+        const db = {
+            collection: function(collectionName) {
+                return {
+                    doc: function(docId) {
+                        return {
+                            get: async function() {
+                                const { data, error } = await supabase
+                                    .from(collectionName)
+                                    .select('*')
+                                    .eq('id', docId)
+                                    .single();
+                                
+                                if (error) throw error;
+                                
+                                return {
+                                    exists: !!data,
+                                    data: function() {
+                                        return data;
+                                    },
+                                    id: docId
+                                };
+                            },
+                            set: async function(data) {
+                                const { error } = await supabase
+                                    .from(collectionName)
+                                    .upsert({ id: docId, ...data });
+                                
+                                if (error) throw error;
+                                return true;
+                            },
+                            delete: async function() {
+                                const { error } = await supabase
+                                    .from(collectionName)
+                                    .delete()
+                                    .eq('id', docId);
+                                
+                                if (error) throw error;
+                                return true;
+                            }
+                        };
+                    },
+                    get: async function() {
+                        const { data, error } = await supabase
+                            .from(collectionName)
+                            .select('*');
+                        
+                        if (error) throw error;
+                        
+                        return {
+                            docs: data.map(doc => ({
+                                data: function() {
+                                    return doc;
+                                },
+                                id: doc.id,
+                                exists: true
+                            })),
+                            forEach: function(callback) {
+                                data.forEach((doc, idx) => {
+                                    callback({
+                                        data: function() {
+                                            return doc;
+                                        },
+                                        id: doc.id,
+                                        exists: true
+                                    });
+                                });
+                            }
+                        };
+                    }
+                };
+            },
+            batch: function() {
+                const operations = [];
+                
+                return {
+                    set: function(docRef, data) {
+                        operations.push({
+                            type: 'set',
+                            collection: docRef._collection,
+                            id: docRef._id,
+                            data: data
+                        });
+                        return this;
+                    },
+                    delete: function(docRef) {
+                        operations.push({
+                            type: 'delete',
+                            collection: docRef._collection,
+                            id: docRef._id
+                        });
+                        return this;
+                    },
+                    commit: async function() {
+                        const results = [];
+                        
+                        for (const op of operations) {
+                            if (op.type === 'set') {
+                                const { error } = await supabase
+                                    .from(op.collection)
+                                    .upsert({ id: op.id, ...op.data });
+                                
+                                results.push({ error });
+                            } else if (op.type === 'delete') {
+                                const { error } = await supabase
+                                    .from(op.collection)
+                                    .delete()
+                                    .eq('id', op.id);
+                                
+                                results.push({ error });
+                            }
+                        }
+                        
+                        return results;
+                    }
+                };
+            }
+        };
+    </script>
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="dashboard.js"></script>
+
+    <!-- Background particles -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function createParticles() {
+                const particlesContainer = document.getElementById('particles-background');
+                const particleCount = Math.min(window.innerWidth / 10, 50);
+                
+                if (particlesContainer) {
+                    particlesContainer.innerHTML = '';
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = `${Math.random() * 100}%`;
+                        particle.style.width = `${Math.random() * 3 + 1}px`;
+                        particle.style.height = particle.style.width;
+                        particle.style.opacity = `${Math.random() * 0.5 + 0.2}`;
+                        particle.style.animationDelay = `${Math.random() * 5}s`;
+                        particlesContainer.appendChild(particle);
+                    }
+                }
+            }
+            
+            createParticles();
+            window.addEventListener('resize', createParticles);
+        });
+    </script>
+    
+    <!-- Fallback button handlers -->
+    <script>
+        // Add a fallback handler for buttons
+        window.addEventListener('load', function() {
+            console.log("Window fully loaded - adding fallback handlers");
+            
+            // Directly add click handlers to all critical buttons
+            const checkStatusBtn = document.getElementById('check-status-btn');
+            if (checkStatusBtn) {
+                checkStatusBtn.onclick = function() {
+                    console.log("Check Status button clicked (fallback)");
+                    const key = document.getElementById('check-status-key').value.trim();
+                    if (!key) {
+                        alert('Please enter a key to check');
+                        return;
+                    }
+                    
+                    // Show loading state
+                    const statusResult = document.getElementById('status-result');
+                    statusResult.className = 'status-result active';
+                    statusResult.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking key status...';
+                    
+                    // Make the request
+                    fetch("https://soulogapi.vercel.app/check-key-status", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ key })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log('Response:', result);
+                        
+                        if (result.status === 'success') {
+                            statusResult.className = 'status-result active';
+                            
+                            switch (result.key_status) {
+                                case 'unused':
+                                    statusResult.className += ' unused';
+                                    statusResult.innerHTML = '<i class="fas fa-check-circle"></i> ' + result.message;
+                                    break;
+                                case 'bound':
+                                    statusResult.className += ' bound';
+                                    statusResult.innerHTML = '<i class="fas fa-link"></i> ' + result.message;
+                                    break;
+                                case 'invalidated':
+                                    statusResult.className += ' invalidated';
+                                    statusResult.innerHTML = '<i class="fas fa-times-circle"></i> ' + result.message;
+                                    break;
+                                case 'expired':
+                                    statusResult.className += ' invalidated';
+                                    statusResult.innerHTML = '<i class="fas fa-clock"></i> This key has expired';
+                                    break;
+                                case 'timed':
+                                    statusResult.className += ' bound';
+                                    const expiry = new Date(result.expiry);
+                                    statusResult.innerHTML = `<i class="fas fa-clock"></i> Timed key expires on: ${expiry.toLocaleString()}`;
+                                    break;
+                                case 'not_found':
+                                    statusResult.className += ' invalidated';
+                                    statusResult.innerHTML = '<i class="fas fa-question-circle"></i> ' + result.message;
+                                    break;
+                            }
+                        } else {
+                            throw new Error(result.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        statusResult.className = 'status-result active invalidated';
+                        statusResult.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${error.message}`;
+                    });
+                };
+            }
+            
+            // Add handler for boost validity button
+            const boostValidityBtn = document.getElementById('boost-validity-btn');
+            if (boostValidityBtn) {
+                boostValidityBtn.onclick = function() {
+                    console.log("Boost Validity button clicked (fallback)");
+                    const key = document.getElementById('boost-key').value.trim();
+                    const duration = document.getElementById('boost-duration-value').value;
+                    const unit = document.getElementById('boost-duration-unit').value;
+                    const boostResult = document.getElementById('boost-result');
+                    
+                    if (!key || !duration) {
+                        alert('Please enter both key and duration');
+                        return;
+                    }
+                    
+                    // Show loading state
+                    boostResult.className = 'boost-result active';
+                    boostResult.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    
+                    // Make the request
+                    fetch("https://soulogapi.vercel.app/boost-validity", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            key,
+                            duration: parseInt(duration),
+                            unit
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log('Response:', result);
+                        
+                        if (result.status === 'success') {
+                            boostResult.className = 'boost-result active';
+                            const newExpiry = new Date(result.new_expiry);
+                            boostResult.innerHTML = `
+                                <i class="fas fa-check-circle"></i>
+                                Validity extended successfully. New expiry: ${newExpiry.toLocaleString()}
+                            `;
+                        } else {
+                            throw new Error(result.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        boostResult.className = 'boost-result active invalidated';
+                        boostResult.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${error.message}`;
+                    });
+                };
+            }
+            
+            // Add analytics update function
+            function updateAnalytics() {
+                console.log("Updating analytics with real data");
+                
+                fetch("https://soulogapi.vercel.app/get-analytics")
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.status === 'success') {
+                            const data = result.data;
+                            document.getElementById('total-keys').textContent = data.total_keys;
+                            document.getElementById('bound-keys').textContent = data.bound_keys;
+                            document.getElementById('unused-keys').textContent = data.unused_keys;
+                            document.getElementById('invalidated-keys').textContent = data.invalidated_keys;
+                        } else {
+                            throw new Error(result.message || 'Failed to fetch analytics');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching analytics:', error);
+                    });
+            }
+            
+            // Set up analytics update
+            const analyticsMenuItem = document.querySelector('.menu-item[data-section="analytics-section"]');
+            if (analyticsMenuItem) {
+                analyticsMenuItem.addEventListener('click', updateAnalytics);
+            }
+            
+            // Update analytics every minute
+            updateAnalytics(); // Initial update
+            setInterval(updateAnalytics, 60000); // Update every minute
+        });
+    </script>
+
+    <script>
+    // Function to show key details
+    function showKeyDetails(type) {
+        const content = document.getElementById('key-details-content');
+        content.innerHTML = '<div class="loading">Loading...</div>';
+        
+        fetch(`https://soulogapi.vercel.app/get-key-details/${type}`)
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    if (result.keys.length === 0) {
+                        content.innerHTML = '<div class="placeholder-text">No keys found</div>';
+                        return;
+                    }
+                    
+                    content.innerHTML = result.keys.map(key => {
+                        let typeClass = key.type || 'regular';
+                        let info = '';
+                        
+                        if (key.type === 'timed') {
+                            info += `
+                                <div>Created: ${new Date(key.created_at).toLocaleString()}</div>
+                                <div>Expires: ${new Date(key.expiry).toLocaleString()}</div>
+                            `;
+                            if (key.device_id) {
+                                info += `<div>Device ID: ${key.device_id}</div>`;
+                                info += `<div>Activated: ${new Date(key.activated_at).toLocaleString()}</div>`;
+                            }
+                        } else if (key.type === 'regular') {
+                            info += `<div>Created: ${new Date(key.created_at).toLocaleString()}</div>`;
+                            if (key.device_id) {
+                                info += `<div>Device ID: ${key.device_id}</div>`;
+                                info += `<div>Activated: ${new Date(key.activated_at).toLocaleString()}</div>`;
+                            }
+                        } else if (key.type === 'invalid') {
+                            info += `<div>Invalidated: ${new Date(key.invalidated_at).toLocaleString()}</div>`;
+                            if (key.previous_data) {
+                                if (key.previous_data.device_id) {
+                                    info += `<div>Last Device: ${key.previous_data.device_id}</div>`;
+                                }
+                                if (key.previous_data.expiry) {
+                                    info += `<div>Was expiring: ${new Date(key.previous_data.expiry).toLocaleString()}</div>`;
+                                }
+                            }
+                        }
+                        
+                        return `
+                            <div class="key-item">
+                                <div class="key-header">
+                                    <span class="key-id">${key.id}</span>
+                                    <span class="key-type ${typeClass}">${key.type}</span>
+                                </div>
+                                <div class="key-info">
+                                    ${info}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    content.innerHTML = `<div class="placeholder-text">Error: ${result.message}</div>`;
+                }
+            })
+            .catch(error => {
+                content.innerHTML = `<div class="placeholder-text">Error loading key details</div>`;
+                console.error('Error:', error);
+            });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1991 @@
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Predictor | Premium AI Predictions</title>
+    <link rel="icon" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030303;
+            overflow-x: hidden;
+            color: #888;
+        }
+
+        /* Premium Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #030303;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+
+        /* 3D Effects */
+        .perspective-container {
+            perspective: 2000px;
+        }
+
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .card-3d:hover {
+            transform: rotateX(2deg) rotateY(2deg) scale(1.01);
+        }
+
+        /* Animations */
+        @keyframes flow-line {
+            0% {
+                stroke-dashoffset: 100;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes pulse-soft {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-flow {
+            animation: flow-line 2s linear infinite;
+        }
+
+        .animate-float {
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
+        @keyframes float-icon {
+
+            0%,
+            100% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-20px) translateX(10px) rotate(5deg);
+            }
+
+            50% {
+                transform: translateY(-10px) translateX(-5px) rotate(-3deg);
+            }
+
+            75% {
+                transform: translateY(-15px) translateX(8px) rotate(2deg);
+            }
+        }
+
+        .floating-icon {
+            animation: float-icon 12s ease-in-out infinite;
+            opacity: 0.8;
+            /* Increased opacity for better visibility */
+            pointer-events: none;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
+        }
+
+        /* Modern Glass & Gradients */
+        .premium-glass {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 4px 24px -1px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+        }
+
+        .premium-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .premium-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow:
+                0 20px 40px -5px rgba(0, 0, 0, 0.4),
+                0 0 20px -5px rgba(124, 58, 237, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        /* Form Inputs */
+        .input-premium {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .input-premium:focus {
+            outline: none;
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(139, 92, 246, 0.05);
+            box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Subtle Grid */
+        .bg-grid-premium {
+            background-size: 60px 60px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        }
+    </style>
+</head>
+
+<body class="selection:bg-indigo-500/30 selection:text-indigo-200">
+
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div id="canvas-container" class="absolute inset-0 z-0 opacity-100"></div>
+        <div
+            class="absolute top-[-20%] left-[10%] w-[800px] h-[800px] bg-purple-900/10 rounded-full blur-[150px] opacity-40">
+        </div>
+        <div
+            class="absolute bottom-[-10%] right-[5%] w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[150px] opacity-30">
+        </div>
+        <div class="absolute inset-0 bg-grid-premium z-0"></div>
+
+        <!-- Floating Background Icons - Updated for Mobile Visibility -->
+        <!-- Left side icons -->
+        <div class="absolute top-[15%] left-[5%] floating-icon" style="animation-delay: 0s;">
+            <iconify-icon icon="mdi:telegram" class="text-5xl md:text-6xl text-slate-500"></iconify-icon>
+        </div>
+        <div class="absolute top-[45%] left-[3%] floating-icon" style="animation-delay: 2s;">
+            <iconify-icon icon="lucide:bot" class="text-4xl md:text-5xl text-slate-500"></iconify-icon>
+        </div>
+        <div class="absolute bottom-[25%] left-[8%] floating-icon" style="animation-delay: 4s;">
+            <iconify-icon icon="lucide:brain" class="text-6xl md:text-7xl text-slate-500"></iconify-icon>
+        </div>
+
+        <!-- Right side icons -->
+        <div class="absolute top-[20%] right-[4%] floating-icon" style="animation-delay: 1s;">
+            <iconify-icon icon="lucide:sparkles" class="text-5xl md:text-6xl text-slate-500"></iconify-icon>
+        </div>
+        <div class="absolute top-[50%] right-[6%] floating-icon" style="animation-delay: 3s;">
+            <iconify-icon icon="lucide:message-circle" class="text-4xl md:text-5xl text-slate-500"></iconify-icon>
+        </div>
+        <div class="absolute bottom-[30%] right-[3%] floating-icon" style="animation-delay: 5s;">
+            <iconify-icon icon="lucide:network" class="text-5xl md:text-6xl text-slate-500"></iconify-icon>
+        </div>
+    </div>
+
+    <!-- Premium Floating Navbar -->
+    <div class="fixed top-6 left-0 right-0 z-50 flex justify-center px-6">
+        <nav
+            class="w-full max-w-4xl premium-glass rounded-2xl px-6 h-14 flex items-center justify-between transition-all duration-300">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer group">
+                <div
+                    class="w-6 h-6 rounded-full bg-gradient-to-tr from-white to-slate-400 flex items-center justify-center shadow-lg shadow-white/10">
+                    <div class="w-4 h-4 bg-black rounded-full flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                    </div>
+                </div>
+                <span
+                    class="text-white text-sm font-semibold tracking-tight group-hover:text-slate-200 transition-colors">Soul<span
+                        class="text-slate-600 font-light">Predictor</span></span>
+            </div>
+
+            <!-- Links -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#home"
+                    class="text-xs font-medium text-slate-400 hover:text-white transition-colors">Home</a>
+                <a href="#about"
+                    class="text-xs font-medium text-slate-400 hover:text-white transition-colors">About</a>
+                <a href="#features"
+                    class="text-xs font-medium text-slate-400 hover:text-white transition-colors">Features</a>
+                <a href="#pricing"
+                    class="text-xs font-medium text-slate-400 hover:text-white transition-colors">Pricing</a>
+                <a href="#contact"
+                    class="text-xs font-medium text-slate-400 hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <!-- Action -->
+            <div class="flex items-center gap-3">
+                <a href="https://t.me/soulpredictor" target="_blank"
+                    class="text-xs font-medium text-slate-400 hover:text-white transition-colors hidden sm:block">Support</a>
+                <a href="#pricing"
+                    class="bg-white text-black text-xs font-semibold px-4 py-1.5 rounded-full hover:bg-slate-200 transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                    Get Started
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative z-10 pt-40 pb-20 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+
+            <!-- Status Badge -->
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[10px] font-medium tracking-wide uppercase text-slate-300 mb-8 animate-float backdrop-blur-sm">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                System Operational
+            </div>
+
+            <h1
+                class="text-5xl md:text-7xl lg:text-8xl font-medium text-white tracking-tighter leading-[0.9] mb-8 max-w-5xl mx-auto">
+                Welcome to <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-b from-slate-200 to-slate-600">Soul
+                    Predictor</span>
+            </h1>
+
+            <p class="text-lg text-slate-500 max-w-xl mx-auto mb-12 leading-relaxed font-light">
+                Experience unprecedented accuracy and reliability with our AI-powered prediction system. Join thousands of successful users who have transformed their gambling experience.
+            </p>
+
+            <!-- Hero Buttons -->
+            <div class="flex flex-wrap gap-4 justify-center mb-20">
+                <a href="#pricing" class="bg-white text-black text-sm font-semibold px-6 py-3 rounded-full hover:bg-slate-200 transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                    Buy Now
+                </a>
+                <a href="https://discord.gg/Tg9jQYaemF" target="_blank" class="bg-white/10 text-white text-sm font-semibold px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                    Join Discord
+                </a>
+                <button id="keyStatusBtn" class="bg-white/10 text-white text-sm font-semibold px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                    Key Status
+                </button>
+                <a href="reviews/reviews.html" class="bg-white/10 text-white text-sm font-semibold px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                    Reviews
+                </a>
+            </div>
+
+            <!-- 3D Workflow Visualization Card -->
+            <div class="perspective-container w-full max-w-4xl mx-auto mb-20">
+                <div
+                    class="card-3d relative w-full bg-[#050505] border border-white/10 rounded-xl shadow-2xl shadow-purple-900/10 overflow-hidden">
+
+                    <!-- Mac-style Header -->
+                    <div class="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-5 justify-between">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/30"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/30"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/30"></div>
+                        </div>
+                        <div class="text-[10px] font-mono text-slate-600">soul_predictor_v2.exe</div>
+                        <div class="w-10"></div>
+                    </div>
+
+                    <!-- The Process Flow UI -->
+                    <div class="p-8 md:p-12 relative min-h-[400px] flex flex-col items-center justify-center">
+
+                        <!-- Connection Lines Background -->
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#333;stop-opacity:1"></stop>
+                                    <stop offset="100%" style="stop-color:#666;stop-opacity:1"></stop>
+                                </linearGradient>
+                            </defs>
+                            <path d="M 200 200 Q 400 50 600 200" stroke="url(#grad1)" stroke-width="1" fill="none"
+                                class="hidden md:block"></path>
+                        </svg>
+
+                        <!-- Steps Container -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full relative z-10">
+
+                            <!-- Step 1: Buy -->
+                            <div class="relative group">
+                                <div
+                                    class="h-full bg-gradient-to-b from-white/[0.08] to-transparent p-[1px] rounded-lg">
+                                    <div
+                                        class="bg-black/90 backdrop-blur-xl h-full p-6 rounded-lg flex flex-col items-center text-center border border-white/5">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 border border-blue-500/20 group-hover:bg-blue-500/20 transition-all">
+                                            <iconify-icon icon="lucide:credit-card"
+                                                class="text-blue-400 text-xl"></iconify-icon>
+                                        </div>
+                                        <h3 class="text-white text-sm font-medium mb-1">1. Choose Plan</h3>
+                                        <p class="text-xs text-slate-500">Select predictor &amp; checkout</p>
+                                        <div
+                                            class="mt-4 px-2 py-1 bg-blue-500/10 rounded text-[10px] text-blue-400 font-mono">
+                                            COMPLETED</div>
+                                    </div>
+                                </div>
+                                <!-- Arrow -->
+                                <div class="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 text-slate-700">
+                                    <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Wait (Processing) -->
+                            <div class="relative group">
+                                <div
+                                    class="h-full bg-gradient-to-b from-white/[0.08] to-transparent p-[1px] rounded-lg">
+                                    <div
+                                        class="bg-black/90 backdrop-blur-xl h-full p-6 rounded-lg flex flex-col items-center text-center border border-white/5 relative overflow-hidden">
+                                        <!-- Scanning effect -->
+                                        <div
+                                            class="absolute top-0 left-0 w-full h-[2px] bg-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.5)] animate-[float_2s_ease-in-out_infinite]">
+                                        </div>
+
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-yellow-500/10 flex items-center justify-center mb-4 border border-yellow-500/20">
+                                            <iconify-icon icon="lucide:loader-2"
+                                                class="text-yellow-400 text-xl animate-spin"></iconify-icon>
+                                        </div>
+                                        <h3 class="text-white text-sm font-medium mb-1">2. Processing</h3>
+                                        <p class="text-xs text-slate-500">Activating service...</p>
+                                        <div
+                                            class="mt-4 px-2 py-1 bg-yellow-500/10 rounded text-[10px] text-yellow-400 font-mono animate-pulse">
+                                            PROCESSING</div>
+                                    </div>
+                                </div>
+                                <!-- Arrow -->
+                                <div class="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 text-slate-700">
+                                    <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Get ADBOT -->
+                            <div class="relative group">
+                                <div
+                                    class="h-full bg-gradient-to-b from-white/[0.08] to-transparent p-[1px] rounded-lg">
+                                    <div
+                                        class="bg-black/90 backdrop-blur-xl h-full p-6 rounded-lg flex flex-col items-center text-center border border-white/5">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center mb-4 border border-purple-500/20 group-hover:scale-110 transition-transform">
+                                            <iconify-icon icon="lucide:bot"
+                                                class="text-purple-400 text-xl"></iconify-icon>
+                                        </div>
+                                        <h3 class="text-white text-sm font-medium mb-1">3. Get Access</h3>
+                                        <p class="text-xs text-slate-500">Key delivered</p>
+                                        <div
+                                            class="mt-4 px-2 py-1 bg-white/5 rounded text-[10px] text-slate-400 font-mono">
+                                            WAITING</div>
+                                    </div>
+                                </div>
+                                <!-- Arrow -->
+                                <div class="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 text-slate-700">
+                                    <iconify-icon icon="lucide:arrow-right" class="text-lg"></iconify-icon>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Start -->
+                            <div class="relative group">
+                                <div
+                                    class="h-full bg-gradient-to-b from-purple-500/50 to-indigo-500/50 p-[1px] rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+                                    <div
+                                        class="bg-black/90 backdrop-blur-xl h-full p-6 rounded-lg flex flex-col items-center text-center border border-white/5">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mb-4 border border-green-500/20 shadow-[0_0_10px_rgba(34,197,94,0.2)]">
+                                            <iconify-icon icon="lucide:zap"
+                                                class="text-green-400 text-xl"></iconify-icon>
+                                        </div>
+                                        <h3 class="text-white text-sm font-medium mb-1">4. Start Predicting</h3>
+                                        <p class="text-xs text-slate-500">AI-powered predictions</p>
+                                        <button
+                                            class="mt-4 w-full py-1 bg-white text-black text-[10px] font-bold rounded hover:bg-slate-200 transition-colors">
+                                            ACTIVATE
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Terminal Output Bottom -->
+                        <div
+                            class="w-full mt-8 p-4 bg-black rounded border border-white/10 font-mono text-[10px] text-slate-400">
+                            <div class="flex gap-2">
+                                <span class="text-green-500">➜</span>
+                                <span>initializing_sequence...</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-green-500">➜</span>
+                                <span>connecting_to_network... <span class="text-green-400">OK</span> (12ms)</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-blue-500">ℹ</span>
+                                <span>Waiting for user activation input...</span>
+                                <span class="w-2 h-4 bg-slate-500 animate-pulse"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 border-t border-white/5 pt-12 w-full max-w-4xl mx-auto">
+                <div>
+                    <div class="text-3xl font-semibold text-white mb-1">99.9%</div>
+                    <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">Uptime</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-semibold text-white mb-1">50ms</div>
+                    <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">Latency</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-semibold text-white mb-1">24/7</div>
+                    <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">Monitoring</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-semibold text-white mb-1">∞</div>
+                    <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">Scalability</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-medium text-white tracking-tight mb-6">About Soul Predictor</h2>
+                <span class="inline-block w-24 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mb-8"></span>
+            </div>
+            
+            <div class="premium-glass p-8 md:p-12 rounded-xl max-w-4xl mx-auto">
+                <div class="space-y-6 text-center">
+                    <p class="text-lg text-slate-300 leading-relaxed">
+                        Soul Predictor is a cutting-edge prediction platform that combines advanced AI algorithms with real-time data analysis to provide highly accurate predictions for various games.
+                    </p>
+                    
+                    <p class="text-lg text-slate-300 leading-relaxed">
+                        Our system has been developed and refined over years, achieving an industry-leading 95% accuracy rate that has helped thousands of users worldwide.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                        <div class="text-left">
+                            <h3 class="text-xl font-medium text-white mb-4">Key Features</h3>
+                            <ul class="space-y-3 text-slate-400">
+                                <li class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                    <span>Advanced AI Algorithms</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                    <span>Real-time Predictions</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                    <span>95% Success Rate</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                    <span>24/7 Support</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="text-left">
+                            <h3 class="text-xl font-medium text-white mb-4">Our Focus</h3>
+                            <ul class="space-y-3 text-slate-400">
+                                <li class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                    <span>Continuous Improvement</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                    <span>User Success</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                    <span>Reliable Predictions</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 justify-center mt-12">
+                        <a href="#features" class="bg-white text-black text-sm font-semibold px-6 py-3 rounded-full hover:bg-slate-200 transition-all">
+                            View Features
+                        </a>
+                        <a href="https://t.me/soulpredictor" target="_blank" class="bg-white/10 text-white text-sm font-semibold px-6 py-3 rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                            Get Free Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-32 relative">
+        <!-- Floating icon in features section -->
+        <div class="absolute top-[10%] left-[2%] floating-icon pointer-events-none" style="animation-delay: 1.5s;">
+            <iconify-icon icon="lucide:cpu" class="text-4xl text-slate-600"></iconify-icon>
+        </div>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <h2 class="text-3xl font-medium text-white tracking-tight mb-2">Our Features</h2>
+                    <p class="text-slate-500">Advanced AI-powered prediction capabilities.</p>
+                </div>
+            </div>
+
+            <!-- Modern Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- Card 1 -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:target" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">AI Technology</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Advanced machine learning algorithms that analyze patterns with 95% accuracy for precise predictions.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:bar-chart-2" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">Real-time Analysis</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Instant data processing and pattern recognition for up-to-the-moment predictions.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:shield" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">Pattern Recognition</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Sophisticated algorithms that identify winning patterns and trends in game data.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:layers" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">Multiple Predictors</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Access to Crash, Mines, Dice, and Pump predictors from a single platform.
+                    </p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:refresh-ccw" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">High Accuracy</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Industry-leading 95% success rate with continuous algorithm improvements.
+                    </p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default lg:col-span-1">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:code-2" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">24/7 Support</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Round-the-clock assistance from our dedicated support team via Telegram and Discord.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Predictors Section -->
+    <section id="predictors" class="py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-medium text-white tracking-tight mb-6">Our Predictors</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Choose from our range of AI-powered prediction tools</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <!-- Crash Predictor -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:trending-up" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">Crash Predictor</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">
+                        Advanced algorithm for crash game predictions with high accuracy rate.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">AI</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Python</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Predictions</span>
+                    </div>
+                    <a href="/mines/login.html" target="_blank"
+                        class="inline-block bg-white text-black text-sm font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition-all">
+                        Access Now
+                    </a>
+                </div>
+
+                <!-- Mines Predictor -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:gem" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">Mines Predictor</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">
+                        Strategic mine game predictions with proven success rate.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">AI</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Strategy</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Analysis</span>
+                    </div>
+                    <a href="/mines/login.html"
+                        class="inline-block bg-white text-black text-sm font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition-all">
+                        Access Now
+                    </a>
+                </div>
+
+                <!-- Dice Predictor -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:dice-6" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">Dice Predictor</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">
+                        Advanced dice roll prediction system with high accuracy.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">AI</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Python</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Analytics</span>
+                    </div>
+                    <a href="https://t.me/SoulPredictor_bot" target="_blank"
+                        class="inline-block bg-white text-black text-sm font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition-all">
+                        Access Now
+                    </a>
+                </div>
+
+                <!-- Pump Predictor -->
+                <div class="premium-glass p-8 rounded-xl premium-card group cursor-default">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            <iconify-icon icon="lucide:zap" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <iconify-icon icon="lucide:arrow-up-right"
+                            class="text-slate-600 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <h3 class="text-lg font-medium text-white mb-2">Pump Predictor</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">
+                        Real-time pump prediction alerts and analysis.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Real-time</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">ML</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-xs text-slate-400">Alerts</span>
+                    </div>
+                    <a href="https://t.me/SoulPredictor_bot" target="_blank"
+                        class="inline-block bg-white text-black text-sm font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition-all">
+                        Access Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 relative overflow-hidden">
+        <!-- Floating icon in pricing section -->
+        <div class="absolute top-[20%] right-[2%] floating-icon pointer-events-none" style="animation-delay: 2.5s;">
+            <iconify-icon icon="lucide:zap" class="text-5xl text-slate-600"></iconify-icon>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-medium text-white tracking-tight mb-6">Transparent Pricing</h2>
+
+                <!-- Main Category Toggle -->
+                <div class="inline-flex items-center p-1 bg-white/5 rounded-full border border-white/5 mb-3"
+                    id="category-toggle">
+                    <button
+                        class="px-6 py-2 rounded-full text-xs font-medium bg-white text-black shadow-lg transition-all"
+                        data-category="predictor">Predictor</button>
+                    <button
+                        class="px-6 py-2 rounded-full text-xs font-medium text-slate-400 hover:text-white transition-all"
+                        data-category="fbi">FBI</button>
+                    <button
+                        class="px-6 py-2 rounded-full text-xs font-medium text-slate-400 hover:text-white transition-all"
+                        data-category="custom">Custom</button>
+                </div>
+
+                <!-- Currency Toggle (Always Visible) -->
+                <div class="text-center mt-3 mb-8">
+                    <div class="inline-flex items-center p-1 bg-white/5 rounded-full border border-white/5"
+                        id="currency-toggle">
+                        <button
+                            class="px-6 py-2 rounded-full text-xs font-medium bg-white text-black shadow-lg transition-all"
+                            data-currency="usd">USD</button>
+                        <button
+                            class="px-6 py-2 rounded-full text-xs font-medium text-slate-400 hover:text-white transition-all"
+                            data-currency="inr">INR</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Predictor Pricing -->
+            <div id="predictor-pricing" class="pricing-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <!-- Basic Plan -->
+                <div
+                    class="premium-glass p-8 rounded-xl flex flex-col h-full hover:border-white/20 transition-all duration-300">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                                <h3 class="text-xl font-medium text-white">Basic Plan</h3>
+                                <p class="text-sm text-slate-500 mt-1">Popular choice</p>
+                        </div>
+                        <div class="text-right">
+                                <div class="text-4xl font-medium text-white tracking-tight" id="price-basic">$7</div>
+                                <span class="text-xs text-slate-500" id="period-basic">25 Days</span>
+                        </div>
+                    </div>
+                    <hr class="border-white/5 mb-8">
+                    <div class="space-y-4 mb-8 flex-1">
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                    icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">High Accuracy Rate</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                    icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">Fast & Secure Setup</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                    icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">24/7 Support</span>
+                        </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                        icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">Instant Activation</span>
+                    </div>
+                        </div>
+                        <button class="payment-btn w-full py-3 bg-white/5 border border-white/10 text-white text-sm font-medium rounded-lg hover:bg-white hover:text-black transition-all" 
+                            data-amount-usd="7" data-amount-inr="300" data-plan="Basic Predictor">
+                            Pay Now
+                    </button>
+                </div>
+
+                    <!-- Elite Plan -->
+                <div class="relative group">
+                    <div
+                        class="absolute -inset-[1px] bg-gradient-to-b from-purple-500/50 to-indigo-500/50 rounded-xl opacity-30 blur-sm group-hover:opacity-50 transition duration-500">
+                    </div>
+                    <div class="premium-glass p-8 rounded-xl h-full flex flex-col relative bg-[#050505]">
+                        <div class="absolute top-0 right-0 p-4">
+                            <span
+                                    class="bg-purple-500/10 text-purple-300 text-[10px] font-bold px-2 py-1 rounded border border-purple-500/20 uppercase tracking-wider">Best Value</span>
+                        </div>
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                    <h3 class="text-xl font-medium text-white">Elite Plan</h3>
+                                    <p class="text-sm text-slate-500 mt-1">Most popular</p>
+                            </div>
+                            <div class="text-right">
+                                    <div class="text-4xl font-medium text-white tracking-tight" id="price-elite">$10</div>
+                                    <span class="text-xs text-slate-500" id="period-elite">35 Days</span>
+                            </div>
+                        </div>
+                        <hr class="border-white/5 mb-8">
+                        <div class="space-y-4 mb-8 flex-1">
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                    <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                </div>
+                                    <span class="text-sm text-white">High Accuracy Rate</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                    <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                </div>
+                                    <span class="text-sm text-white">Fast & Secure Setup</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                    <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                </div>
+                                    <span class="text-sm text-white">24/7 Premium Support</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                    <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                </div>
+                                    <span class="text-sm text-white">Instant Activation</span>
+                            </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                        </div>
+                                    <span class="text-sm text-white">Advanced Features</span>
+                    </div>
+                </div>
+                            <button class="payment-btn w-full py-3 bg-white text-black text-sm font-medium rounded-lg hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)]" 
+                                data-amount-usd="10" data-amount-inr="400" data-plan="Elite Predictor">
+                                Pay Now
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FBI Pricing -->
+            <div id="fbi-pricing" class="pricing-content" style="display: none;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <!-- Monthly FBI -->
+                    <div
+                        class="premium-glass p-8 rounded-xl flex flex-col h-full hover:border-white/20 transition-all duration-300">
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                <h3 class="text-xl font-medium text-white">Monthly FBI</h3>
+                                <p class="text-sm text-slate-500 mt-1">Standard</p>
+                </div>
+                            <div class="text-right">
+                                <div class="text-4xl font-medium text-white tracking-tight">$6</div>
+                                <span class="text-xs text-slate-500">30 Days</span>
+                            </div>
+                        </div>
+                        <hr class="border-white/5 mb-8">
+                        <div class="space-y-4 mb-8 flex-1">
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                        icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">Reliable Performance</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                        icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">Fast & Secure Setup</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                        icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">Dedicated Support</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center"><iconify-icon
+                                        icon="lucide:check" class="text-white text-xs"></iconify-icon></div>
+                                <span class="text-sm text-slate-300">Instant Activation</span>
+                            </div>
+                        </div>
+                        <button class="payment-btn w-full py-3 bg-white/5 border border-white/10 text-white text-sm font-medium rounded-lg hover:bg-white hover:text-black transition-all" 
+                            data-amount-usd="6" data-amount-inr="400" data-plan="Monthly FBI">
+                            Pay Now
+                        </button>
+            </div>
+
+                    <!-- Extended FBI -->
+                    <div class="relative group">
+                        <div
+                            class="absolute -inset-[1px] bg-gradient-to-b from-purple-500/50 to-indigo-500/50 rounded-xl opacity-30 blur-sm group-hover:opacity-50 transition duration-500">
+                    </div>
+                        <div class="premium-glass p-8 rounded-xl h-full flex flex-col relative bg-[#050505]">
+                            <div class="absolute top-0 right-0 p-4">
+                                <span
+                                    class="bg-purple-500/10 text-purple-300 text-[10px] font-bold px-2 py-1 rounded border border-purple-500/20 uppercase tracking-wider">Most Popular</span>
+                            </div>
+                            <div class="flex justify-between items-start mb-8">
+                                <div>
+                                    <h3 class="text-xl font-medium text-white">Extended FBI</h3>
+                                    <p class="text-sm text-slate-500 mt-1">Best value</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-4xl font-medium text-white tracking-tight">$12</div>
+                                    <span class="text-xs text-slate-500">60 Days</span>
+                                </div>
+                            </div>
+                            <hr class="border-white/5 mb-8">
+                            <div class="space-y-4 mb-8 flex-1">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                    </div>
+                                    <span class="text-sm text-white">Reliable Performance</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                    </div>
+                                    <span class="text-sm text-white">Fast & Secure Setup</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                    </div>
+                                    <span class="text-sm text-white">24/7 Premium Support</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                    </div>
+                                    <span class="text-sm text-white">Instant Activation</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                        <iconify-icon icon="lucide:check" class="text-purple-300 text-xs"></iconify-icon>
+                                    </div>
+                                    <span class="text-sm text-white">Extended Features</span>
+                                </div>
+                            </div>
+                            <button class="payment-btn w-full py-3 bg-white text-black text-sm font-medium rounded-lg hover:bg-slate-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)]" 
+                                data-amount-usd="12" data-amount-inr="600" data-plan="Extended FBI">
+                                Pay Now
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Services -->
+            <div id="custom-pricing" class="pricing-content" style="display: none;">
+                <div class="max-w-2xl mx-auto">
+                    <div class="premium-glass p-8 md:p-12 rounded-xl text-center">
+                        <div class="mb-8">
+                            <iconify-icon icon="lucide:sparkles" class="text-6xl text-purple-400 mb-4"></iconify-icon>
+                            <h3 class="text-2xl font-medium text-white mb-4">Custom Services</h3>
+                            <p class="text-slate-400 mb-8">Get tailored solutions for your specific needs</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                <span class="text-slate-300">Custom Tools</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                <span class="text-slate-300">Scripts Development</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                <span class="text-slate-300">Custom Websites</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                <span class="text-slate-300">Design Services</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                <span class="text-slate-300">API Integration</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-green-400"></iconify-icon>
+                                <span class="text-slate-300">Automation Solutions</span>
+                    </div>
+                </div>
+
+                        <a href="https://t.me/veilchief" target="_blank"
+                            class="inline-block w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-sm font-medium rounded-lg hover:opacity-90 transition-all shadow-lg shadow-purple-900/20">
+                            Contact Now
+                        </a>
+                </div>
+                </div>
+            </div>
+            
+            <!-- Single Verify Payment Button (visible for Predictor and FBI categories only) -->
+            <div id="verify-payment-section" class="text-center mt-8">
+                <a href="buy/verify.html" target="_blank" class="inline-flex items-center gap-2 premium-glass px-6 py-3 rounded-full text-white text-sm font-semibold border border-white/10 hover:bg-white/10 transition-all">
+                    <iconify-icon icon="lucide:check-circle"></iconify-icon>
+                    Verify Payment & Get Keys
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative border-t border-white/5 bg-black/50">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-medium text-white tracking-tight mb-4">Get In Touch</h2>
+                <p class="text-slate-500">Connect with us for support, questions, or custom solutions</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="premium-glass p-8 rounded-xl">
+                    <h3 class="text-xl font-medium text-white mb-6">Contact Form</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2 block">Name</label>
+                            <input type="text" placeholder="Your name"
+                                class="w-full px-4 py-3 rounded-lg text-sm input-premium placeholder:text-slate-600">
+                        </div>
+                        <div>
+                            <label class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2 block">Email</label>
+                            <input type="email" placeholder="your@email.com"
+                                class="w-full px-4 py-3 rounded-lg text-sm input-premium placeholder:text-slate-600">
+                        </div>
+                        <div>
+                            <label class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2 block">Message</label>
+                            <textarea rows="4" placeholder="Your message..."
+                                class="w-full px-4 py-3 rounded-lg text-sm input-premium placeholder:text-slate-600 resize-none"></textarea>
+                        </div>
+                    <button type="button"
+                            class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-sm font-medium rounded-lg hover:opacity-90 transition-all shadow-lg shadow-purple-900/20">
+                            Send Message
+                    </button>
+            </form>
+                </div>
+                
+                <div class="premium-glass p-8 rounded-xl">
+                    <h3 class="text-xl font-medium text-white mb-6">Connect With Us</h3>
+                    <div class="space-y-4">
+                        <a href="https://t.me/soulpredictor" target="_blank" class="flex items-center gap-3 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all group">
+                            <iconify-icon icon="lucide:send" class="text-xl text-slate-400 group-hover:text-white"></iconify-icon>
+                            <div>
+                                <div class="text-white text-sm font-medium">Telegram Support</div>
+                                <div class="text-slate-500 text-xs">@soulpredictor</div>
+                            </div>
+                        </a>
+                        <a href="https://t.me/veilchief" target="_blank" class="flex items-center gap-3 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all group">
+                            <iconify-icon icon="lucide:user" class="text-xl text-slate-400 group-hover:text-white"></iconify-icon>
+                            <div>
+                                <div class="text-white text-sm font-medium">Talk with Owner</div>
+                                <div class="text-slate-500 text-xs">@veilchief</div>
+                            </div>
+                        </a>
+                        <a href="https://discord.gg/Tg9jQYaemF" target="_blank" class="flex items-center gap-3 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all group">
+                            <iconify-icon icon="lucide:message-circle" class="text-xl text-slate-400 group-hover:text-white"></iconify-icon>
+                            <div>
+                                <div class="text-white text-sm font-medium">Discord Community</div>
+                                <div class="text-slate-500 text-xs">Join our server</div>
+                            </div>
+                        </a>
+                        <a href="https://www.youtube.com/@soulpredictor1" target="_blank" class="flex items-center gap-3 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all group">
+                            <iconify-icon icon="lucide:youtube" class="text-xl text-slate-400 group-hover:text-white"></iconify-icon>
+                            <div>
+                                <div class="text-white text-sm font-medium">YouTube Channel</div>
+                                <div class="text-slate-500 text-xs">@soulpredictor1</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimal Footer -->
+    <footer class="border-t border-white/5 py-12 bg-black relative z-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center">
+                    <div class="w-3 h-3 bg-white rounded-full"></div>
+                </div>
+                <span class="text-white text-xs font-semibold tracking-tight">Soul Predictor</span>
+            </div>
+            <div class="flex gap-8 text-xs text-slate-500 font-medium">
+                <a href="#home" class="hover:text-white transition-colors">Home</a>
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#features" class="hover:text-white transition-colors">Features</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </div>
+            <div class="flex gap-4 text-slate-500">
+                <a href="https://t.me/soulpredictor" target="_blank" class="hover:text-white transition-colors">
+                    <iconify-icon icon="lucide:send" class="text-lg"></iconify-icon>
+                </a>
+                <a href="https://discord.gg/Tg9jQYaemF" target="_blank" class="hover:text-white transition-colors">
+                    <iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon>
+                </a>
+                <a href="https://www.youtube.com/@soulpredictor1" target="_blank" class="hover:text-white transition-colors">
+                    <iconify-icon icon="lucide:youtube" class="text-lg"></iconify-icon>
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-6 text-center">
+            <p class="text-xs text-slate-700 font-mono">&copy; 2025 Soul Predictor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://unpkg.com/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+    <script>
+        // Initialize Vanilla Tilt
+        VanillaTilt.init(document.querySelectorAll(".premium-card, .card-3d"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            scale: 1.02
+        });
+
+        // Parallax Background Effect
+        document.addEventListener('mousemove', (e) => {
+            const icons = document.querySelectorAll('.floating-icon');
+            const x = (window.innerWidth - e.pageX * 2) / 100;
+            const y = (window.innerHeight - e.pageY * 2) / 100;
+
+            icons.forEach((icon, index) => {
+                const speed = (index + 1) * 0.5;
+                icon.style.transform = `translateX(${x * speed}px) translateY(${y * speed}px)`;
+            });
+        });
+
+        // Payment functionality
+        let currentCurrency = 'usd';
+        let currentAmount = 0;
+        let currentPlan = '';
+        let timerInterval;
+
+        // OxaPay payment links for USD
+        const OXAPAY_LINKS = {
+            '7': 'https://pay.oxapay.com/16579184',   // $7 Predictor Basic
+            '10': 'https://pay.oxapay.com/15532063',  // $10 Predictor Elite
+            '6': 'https://pay.oxapay.com/11522416',   // $6 FBI Monthly
+            '12': 'https://pay.oxapay.com/17254239'   // $12 FBI Extended
+        };
+
+        // Category Toggle Logic
+        const categoryToggle = document.getElementById('category-toggle');
+        const categoryButtons = categoryToggle.querySelectorAll('button');
+        const currencyToggle = document.getElementById('currency-toggle');
+        const currencyButtons = currencyToggle.querySelectorAll('button');
+        
+        const predictorPricing = document.getElementById('predictor-pricing');
+        const fbiPricing = document.getElementById('fbi-pricing');
+        const customPricing = document.getElementById('custom-pricing');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category;
+
+                // Update Category Buttons
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-white', 'text-black', 'shadow-lg');
+                    btn.classList.add('text-slate-400', 'hover:text-white');
+                });
+                button.classList.remove('text-slate-400', 'hover:text-white');
+                button.classList.add('bg-white', 'text-black', 'shadow-lg');
+
+                // Show/Hide Pricing Sections
+                predictorPricing.style.display = category === 'predictor' ? 'block' : 'none';
+                fbiPricing.style.display = category === 'fbi' ? 'block' : 'none';
+                customPricing.style.display = category === 'custom' ? 'block' : 'none';
+                
+                // Show/hide Verify Payment button (only for Predictor and FBI, not Custom)
+                const verifyPaymentSection = document.getElementById('verify-payment-section');
+                if (verifyPaymentSection) {
+                    verifyPaymentSection.style.display = (category === 'predictor' || category === 'fbi') ? 'block' : 'none';
+                }
+                
+                // Currency toggle is always visible, but hide pricing cards for custom
+                if (category === 'custom') {
+                    // Custom doesn't need currency toggle functionality
+                }
+                
+                // Update prices when switching categories
+                updatePrices();
+            });
+        });
+
+        // Currency Toggle Logic
+        currencyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const currency = button.dataset.currency;
+
+                // Update Currency Buttons
+                currencyButtons.forEach(btn => {
+                    btn.classList.remove('bg-white', 'text-black', 'shadow-lg');
+                    btn.classList.add('text-slate-400', 'hover:text-white');
+                });
+                button.classList.remove('text-slate-400', 'hover:text-white');
+                button.classList.add('bg-white', 'text-black', 'shadow-lg');
+
+                currentCurrency = currency;
+                updatePrices();
+            });
+        });
+
+        // Update prices based on currency
+        function updatePrices() {
+            // Update all payment buttons' parent price displays
+            document.querySelectorAll('.payment-btn').forEach(button => {
+                const card = button.closest('.premium-glass, .premium-card');
+                if (!card) return;
+                
+                const usdAmount = button.dataset.amountUsd;
+                const inrAmount = button.dataset.amountInr;
+                
+                // Find price display (text-4xl element)
+                const priceDisplay = card.querySelector('.text-4xl.font-medium.text-white.tracking-tight');
+                if (priceDisplay) {
+                    if (currentCurrency === 'usd') {
+                        priceDisplay.textContent = '$' + usdAmount;
+                } else {
+                        priceDisplay.textContent = '₹' + inrAmount;
+                    }
+                }
+            });
+        }
+
+        // Payment button handlers
+        function initPaymentButtons() {
+            const paymentButtons = document.querySelectorAll('.payment-btn');
+            paymentButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const amount = currentCurrency === 'usd' ? button.dataset.amountUsd : button.dataset.amountInr;
+                    const plan = button.dataset.plan;
+                    
+                    if (!amount || !plan) {
+                        console.error('Missing payment data:', { amount, plan, currency: currentCurrency });
+                        showNotification('Payment data missing. Please try again.');
+                        return;
+                    }
+                    
+                    currentPlan = plan;
+                    currentAmount = parseInt(amount);
+                    
+                    console.log('Payment initiated:', { amount: currentAmount, plan: currentPlan, currency: currentCurrency });
+                    
+                    if (currentCurrency === 'usd') {
+                        // For USD payments, redirect to OxaPay
+                        const oxapayLink = OXAPAY_LINKS[amount];
+                        if (oxapayLink) {
+                            window.location.href = oxapayLink;
+                        } else {
+                            showNotification('Payment link not available. Please contact support.');
+                        }
+                    } else {
+                        // For INR payments, show QR modal
+                        const modal = document.getElementById('qrModal');
+                        if (modal) {
+                            modal.style.display = 'flex';
+                            generateQR(currentAmount);
+                        } else {
+                            console.error('QR Modal not found');
+                            showNotification('Payment modal not found. Please refresh the page.');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Generate QR Code
+        function generateQR(amount) {
+            console.log('Generating QR for amount:', amount);
+            
+            // Reset previous states
+            const qrCode = document.getElementById('qrCode');
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            const paymentConfirmation = document.getElementById('paymentConfirmation');
+            const qrPlaceholder = document.getElementById('qrPlaceholder');
+            
+            if (!qrCode || !qrCodeContainer) {
+                console.error('QR code elements not found');
+                showNotification('QR code elements not found. Please refresh the page.');
+                return;
+            }
+            
+            // Clear previous QR code
+            qrCode.innerHTML = '';
+            qrCodeContainer.classList.remove('hidden');
+            qrCodeContainer.style.display = 'block';
+            paymentConfirmation.classList.add('hidden');
+            paymentConfirmation.style.display = 'none';
+            qrPlaceholder.classList.add('hidden');
+            qrPlaceholder.style.display = 'none';
+            
+            // Show loader
+            const loader = qrCodeContainer.querySelector('.loader');
+            if (loader) loader.style.display = 'block';
+            
+            // Create amount display
+            const qrWrapper = document.querySelector('.qr-wrapper');
+            let amountDisplay = qrWrapper.querySelector('.amount-display');
+            if (!amountDisplay) {
+                amountDisplay = document.createElement('div');
+                amountDisplay.className = 'amount-display';
+                amountDisplay.style.cssText = 'color: white; text-align: center; margin-bottom: 20px; font-size: 18px; font-weight: 600;';
+                qrWrapper.insertBefore(amountDisplay, qrWrapper.firstChild);
+            }
+            amountDisplay.textContent = `Amount: ₹${amount} - ${currentPlan}`;
+            
+            // Generate QR after delay
+            setTimeout(() => {
+                try {
+                    const upiId = "7014961692@omni";
+                    const merchantName = "SoulPayGate";
+                    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&am=${amount}&cu=INR`;
+                    
+                    console.log('Generating QR with URL:', upiUrl);
+                    
+                    // Check if QRCode is available
+                    if (typeof QRCode === 'undefined') {
+                        console.error('QRCode library not loaded');
+                        showNotification('QR Code library not loaded. Please refresh the page.');
+                        return;
+                    }
+                    
+                    // Clear previous QR code
+                    qrCode.innerHTML = '';
+                    
+                    // Generate QR
+                    new QRCode(qrCode, {
+                        text: upiUrl,
+                        width: 250,
+                        height: 250,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                    
+                    console.log('QR Code generated successfully');
+                    
+                    // Show download button
+                    const downloadBtn = document.getElementById('downloadQR');
+                    if (downloadBtn) {
+                        downloadBtn.classList.remove('hidden');
+                        downloadBtn.style.display = 'block';
+                    }
+                    
+                    // Hide loader
+                    if (loader) loader.style.display = 'none';
+                    
+                    // Start timer
+                    startTimer(300); // 5 minutes
+                    
+                    // Show payment confirmation after delay
+                    setTimeout(() => {
+                        paymentConfirmation.classList.remove('hidden');
+                        paymentConfirmation.style.display = 'block';
+                    }, 3000);
+                } catch (error) {
+                    console.error('Error generating QR code:', error);
+                    showNotification('Error generating QR code: ' + error.message);
+                    if (loader) loader.style.display = 'none';
+                }
+            }, 500);
+        }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const timerElement = document.getElementById('timer');
+            if (timerElement) {
+                timerElement.classList.remove('hidden');
+                
+                clearInterval(timerInterval);
+                
+                timerInterval = setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    timerElement.textContent = `QR Time remaining: ${minutes}:${seconds}`;
+
+                    if (--timer < 0) {
+                        clearInterval(timerInterval);
+                        handlePaymentConfirmation(false);
+                    }
+                }, 1000);
+            }
+        }
+
+        function handlePaymentConfirmation(confirmed) {
+            clearInterval(timerInterval);
+            
+            if (confirmed) {
+                document.getElementById('paymentConfirmation').innerHTML = '<div class="loader" style="display:block;margin:0 auto;"></div><p class="text-white text-center mt-4">Processing payment...</p>';
+                
+                setTimeout(() => {
+                    showNotification('Payment verified! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'https://t.me/veilchief';
+                    }, 2000);
+                }, 2000);
+            } else {
+                resetPaymentUI();
+                showNotification(`Payment of ₹${currentAmount} was cancelled.`);
+            }
+        }
+
+        function resetPaymentUI() {
+            document.getElementById('qrCodeContainer').classList.add('hidden');
+            document.getElementById('paymentConfirmation').classList.add('hidden');
+            const timer = document.getElementById('timer');
+            if (timer) timer.classList.add('hidden');
+            const downloadBtn = document.getElementById('downloadQR');
+            if (downloadBtn) downloadBtn.classList.add('hidden');
+            document.getElementById('qrPlaceholder').classList.remove('hidden');
+            
+            const amountDisplay = document.querySelector('.amount-display');
+            if (amountDisplay) amountDisplay.remove();
+            
+            clearInterval(timerInterval);
+        }
+
+        function showNotification(message) {
+            const notificationContainer = document.getElementById('notificationContainer');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            if (notificationMessage) notificationMessage.textContent = message;
+            if (notificationContainer) {
+                notificationContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    notificationContainer.classList.add('hidden');
+                }, 3000);
+            }
+        }
+
+        function downloadQRCode() {
+            const qrImage = document.querySelector('#qrCode img');
+            if (!qrImage) {
+                showNotification('No QR code to download');
+                return;
+            }
+
+            const tempImage = new Image();
+            tempImage.crossOrigin = "Anonymous";
+            tempImage.src = qrImage.src;
+
+            tempImage.onload = function() {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                
+                canvas.width = tempImage.width + 40;
+                canvas.height = tempImage.height + 40;
+                
+                context.fillStyle = '#ffffff';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(tempImage, 20, 20);
+                
+                try {
+                    const link = document.createElement('a');
+                    link.download = `QR_Payment_${currentAmount}INR_${currentPlan.replace(/\s+/g, '_')}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    showNotification('QR Code downloaded successfully!');
+                } catch (error) {
+                    console.error('Download error:', error);
+                    showNotification('Failed to download QR code');
+                }
+            };
+        }
+
+        // Initialize payment buttons on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initPaymentButtons();
+            updatePrices();
+        });
+
+        // Three.js Sound Wave Background
+        const initGlobe = () => {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Wave Parameters
+            const SEPARATION = 40;
+            const AMOUNTX = 60;
+            const AMOUNTY = 60;
+
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+
+            // Create grid of particles
+            for (let ix = 0; ix < AMOUNTX; ix++) {
+                for (let iy = 0; iy < AMOUNTY; iy++) {
+                    const x = ix * SEPARATION - ((AMOUNTX * SEPARATION) / 2);
+                    const z = iy * SEPARATION - ((AMOUNTY * SEPARATION) / 2);
+                    const y = 0;
+                    vertices.push(x, y, z);
+                }
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0x8b5cf6,
+                size: 3,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // Starfield (Background) - Kept for depth
+            const starGeometry = new THREE.BufferGeometry();
+            const starVertices = [];
+            const starCount = 2000;
+
+            for (let i = 0; i < starCount; i++) {
+                const x = THREE.MathUtils.randFloatSpread(3000);
+                const y = THREE.MathUtils.randFloatSpread(3000);
+                const z = THREE.MathUtils.randFloatSpread(3000);
+                starVertices.push(x, y, z);
+            }
+
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.5, transparent: true, opacity: 0.4 });
+            const stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+
+            // Camera positioning for perspective view
+            camera.position.y = 300;
+            camera.position.z = 800;
+            camera.lookAt(0, 0, 0);
+
+            let count = 0;
+
+            // Animation
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                const positions = particles.geometry.attributes.position.array;
+                let i = 0;
+
+                // Wave Animation
+                for (let ix = 0; ix < AMOUNTX; ix++) {
+                    for (let iy = 0; iy < AMOUNTY; iy++) {
+                        // Calculate y position based on sine waves
+                        const value = (Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50);
+
+                        // Update y coordinate (index + 1)
+                        positions[i + 1] = value;
+
+                        i += 3;
+                    }
+                }
+
+                particles.geometry.attributes.position.needsUpdate = true;
+
+                // Rotate entire system slowly
+                particles.rotation.y += 0.002;
+                stars.rotation.y -= 0.0005;
+
+                count += 0.1;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            // Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+
+        // Initialize Globe after DOM load
+        document.addEventListener('DOMContentLoaded', initGlobe);
+
+        // Modal handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('qrModal');
+            const closeModal = document.querySelector('.close-modal');
+            
+            if (closeModal) {
+                closeModal.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    modal.style.display = 'none';
+                    resetPaymentUI();
+                });
+            }
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    resetPaymentUI();
+                }
+            });
+            
+            const confirmYes = document.getElementById('confirmYes');
+            const confirmNo = document.getElementById('confirmNo');
+            const downloadQR = document.getElementById('downloadQR');
+            
+            if (confirmYes) {
+                confirmYes.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handlePaymentConfirmation(true);
+                });
+            }
+            if (confirmNo) {
+                confirmNo.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handlePaymentConfirmation(false);
+                });
+            }
+            if (downloadQR) {
+                downloadQR.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    downloadQRCode();
+                });
+            }
+        });
+
+    </script>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="modal" style="display: none;">
+        <div class="premium-glass modal-content" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; margin: 10% auto; padding: 40px; width: 90%; max-width: 500px; position: relative; color: #E2E8F0; box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;">
+            <span class="close-modal" style="position: absolute; right: 24px; top: 24px; color: #888; font-size: 28px; font-weight: 500; cursor: pointer; transition: color 0.3s ease; z-index: 10;">&times;</span>
+            <h2 style="font-size: 28px; font-weight: 600; margin-bottom: 24px; color: white; text-align: center;">Complete Your Payment</h2>
+            <div class="qr-wrapper" style="text-align: center;">
+                <div id="qrPlaceholder" style="padding: 40px;">
+                    <iconify-icon icon="lucide:qr-code" style="font-size: 64px; color: #888; margin-bottom: 16px;"></iconify-icon>
+                    <p style="color: #888; font-size: 16px;">Click a payment button to generate QR code</p>
+                </div>
+                <div id="qrCodeContainer" class="hidden" style="display: none;">
+                    <div class="loader" style="width: 48px; height: 48px; border: 3px solid rgba(139, 92, 246, 0.3); border-top: 3px solid #8B5CF6; border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto;"></div>
+                    <div id="qrCode" style="margin: 20px auto; display: inline-block; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);"></div>
+                    <div id="timer" class="hidden" style="color: #9bf436; margin: 15px 0; font-weight: 600; font-size: 14px;"></div>
+                    <button id="downloadQR" class="hidden premium-glass" style="background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 24px; border-radius: 12px; font-weight: 500; cursor: pointer; margin-top: 15px; width: 100%; transition: all 0.3s ease; backdrop-filter: blur(10px);">Download QR</button>
+                </div>
+            </div>
+            <div id="paymentConfirmation" class="hidden" style="display: none; margin-top: 24px; text-align: center; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <p style="color: white; margin-bottom: 20px; font-size: 16px;">Have you completed the payment?</p>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <button id="confirmYes" class="premium-glass" style="background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); color: white; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; min-width: 140px;">Yes, I've Paid</button>
+                    <button id="confirmNo" class="premium-glass" style="background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 24px; border-radius: 12px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; min-width: 140px;">No, Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="hidden" style="position: fixed; bottom: 20px; right: 20px; background: rgba(15, 10, 30, 0.95); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 16px 20px; z-index: 10000; backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <iconify-icon icon="lucide:info" style="color: #8B5CF6; font-size: 20px;"></iconify-icon>
+            <span id="notificationMessage" style="color: #E2E8F0; font-size: 14px;"></span>
+        </div>
+    </div>
+
+    <!-- Key Status Modal -->
+    <div id="keyStatusModal" class="modal" style="display: none;">
+        <div class="premium-glass modal-content" style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; margin: 15% auto; padding: 40px; width: 90%; max-width: 440px; position: relative; color: #E2E8F0; box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;">
+            <span class="close-key-modal" style="position: absolute; right: 24px; top: 24px; color: #888; font-size: 28px; font-weight: 500; cursor: pointer; transition: color 0.3s ease; z-index: 10;">&times;</span>
+            <h2 style="font-size: 28px; font-weight: 600; margin-bottom: 24px; color: white;">Check Key Status</h2>
+            <input type="text" id="keyInput" class="key-input" placeholder="Enter your key" style="width: 100%; padding: 16px; margin: 8px 0 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 12px; color: white; font-size: 16px; transition: all 0.3s ease;">
+            <button id="checkKeyBtn" class="check-key-btn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">Check Status</button>
+            <div id="keyStatusResult" class="key-status-result" style="margin-top: 20px; padding: 16px; border-radius: 12px; display: none; font-size: 15px; line-height: 1.5;"></div>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .close-modal:hover {
+            color: #8B5CF6 !important;
+            transform: scale(1.1);
+        }
+
+        #downloadQR:hover,
+        #confirmYes:hover,
+        #confirmNo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        #confirmYes:hover {
+            background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
+        }
+
+        #confirmNo:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        #downloadQR:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .key-input:focus {
+            outline: none;
+            border-color: #8B5CF6 !important;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2) !important;
+        }
+
+        .key-input::placeholder {
+            color: #6B7280;
+        }
+
+        .check-key-btn:hover {
+            background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .key-status-result.success {
+            background: rgba(56, 161, 105, 0.1);
+            border: 1px solid rgba(56, 161, 105, 0.2);
+            color: #48BB78;
+        }
+
+        .key-status-result.error {
+            background: rgba(229, 62, 62, 0.1);
+            border: 1px solid rgba(229, 62, 62, 0.2);
+            color: #F56565;
+        }
+
+        .key-status-result.warning {
+            background: rgba(236, 201, 75, 0.1);
+            border: 1px solid rgba(236, 201, 75, 0.2);
+            color: #ECC94B;
+        }
+
+        .close-key-modal:hover {
+            color: #8B5CF6 !important;
+            transform: scale(1.1);
+        }
+    </style>
+
+    <!-- Key Status Script -->
+    <script>
+        // Key Status Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const keyStatusModal = document.getElementById('keyStatusModal');
+            const keyStatusBtn = document.getElementById('keyStatusBtn');
+            const closeKeyModal = document.querySelector('.close-key-modal');
+            const checkKeyBtn = document.getElementById('checkKeyBtn');
+            const keyInput = document.getElementById('keyInput');
+            const keyStatusResult = document.getElementById('keyStatusResult');
+
+            // Open modal
+            if (keyStatusBtn) {
+                keyStatusBtn.addEventListener('click', function() {
+                    keyStatusModal.style.display = 'flex';
+                });
+            }
+
+            // Close modal
+            if (closeKeyModal) {
+                closeKeyModal.addEventListener('click', function() {
+                    keyStatusModal.style.display = 'none';
+                    keyInput.value = "";
+                    keyStatusResult.style.display = 'none';
+                });
+            }
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === keyStatusModal) {
+                    keyStatusModal.style.display = 'none';
+                    keyInput.value = "";
+                    keyStatusResult.style.display = 'none';
+                }
+            });
+
+            // Check key status
+            if (checkKeyBtn) {
+                checkKeyBtn.addEventListener('click', function() {
+                    const key = keyInput.value.trim();
+                    if (!key) {
+                        keyStatusResult.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a key';
+                        keyStatusResult.className = 'key-status-result error';
+                        keyStatusResult.style.display = 'block';
+                        return;
+                    }
+
+                    // Show loading state
+                    keyStatusResult.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking key status...';
+                    keyStatusResult.className = 'key-status-result';
+                    keyStatusResult.style.display = 'block';
+
+                    // Make API request
+                    fetch('https://soulogapi.vercel.app/check-key-status', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ key })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.status === 'success') {
+                            let statusClass = '';
+                            let icon = '';
+                            
+                            switch (result.key_status) {
+                                case 'unused':
+                                    statusClass = 'success';
+                                    icon = 'check-circle';
+                                    break;
+                                case 'bound':
+                                    statusClass = 'warning';
+                                    icon = 'link';
+                                    break;
+                                case 'invalidated':
+                                    statusClass = 'error';
+                                    icon = 'times-circle';
+                                    break;
+                                case 'expired':
+                                    statusClass = 'error';
+                                    icon = 'clock';
+                                    break;
+                                default:
+                                    statusClass = 'error';
+                                    icon = 'question-circle';
+                            }
+
+                            keyStatusResult.className = `key-status-result ${statusClass}`;
+                            keyStatusResult.innerHTML = `<i class="fas fa-${icon}"></i> ${result.message}`;
+                            
+                            if (result.key_status === 'timed' && result.expiry) {
+                                const expiry = new Date(result.expiry);
+                                keyStatusResult.innerHTML += `<br>Expires on: ${expiry.toLocaleString()}`;
+                            }
+                        } else {
+                            throw new Error(result.message || 'Failed to check key status');
+                        }
+                    })
+                    .catch(error => {
+                        keyStatusResult.className = 'key-status-result error';
+                        keyStatusResult.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${error.message}`;
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
