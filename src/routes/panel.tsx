@@ -265,8 +265,8 @@ function PanelPage() {
                 <img src="/favicon.ico" alt="Avatar" style={{ borderRadius: "50%", display: "block" }} className="w-full h-full object-cover" />
               </div>
 
-              <div className="flex-1 flex flex-col items-center sm:items-start text-center sm:text-left w-full z-10">
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-2.5 py-1 mb-4 shadow-sm backdrop-blur-md">
+              <div className="flex-1 flex flex-col items-center sm:items-start text-center sm:text-left w-full min-w-0 z-10">
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-2.5 py-1 mb-4 shadow-sm backdrop-blur-md shrink-0">
                   <span className="relative flex size-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
                     <span className="relative inline-flex rounded-full size-2 bg-accent"></span>
@@ -274,8 +274,12 @@ function PanelPage() {
                   <span className="text-[10px] font-semibold tracking-widest text-muted-foreground uppercase">Account</span>
                 </div>
                 
-                <h2 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">{username ?? "User"}</h2>
-                <p className="text-sm text-muted-foreground/80 mt-1.5 font-medium">{session.email ?? "No email provided"}</p>
+                <h2 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-sm truncate w-full">
+                  Greeting, {username?.split('@')[0] ?? "User"}!
+                </h2>
+                <p className="text-sm text-muted-foreground/80 mt-1.5 font-medium truncate w-full">
+                  {session.email ?? "No email provided"}
+                </p>
 
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3 w-full">
                   {(() => {

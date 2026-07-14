@@ -5,8 +5,9 @@ const PLANS: CategoryPlan[] = [
   {
     name: "Web Launch",
     tag: "For fast shipping",
-    priceWeekly: "$149",
-    priceMonthly: "$549",
+    priceWeekly: "Contact!",
+    priceMonthly: "Contact!",
+    ctaHref: "https://t.me/oglibe",
     features: [
       "High-converting landing page",
       "Mobile-first design",
@@ -19,8 +20,9 @@ const PLANS: CategoryPlan[] = [
     name: "Growth Stack",
     tag: "Most popular",
     highlight: true,
-    priceWeekly: "$299",
-    priceMonthly: "$1,099",
+    priceWeekly: "Contact!",
+    priceMonthly: "Contact!",
+    ctaHref: "https://t.me/oglibe",
     features: [
       "Multi-page website",
       "SEO + content structure",
@@ -33,8 +35,9 @@ const PLANS: CategoryPlan[] = [
   {
     name: "Scale Suite",
     tag: "Teams & brands",
-    priceWeekly: "Custom",
-    priceMonthly: "Custom",
+    priceWeekly: "Contact!",
+    priceMonthly: "Contact!",
+    ctaHref: "https://t.me/oglibe",
     features: [
       "Full web platform",
       "Design system + components",

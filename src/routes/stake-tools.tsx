@@ -20,7 +20,9 @@ const PREDICTOR_PLANS: CategoryPlan[] = [
     badge: "Diamond",
     highlight: true,
     priceWeekly: "7.99€",
+    priceWeeklyInr: "₹249",
     priceMonthly: "12.99€",
+    priceMonthlyInr: "₹349",
     features: ["No usage limit"],
     featuresWeekly: [
       "No usage limit",
@@ -47,7 +49,9 @@ const PREDICTOR_PLANS: CategoryPlan[] = [
     tag: "Max performance",
     badge: "Obsidian",
     priceWeekly: "9.99€",
+    priceWeeklyInr: "₹449",
     priceMonthly: "15.99€",
+    priceMonthlyInr: "₹549",
     features: ["No usage limit"],
     featuresWeekly: [
       "No usage limit",

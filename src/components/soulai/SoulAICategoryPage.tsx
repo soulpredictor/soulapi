@@ -15,7 +15,9 @@ export type CategoryPlan = {
   badge?: string;
   highlight?: boolean;
   priceWeekly: string;
+  priceWeeklyInr?: string;
   priceMonthly: string;
+  priceMonthlyInr?: string;
   features: string[];
   featuresWeekly?: string[];
   featuresMonthly?: string[];
@@ -292,6 +294,7 @@ function PlansSection({
   );
   const [group, setGroup] = useState<string>(groups[0]?.id ?? "default");
   const [billing, setBilling] = useState<Billing>("monthly");
+  const [currency, setCurrency] = useState<"global" | "inr">("global");
 
   const activeGroup = useMemo(() => groups.find((g) => g.id === group) ?? groups[0], [groups, group]);
   const activePlans = useMemo(() => activeGroup?.plans ?? [], [activeGroup]);
@@ -306,10 +309,10 @@ function PlansSection({
             uiKey: `${p.name}-weekly`,
             periodLabel: "Weekly",
             badge: "Weekly",
-            displayPrice: p.priceWeekly,
+            displayPrice: currency === "inr" ? (p.priceWeeklyInr ?? p.priceWeekly) : p.priceWeekly,
             displaySuffix: isPriceCustom(p.priceWeekly) ? "" : "/ week",
             features: p.featuresWeekly ?? p.features,
-            ctaHref: p.ctaHrefWeekly ?? p.ctaHref ?? "#contact",
+            ctaHref: currency === "inr" && p.priceWeeklyInr ? "https://t.me/oglibe" : (p.ctaHrefWeekly ?? p.ctaHref ?? "#contact"),
             ctaLabel: p.ctaLabel ?? "Get Started",
           },
           {
@@ -317,16 +320,18 @@ function PlansSection({
             uiKey: `${p.name}-monthly`,
             periodLabel: "Monthly",
             badge: "Monthly",
-            displayPrice: p.priceMonthly,
+            displayPrice: currency === "inr" ? (p.priceMonthlyInr ?? p.priceMonthly) : p.priceMonthly,
             displaySuffix: isPriceCustom(p.priceMonthly) ? "" : "/ month",
             features: p.featuresMonthly ?? p.features,
-            ctaHref: p.ctaHrefMonthly ?? p.ctaHref ?? "#contact",
+            ctaHref: currency === "inr" && p.priceMonthlyInr ? "https://t.me/oglibe" : (p.ctaHrefMonthly ?? p.ctaHref ?? "#contact"),
             ctaLabel: p.ctaLabel ?? "Get Started",
           },
         ]);
       }
       return activePlans.map((p) => {
-        const activePrice = billing === "weekly" ? p.priceWeekly : p.priceMonthly;
+        const activePriceGlobal = billing === "weekly" ? p.priceWeekly : p.priceMonthly;
+        const activePriceInr = billing === "weekly" ? (p.priceWeeklyInr ?? p.priceWeekly) : (p.priceMonthlyInr ?? p.priceMonthly);
+        const activePrice = currency === "inr" ? activePriceInr : activePriceGlobal;
         return {
           ...p,
           uiKey: p.name,
@@ -335,14 +340,16 @@ function PlansSection({
           displaySuffix: isPriceCustom(activePrice) ? "" : billing === "weekly" ? "/ week" : "/ month",
           features: billing === "weekly" ? (p.featuresWeekly ?? p.features) : (p.featuresMonthly ?? p.features),
           ctaHref:
-            billing === "weekly"
-              ? p.ctaHrefWeekly ?? p.ctaHref ?? "#contact"
-              : p.ctaHrefMonthly ?? p.ctaHref ?? "#contact",
+            currency === "inr" && (p.priceWeeklyInr || p.priceMonthlyInr)
+              ? "https://t.me/oglibe"
+              : billing === "weekly"
+                ? p.ctaHrefWeekly ?? p.ctaHref ?? "#contact"
+                : p.ctaHrefMonthly ?? p.ctaHref ?? "#contact",
           ctaLabel: p.ctaLabel ?? "Get Started",
         };
       });
     },
-    [activePlans, billing, pricingMode],
+    [activePlans, billing, pricingMode, currency],
   );
 
   const gridClassName =
@@ -397,7 +404,38 @@ function PlansSection({
               )}
               <div className="flex items-center justify-between gap-4">
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">{p.tag}</div>
-                {p.periodLabel && <div className="text-xs uppercase tracking-widest text-muted-foreground">{p.periodLabel}</div>}
+                <div className="flex items-center gap-2">
+                  {(p.priceWeeklyInr || p.priceMonthlyInr) && (
+                    <div className="relative inline-flex items-center rounded-xl border border-border bg-surface/40 p-0.5 backdrop-blur shrink-0 w-[110px]">
+                      <motion.div
+                        className="absolute inset-y-0.5 rounded-lg bg-accent"
+                        initial={false}
+                        animate={{ left: currency === "global" ? 2 : "calc(50% + 1px)" }}
+                        style={{ width: "calc(50% - 3px)" }}
+                        transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setCurrency("global")}
+                        className={`relative z-10 w-1/2 text-center py-1 text-[9px] font-bold tracking-widest transition-all ${
+                          currency === "global" ? "text-accent-foreground" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        GLOBAL
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCurrency("inr")}
+                        className={`relative z-10 w-1/2 text-center py-1 text-[9px] font-bold tracking-widest transition-all ${
+                          currency === "inr" ? "text-accent-foreground" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        INR
+                      </button>
+                    </div>
+                  )}
+                  {p.periodLabel && <div className="text-xs uppercase tracking-widest text-muted-foreground">{p.periodLabel}</div>}
+                </div>
               </div>
               <h3 className="mt-2 text-2xl font-semibold">{p.name}</h3>
               <div className="mt-4 flex items-baseline gap-2">

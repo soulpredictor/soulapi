@@ -5,8 +5,9 @@ const PLANS: CategoryPlan[] = [
   {
     name: "AI Automation",
     tag: "For operations",
-    priceWeekly: "$249",
-    priceMonthly: "$899",
+    priceWeekly: "Contact!",
+    priceMonthly: "Contact!",
+    ctaHref: "https://t.me/oglibe",
     features: [
       "Automation blueprint",
       "Workflow build + testing",
@@ -19,8 +20,9 @@ const PLANS: CategoryPlan[] = [
     name: "Bots + Community",
     tag: "Most popular",
     highlight: true,
-    priceWeekly: "$349",
-    priceMonthly: "$1,299",
+    priceWeekly: "Contact!",
+    priceMonthly: "Contact!",
+    ctaHref: "https://t.me/oglibe",
     features: [
       "Discord bot + moderation tools",
       "Custom commands + roles",
@@ -33,8 +35,9 @@ const PLANS: CategoryPlan[] = [
   {
     name: "Custom Product",
     tag: "Build anything",
-    priceWeekly: "Custom",
-    priceMonthly: "Custom",
+    priceWeekly: "Contact!",
+    priceMonthly: "Contact!",
+    ctaHref: "https://t.me/oglibe",
     features: [
       "Full-stack app development",
       "Architecture + roadmap",

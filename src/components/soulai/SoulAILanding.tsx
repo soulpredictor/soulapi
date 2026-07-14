@@ -286,8 +286,8 @@ function Hero() {
                 <Send className="size-4" />
                 Telegram
               </GlowButton>
-              <GlowButton href="#services" variant="ghost">
-                Services
+              <GlowButton href="/stake-tools" variant="ghost">
+                Stake Tools
               </GlowButton>
             </motion.div>
 
