@@ -1040,18 +1040,27 @@ function Contact() {
             </p>
             <div className="mt-10 space-y-4">
               {[
-                { icon: Mail, label: "soulgenzai@gmail.com" },
-                { icon: Send, label: "t.me/iorpx" },
-                { icon: Youtube, label: "youtube.com/@stakepredictorai" },
-                { icon: MapPin, label: "California" },
-              ].map((c) => (
-                <div key={c.label} className="flex items-center gap-3">
-                  <div className="grid size-10 place-items-center rounded-xl border border-border bg-surface/60 text-accent">
-                    <c.icon className="size-4" />
-                  </div>
-                  <span className="text-sm text-foreground">{c.label}</span>
-                </div>
-              ))}
+                { icon: Mail, label: "soulgenzai@gmail.com", href: "mailto:soulgenzai@gmail.com" },
+                { icon: Send, label: "t.me/iorpx", href: "https://t.me/iorpx" },
+                { icon: Youtube, label: "youtube.com/@stakepredictorai", href: "https://youtube.com/@stakepredictorai" },
+                { icon: MapPin, label: "California", href: null },
+              ].map((c) => {
+                const Wrapper = c.href ? "a" : "div";
+                return (
+                  <Wrapper 
+                    key={c.label} 
+                    href={c.href || undefined} 
+                    target={c.href ? "_blank" : undefined} 
+                    rel={c.href ? "noopener noreferrer" : undefined}
+                    className={`flex items-center gap-3 ${c.href ? "hover:opacity-80 transition-opacity cursor-pointer" : ""}`}
+                  >
+                    <div className="grid size-10 place-items-center rounded-xl border border-border bg-surface/60 text-accent">
+                      <c.icon className="size-4" />
+                    </div>
+                    <span className="text-sm text-foreground">{c.label}</span>
+                  </Wrapper>
+                );
+              })}
             </div>
           </div>
 
