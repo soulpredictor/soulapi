@@ -1149,9 +1149,7 @@ export default function SoulAILanding() {
       <WhySoulAI />
       <Projects />
       <Process />
-      <TechStack />
       <Stats />
-      <Testimonials />
       <Contact />
       <SoulAIFooter />
       <FloatingCTA />

@@ -120,7 +120,7 @@ function BillingToggle({
             layoutId="billing-pill"
             className="absolute inset-y-1 rounded-xl bg-accent"
             style={{ width: "calc(50% - 4px)", left: value === "weekly" ? 4 : "calc(50% + 0px)" }}
-            transition={{ type: "spring", stiffness: 420, damping: 36 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
           />
         </AnimatePresence>
         <button
@@ -172,7 +172,7 @@ function PlanGroupToggle({
               layoutId="group-pill"
               className="absolute inset-y-1 rounded-xl bg-accent"
               style={{ width, left }}
-              transition={{ type: "spring", stiffness: 420, damping: 36 }}
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
             />
           </AnimatePresence>
           {options.map((o) => (
@@ -413,7 +413,7 @@ function PlansSection({
                           layoutId={`curr-pill-${p.uiKey}`}
                           className="absolute inset-y-0.5 rounded-lg bg-accent"
                           style={{ width: "calc(50% - 3px)", left: currency === "global" ? 2 : "calc(50% + 1px)" }}
-                          transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
                         />
                       </AnimatePresence>
                       <button
