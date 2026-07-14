@@ -1,11 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Mail, ShieldCheck } from "lucide-react";
+import { ArrowRight, Mail, ShieldCheck, Lock } from "lucide-react";
 import { SoulAIFooter, SoulAINavbar } from "@/components/soulai/SoulAIChrome";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
-import { getStoredSession, requestAuthCode, setStoredSession, verifyAuthCode } from "@/lib/soulpredictor";
+import { getStoredSession, setStoredSession, loginWithPassword, registerWithPassword, requestPasswordReset, resetPassword } from "@/lib/soulpredictor";
 
 function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`mx-auto w-full max-w-7xl px-6 lg:px-10 ${className}`}>{children}</div>;
@@ -19,10 +19,14 @@ export const Route = createFileRoute("/login")({
   }),
 });
 
+type Step = "login" | "register" | "forgot" | "reset";
+
 function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [step, setStep] = useState<"email" | "code">("email");
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [step, setStep] = useState<Step>("login");
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ kind: "error" | "success"; text: string } | null>(null);
@@ -34,7 +38,75 @@ function LoginPage() {
     }
   }, [navigate]);
 
-  const canSend = email.trim().length >= 3 && email.includes("@");
+  const canSubmitLogin = email.trim().length >= 3 && email.includes("@") && password.length >= 6;
+  const canSubmitRegister = canSubmitLogin;
+  const canSubmitForgot = email.trim().length >= 3 && email.includes("@");
+  const canSubmitReset = code.length >= 4 && newPassword.length >= 6;
+
+  const handleLogin = async () => {
+    setBusy(true);
+    setMessage(null);
+    try {
+      const res = await loginWithPassword(email.trim(), password);
+      if (res.status !== "success" || !res.user) throw new Error(res.message ?? "Login failed");
+      const token = typeof res.user.user_token === "string" ? res.user.user_token : null;
+      setStoredSession({ email: email.trim(), userToken: token ?? undefined });
+      navigate({ to: "/panel" });
+    } catch (e) {
+      setMessage({ kind: "error", text: e instanceof Error ? e.message : "Login failed" });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleRegister = async () => {
+    setBusy(true);
+    setMessage(null);
+    try {
+      const res = await registerWithPassword(email.trim(), password);
+      if (res.status !== "success") throw new Error(res.message ?? "Registration failed");
+      setMessage({ kind: "success", text: "Account created! You can now log in." });
+      setStep("login");
+      setPassword("");
+    } catch (e) {
+      setMessage({ kind: "error", text: e instanceof Error ? e.message : "Registration failed" });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleForgot = async () => {
+    setBusy(true);
+    setMessage(null);
+    try {
+      const res = await requestPasswordReset(email.trim());
+      if (res.status !== "success") throw new Error(res.message ?? "Failed to send reset code");
+      setStep("reset");
+      setMessage({ kind: "success", text: "Reset code sent to your email." });
+    } catch (e) {
+      setMessage({ kind: "error", text: e instanceof Error ? e.message : "Failed to send reset code" });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleReset = async () => {
+    setBusy(true);
+    setMessage(null);
+    try {
+      const res = await resetPassword(email.trim(), code.trim(), newPassword);
+      if (res.status !== "success") throw new Error(res.message ?? "Failed to reset password");
+      setMessage({ kind: "success", text: "Password reset successful! Please log in." });
+      setStep("login");
+      setPassword("");
+      setNewPassword("");
+      setCode("");
+    } catch (e) {
+      setMessage({ kind: "error", text: e instanceof Error ? e.message : "Failed to reset password" });
+    } finally {
+      setBusy(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -63,7 +135,7 @@ function LoginPage() {
               transition={{ duration: 0.7, delay: 0.05 }}
               className="mt-6 text-4xl md:text-5xl font-semibold leading-tight tracking-tight"
             >
-              Login with email code
+              {step === "login" ? "Welcome back" : step === "register" ? "Create an account" : "Reset password"}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 18 }}
@@ -71,32 +143,88 @@ function LoginPage() {
               transition={{ duration: 0.7, delay: 0.12 }}
               className="mt-4 text-sm md:text-base text-muted-foreground leading-relaxed"
             >
-              Enter your email to receive a login code. If you’re new, this also registers your account automatically.
+              {step === "login" 
+                ? "Enter your email and password to access your dashboard." 
+                : step === "register" 
+                ? "Enter your details to create a new account." 
+                : "We will send a verification code to your email to reset your password."}
             </motion.p>
 
             <div className="mt-10 rounded-2xl border border-border bg-surface/40 backdrop-blur-xl p-6 sm:p-8 shadow-elegant">
+              
+              {(step === "login" || step === "register") && (
+                <div className="mb-6 flex p-1 bg-background/50 rounded-lg">
+                  <button 
+                    onClick={() => { setStep("login"); setMessage(null); }}
+                    className={cn(
+                      "flex-1 py-2 text-sm font-semibold rounded-md transition-all",
+                      step === "login" ? "bg-accent text-accent-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    Login
+                  </button>
+                  <button 
+                    onClick={() => { setStep("register"); setMessage(null); }}
+                    className={cn(
+                      "flex-1 py-2 text-sm font-semibold rounded-md transition-all",
+                      step === "register" ? "bg-accent text-accent-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    Register
+                  </button>
+                </div>
+              )}
+
               <AnimatePresence mode="wait">
-                {step === "email" ? (
+                {(step === "login" || step === "register" || step === "forgot") ? (
                   <motion.div
-                    key="email"
+                    key="form"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.25 }}
                     className="space-y-4"
                   >
-                    <div className="flex items-center gap-2 text-sm font-semibold">
-                      <Mail className="size-4 text-accent" />
-                      Email
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-sm font-semibold">
+                        <Mail className="size-4 text-accent" />
+                        Email
+                      </div>
+                      <input
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="email"
+                        autoComplete="email"
+                        placeholder="you@email.com"
+                        className="w-full rounded-xl border border-border bg-background/40 px-4 py-3 text-base outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
+                      />
                     </div>
-                    <input
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      type="email"
-                      autoComplete="email"
-                      placeholder="you@email.com"
-                      className="w-full rounded-xl border border-border bg-background/40 px-4 py-3 text-base outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
-                    />
+
+                    {(step === "login" || step === "register") && (
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-sm font-semibold">
+                            <Lock className="size-4 text-accent" />
+                            Password
+                          </div>
+                          {step === "login" && (
+                            <button 
+                              onClick={() => { setStep("forgot"); setMessage(null); }} 
+                              className="text-xs text-accent hover:underline"
+                            >
+                              Forgot password?
+                            </button>
+                          )}
+                        </div>
+                        <input
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          type="password"
+                          placeholder="••••••••"
+                          className="w-full rounded-xl border border-border bg-background/40 px-4 py-3 text-base outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
+                        />
+                      </div>
+                    )}
 
                     {message && (
                       <div
@@ -112,30 +240,27 @@ function LoginPage() {
                     )}
 
                     <button
-                      disabled={!canSend || busy}
-                      onClick={async () => {
-                        setBusy(true);
-                        setMessage(null);
-                        try {
-                          const res = await requestAuthCode(email.trim());
-                          if (res.status !== "success") throw new Error(res.message ?? "Failed to send code");
-                          setStoredSession({ email: email.trim() });
-                          setStep("code");
-                          setMessage({ kind: "success", text: "Code sent. Check your inbox." });
-                        } catch (e) {
-                          setMessage({ kind: "error", text: e instanceof Error ? e.message : "Failed to send code" });
-                        } finally {
-                          setBusy(false);
-                        }
-                      }}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground transition-all hover:shadow-[0_0_30px_var(--glow)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={busy || (step === "login" ? !canSubmitLogin : step === "register" ? !canSubmitRegister : !canSubmitForgot)}
+                      onClick={step === "login" ? handleLogin : step === "register" ? handleRegister : handleForgot}
+                      className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground transition-all hover:shadow-[0_0_30px_var(--glow)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Send Code <ArrowRight className="size-4" />
+                      {step === "login" ? "Login to Dashboard" : step === "register" ? "Create Account" : "Send Reset Code"} <ArrowRight className="size-4" />
                     </button>
+
+                    {step === "forgot" && (
+                      <div className="mt-4 text-center">
+                        <button 
+                          onClick={() => { setStep("login"); setMessage(null); }}
+                          className="text-sm text-muted-foreground hover:text-foreground"
+                        >
+                          Back to Login
+                        </button>
+                      </div>
+                    )}
                   </motion.div>
-                ) : (
+                ) : step === "reset" ? (
                   <motion.div
-                    key="code"
+                    key="reset"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
@@ -145,11 +270,11 @@ function LoginPage() {
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2 text-sm font-semibold">
                         <ShieldCheck className="size-4 text-accent" />
-                        Enter code
+                        Enter reset code
                       </div>
                       <button
                         onClick={() => {
-                          setStep("email");
+                          setStep("forgot");
                           setCode("");
                           setMessage(null);
                         }}
@@ -183,6 +308,20 @@ function LoginPage() {
                       </div>
                     </div>
 
+                    <div className="space-y-2 mt-4">
+                      <div className="flex items-center gap-2 text-sm font-semibold">
+                        <Lock className="size-4 text-accent" />
+                        New Password
+                      </div>
+                      <input
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        type="password"
+                        placeholder="••••••••"
+                        className="w-full rounded-xl border border-border bg-background/40 px-4 py-3 text-base outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
+                      />
+                    </div>
+
                     {message && (
                       <div
                         className={cn(
@@ -197,53 +336,14 @@ function LoginPage() {
                     )}
 
                     <button
-                      disabled={code.trim().length < 4 || busy}
-                      onClick={async () => {
-                        setBusy(true);
-                        setMessage(null);
-                        try {
-                          const res = await verifyAuthCode(email.trim(), code.trim());
-                          if (res.status !== "success" || !res.user) throw new Error(res.message ?? "Invalid code");
-                          const token = typeof res.user.user_token === "string" ? res.user.user_token : null;
-                          setStoredSession({ email: email.trim(), userToken: token ?? undefined });
-                          navigate({ to: "/panel" });
-                        } catch (e) {
-                          setMessage({ kind: "error", text: e instanceof Error ? e.message : "Invalid code" });
-                        } finally {
-                          setBusy(false);
-                        }
-                      }}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground transition-all hover:shadow-[0_0_30px_var(--glow)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={!canSubmitReset || busy}
+                      onClick={handleReset}
+                      className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground transition-all hover:shadow-[0_0_30px_var(--glow)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Verify & Continue <ArrowRight className="size-4" />
+                      Set New Password <ArrowRight className="size-4" />
                     </button>
-
-                    <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
-                      <button
-                        disabled={busy}
-                        onClick={async () => {
-                          setBusy(true);
-                          setMessage(null);
-                          try {
-                            const res = await requestAuthCode(email.trim());
-                            if (res.status !== "success") throw new Error(res.message ?? "Failed to resend");
-                            setMessage({ kind: "success", text: "Code resent." });
-                          } catch (e) {
-                            setMessage({ kind: "error", text: e instanceof Error ? e.message : "Failed to resend" });
-                          } finally {
-                            setBusy(false);
-                          }
-                        }}
-                        className="hover:text-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Resend code
-                      </button>
-                      <a href="/stake-tools" className="hover:text-foreground transition-colors">
-                        View plans
-                      </a>
-                    </div>
                   </motion.div>
-                )}
+                ) : null}
               </AnimatePresence>
             </div>
           </div>
@@ -253,4 +353,3 @@ function LoginPage() {
     </div>
   );
 }
-

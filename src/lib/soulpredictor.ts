@@ -126,12 +126,20 @@ async function getJson<T>(url: string, init?: RequestInit): Promise<T> {
   return data;
 }
 
-export function requestAuthCode(email: string) {
-  return postJson<SoulApiResult<{}>>(`${SOULPREDICTOR_API_BASE_URL}/auth/request-code`, { email });
+export function registerWithPassword(email: string, password?: string) {
+  return postJson<SoulApiResult<{}>>(`${SOULPREDICTOR_API_BASE_URL}/register`, { email, password });
 }
 
-export function verifyAuthCode(email: string, code: string) {
-  return postJson<SoulApiResult<{ user?: SoulUser }>>(`${SOULPREDICTOR_API_BASE_URL}/auth/verify-code`, { email, code });
+export function loginWithPassword(email: string, password?: string) {
+  return postJson<SoulApiResult<{ user?: SoulUser }>>(`${SOULPREDICTOR_API_BASE_URL}/auth/login`, { email, password });
+}
+
+export function requestPasswordReset(email: string) {
+  return postJson<SoulApiResult<{}>>(`${SOULPREDICTOR_API_BASE_URL}/auth/forgot-password`, { email });
+}
+
+export function resetPassword(email: string, code: string, new_password?: string) {
+  return postJson<SoulApiResult<{}>>(`${SOULPREDICTOR_API_BASE_URL}/auth/reset-password`, { email, code, new_password });
 }
 
 export function authProfile(session: SoulSession) {

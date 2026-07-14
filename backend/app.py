@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 import random
 import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 import random
@@ -2103,11 +2104,21 @@ def user_login():
     try:
         data = request.get_json() or {}
         email = (data.get('email') or data.get('username') or '').strip().lower()
+        password = data.get('password')
+        user_token = data.get('user_token')
+        
         if not email:
             return jsonify({
                 "status": "error",
                 "message": "Email required"
             }), 400
+            
+        if not password and not user_token:
+            return jsonify({
+                "status": "error",
+                "message": "Password or user token required"
+            }), 400
+            
         # Require user to be registered - no login for unregistered users
         ensure_json_file_exists(USERS_JSON_FILE)
         users_data = read_json_file(USERS_JSON_FILE)
@@ -2119,11 +2130,26 @@ def user_login():
                 "status": "error",
                 "message": "User not registered. Please register first."
             }), 403
-        if not user_row.get('verified'):
-            return jsonify({
-                "status": "error",
-                "message": "Email not verified. Please verify with code first."
-            }), 403
+            
+        # Authenticate via user_token if password not provided
+        if not password and user_token:
+            if user_row.get('user_token') != user_token:
+                return jsonify({
+                    "status": "error",
+                    "message": "Invalid session token."
+                }), 403
+        else:
+            if not user_row.get('password'):
+                return jsonify({
+                    "status": "error",
+                    "message": "Account created via OTP. Please use Forgot Password to set a password."
+                }), 403
+                
+            if not check_password_hash(user_row.get('password'), password):
+                return jsonify({
+                    "status": "error",
+                    "message": "Invalid password."
+                }), 403
         record, index, requests_data = get_latest_request_by_username(email)
         if not record:
             try:
@@ -2306,12 +2332,19 @@ def user_login():
 def register_user():
     try:
         data = request.get_json() or {}
-        email = data.get('email')
+        email = (data.get('email') or '').strip().lower()
+        password = data.get('password')
         
         if not email or '@' not in str(email):
             return jsonify({
                 "status": "error",
                 "message": "Valid email required"
+            }), 400
+            
+        if not password or len(password) < 6:
+            return jsonify({
+                "status": "error",
+                "message": "Password must be at least 6 characters"
             }), 400
         
         ensure_json_file_exists(USERS_JSON_FILE)
@@ -2320,12 +2353,23 @@ def register_user():
             users_data = []
         
         # Check if user already exists
-        user, _, _ = get_user_by_email(email, users_data)
+        user, index, _ = get_user_by_email(email, users_data)
         if user:
-            return jsonify({
-                "status": "error",
-                "message": "User with this email already exists"
-            }), 400
+            # If they don't have a password yet (legacy OTP account), allow them to set it here
+            if not user.get('password'):
+                user['password'] = generate_password_hash(password)
+                user['updated_at'] = datetime.now(timezone.utc).isoformat()
+                users_data[index] = user
+                write_json_file(USERS_JSON_FILE, users_data)
+                return jsonify({
+                    "status": "success",
+                    "message": "Password set successfully for legacy account."
+                })
+            else:
+                return jsonify({
+                    "status": "error",
+                    "message": "User with this email already exists"
+                }), 400
         
         # Create new user
         user_id = generate_session_id()
@@ -2338,7 +2382,7 @@ def register_user():
         new_user = {
             "id": user_id,
             "email": email,
-            "password": None,
+            "password": generate_password_hash(password),
             "verified": True,
             "user_token": generate_session_id(),
             "created_at": now.isoformat(),
@@ -2387,8 +2431,8 @@ def register_user():
         }), 500
 
 
-@app.route('/auth/request-code', methods=['POST'])
-def auth_request_code():
+@app.route('/auth/forgot-password', methods=['POST'])
+def auth_forgot_password():
     try:
         data = request.get_json() or {}
         email = (data.get('email') or '').strip().lower()
@@ -3037,17 +3081,18 @@ def bot_limit_reset_status():
         }), 500
 
 
-@app.route('/auth/verify-code', methods=['POST'])
-def auth_verify_code():
+@app.route('/auth/login', methods=['POST'])
+def auth_login():
     try:
         data = request.get_json() or {}
         email = (data.get('email') or '').strip().lower()
-        code = data.get('code')
-        if not email or not code:
+        password = data.get('password')
+        if not email or not password:
             return jsonify({
                 "status": "error",
-                "message": "Email and code required"
+                "message": "Email and password required"
             }), 400
+            
         ensure_json_file_exists(USERS_JSON_FILE)
         users_data = read_json_file(USERS_JSON_FILE)
         if not isinstance(users_data, list):
@@ -3056,67 +3101,27 @@ def auth_verify_code():
         if not user:
             return jsonify({
                 "status": "error",
-                "message": "No active verification code. Request a code first."
+                "message": "Invalid email or password."
             }), 400
-        
-        if user.get('verified'):
-            if not user.get('user_token'):
-                user['user_token'] = generate_session_id()
-                user['updated_at'] = datetime.now(timezone.utc).isoformat()
-                users_data[index] = user
-                write_json_file(USERS_JSON_FILE, users_data)
-            payload = {
-                "email": user.get('email'),
-                "verified": user.get('verified'),
-                "user_token": user.get('user_token'),
-                "subscription_plan": user.get('subscription_plan'),
-                "subscription_plan_name": get_plan_display_name(user.get('subscription_plan') or "free"),
-                "plan_expires_at": user.get('plan_expires_at'),
-                "total_paid_usd": user.get('total_paid_usd') or 0,
-                "assets": user.get('assets') or []
-            }
-            return jsonify({
-                "status": "success",
-                "user": payload
-            })
-
-        stored_hash = user.get('verification_code_hash')
-        expires_at = user.get('verification_expires_at')
-        if not stored_hash or not expires_at:
+            
+        if not user.get('password'):
             return jsonify({
                 "status": "error",
-                "message": "No active verification code"
+                "message": "Account created via OTP. Please use Forgot Password to set a password."
             }), 400
-        try:
-            expires_dt = convert_to_utc(expires_at)
-        except Exception:
-            expires_dt = None
-        now = datetime.now(timezone.utc)
-        if not expires_dt or expires_dt < now:
+            
+        if not check_password_hash(user.get('password'), password):
             return jsonify({
                 "status": "error",
-                "message": "Verification code expired"
+                "message": "Invalid email or password."
             }), 400
-        code_hash = hashlib.sha256((email + str(code)).encode('utf-8')).hexdigest()
-        if code_hash != stored_hash:
-            return jsonify({
-                "status": "error",
-                "message": "Invalid verification code"
-            }), 400
-        user['verified'] = True
-        user['verification_code_hash'] = None
-        user['verification_expires_at'] = None
-        user['status'] = "verified"  # Update status
-        user['verified_at'] = now.isoformat()  # Track verification time
+            
         if not user.get('user_token'):
             user['user_token'] = generate_session_id()
-        user['updated_at'] = now.isoformat()
-        users_data[index] = user
-        if not write_json_file(USERS_JSON_FILE, users_data):
-            return jsonify({
-                "status": "error",
-                "message": "Unable to persist user data"
-            }), 500
+            user['updated_at'] = datetime.now(timezone.utc).isoformat()
+            users_data[index] = user
+            write_json_file(USERS_JSON_FILE, users_data)
+            
         payload = {
             "email": user.get('email'),
             "verified": user.get('verified'),
@@ -3138,6 +3143,88 @@ def auth_verify_code():
             "message": str(e)
         }), 500
 
+
+@app.route('/auth/reset-password', methods=['POST'])
+def auth_reset_password():
+    try:
+        data = request.get_json() or {}
+        email = (data.get('email') or '').strip().lower()
+        code = data.get('code')
+        new_password = data.get('new_password')
+        
+        if not email or not code or not new_password:
+            return jsonify({
+                "status": "error",
+                "message": "Email, code, and new password required"
+            }), 400
+            
+        if len(new_password) < 6:
+            return jsonify({
+                "status": "error",
+                "message": "Password must be at least 6 characters"
+            }), 400
+            
+        ensure_json_file_exists(USERS_JSON_FILE)
+        users_data = read_json_file(USERS_JSON_FILE)
+        if not isinstance(users_data, list):
+            users_data = []
+        user, index, _ = get_user_by_email(email, users_data)
+        if not user:
+            return jsonify({
+                "status": "error",
+                "message": "Invalid request"
+            }), 400
+            
+        stored_hash = user.get('verification_code_hash')
+        expires_at = user.get('verification_expires_at')
+        if not stored_hash or not expires_at:
+            return jsonify({
+                "status": "error",
+                "message": "No active password reset request"
+            }), 400
+            
+        try:
+            expiry_dt = convert_to_utc(expires_at)
+            if expiry_dt < datetime.now(timezone.utc):
+                return jsonify({
+                    "status": "error",
+                    "message": "Verification code expired"
+                }), 400
+        except Exception:
+            return jsonify({
+                "status": "error",
+                "message": "Invalid expiry date"
+            }), 400
+            
+        code_hash = hashlib.sha256((email + code).encode('utf-8')).hexdigest()
+        if code_hash != stored_hash:
+            return jsonify({
+                "status": "error",
+                "message": "Invalid code"
+            }), 400
+            
+        user['password'] = generate_password_hash(new_password)
+        user['verification_code_hash'] = None
+        user['verification_expires_at'] = None
+        user['verified'] = True
+        user['updated_at'] = datetime.now(timezone.utc).isoformat()
+        
+        if not user.get('user_token'):
+            user['user_token'] = generate_session_id()
+            
+        users_data[index] = user
+        write_json_file(USERS_JSON_FILE, users_data)
+        
+        return jsonify({
+            "status": "success",
+            "message": "Password reset successfully"
+        })
+    except Exception as e:
+        logger.error(f"Error resetting password: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
 
 @app.route('/auth/profile', methods=['POST'])
 def auth_profile():
