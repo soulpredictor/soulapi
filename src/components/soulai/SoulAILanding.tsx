@@ -300,7 +300,7 @@ function Hero() {
               {[
                 { k: "500+", v: "Clients" },
                 { k: "9.8/10", v: "Trust Score" },
-                { k: "48h", v: "Delivery Time" },
+                { k: "Earliest", v: "Delivery Time" },
               ].map((s) => (
                 <div key={s.v}>
                   <div className="text-2xl font-semibold text-foreground">{s.k}</div>
@@ -1006,40 +1006,21 @@ const FAQ = [
   { q: "Can I hire you monthly?", a: "We offer flexible monthly retainers for teams that need continuous design, engineering, or AI work." },
 ];
 
-function FAQSection() {
-  return (
-    <section className="relative py-24 md:py-32">
-      <Container className="max-w-3xl">
-        <SectionHeading eyebrow="FAQ" title={<>Questions, answered.</>} description="Everything you need to know before we start working together." />
-        <div className="mt-14">
-          <Accordion type="single" collapsible className="space-y-3">
-            {FAQ.map((f, i) => (
-              <AccordionItem
-                key={i}
-                value={`item-${i}`}
-                className="rounded-xl border border-border bg-surface/50 backdrop-blur px-6 data-[state=open]:border-accent/40 transition-colors"
-              >
-                <AccordionTrigger className="text-left text-base font-medium hover:no-underline">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </Container>
-    </section>
-  );
-}
+const STAKE_FAQ = [
+  { q: "What are the prices?", a: "Check out our Stake tools section for detailed pricing on all plans." },
+  { q: "How much accuracy?", a: "Our AI predictor achieves up to 98.7% accuracy on tested game modes." },
+  { q: "Where to do payment?", a: "Payments are processed securely via Crypto and other supported methods through our automated bot." },
+  { q: "Is it legit / safe?", a: "Yes, our systems are built with security first. We have over 500+ satisfied clients and a 9.8/10 Trust Score." },
+  { q: "How do I contact admin?", a: "You can reach out to our admin directly on Telegram via @iorpx." },
+  { q: "Free trials?", a: "Yes! Get your free trial by messaging our bot on Telegram at @soulpredictor_bot." },
+];
 
 /* ------------------------------------------------------------------ */
 /*  Contact                                                            */
 /* ------------------------------------------------------------------ */
 
 function Contact() {
-  const [sent, setSent] = useState(false);
+  const [faqTab, setFaqTab] = useState<"services" | "stake">("services");
   return (
     <section id="contact" className="relative py-24 md:py-32">
       <Container>
@@ -1059,10 +1040,10 @@ function Contact() {
             </p>
             <div className="mt-10 space-y-4">
               {[
-                { icon: Mail, label: "hello@soulai.dev" },
-                { icon: Phone, label: "+1 (415) 555 0123" },
-                { icon: MessageCircle, label: "discord.gg/soulai" },
-                { icon: MapPin, label: "Remote · Global" },
+                { icon: Mail, label: "soulgenzai@gmail.com" },
+                { icon: Send, label: "t.me/iorpx" },
+                { icon: Youtube, label: "youtube.com/@stakepredictorai" },
+                { icon: MapPin, label: "California" },
               ].map((c) => (
                 <div key={c.label} className="flex items-center gap-3">
                   <div className="grid size-10 place-items-center rounded-xl border border-border bg-surface/60 text-accent">
@@ -1074,72 +1055,39 @@ function Contact() {
             </div>
           </div>
 
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSent(true);
-            }}
-            className="rounded-2xl border border-border bg-surface/50 backdrop-blur-xl p-8"
-          >
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                { name: "name", label: "Name", type: "text" },
-                { name: "email", label: "Email", type: "email" },
-                { name: "phone", label: "Phone", type: "tel" },
-                { name: "company", label: "Company", type: "text" },
-              ].map((f) => (
-                <label key={f.name} className="flex flex-col gap-1.5">
-                  <span className="text-xs text-muted-foreground">{f.label}</span>
-                  <input
-                    type={f.type}
-                    name={f.name}
-                    required
-                    className="rounded-xl border border-border bg-background/50 px-4 py-3 text-sm outline-none transition-all focus:border-accent/60 focus:shadow-[0_0_20px_var(--glow)]"
-                  />
-                </label>
+          <div className="rounded-2xl border border-border bg-surface/50 backdrop-blur-xl p-8 flex flex-col gap-6">
+            <div className="flex gap-2 p-1.5 bg-background/50 rounded-xl w-fit border border-border">
+              <button 
+                onClick={() => setFaqTab("services")}
+                className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${faqTab === "services" ? "bg-accent text-accent-foreground shadow-md" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                Services
+              </button>
+              <button 
+                onClick={() => setFaqTab("stake")}
+                className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${faqTab === "stake" ? "bg-accent text-accent-foreground shadow-md" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                Stake Query
+              </button>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-3">
+              {(faqTab === "services" ? FAQ : STAKE_FAQ).map((f, i) => (
+                <AccordionItem
+                  key={i}
+                  value={`item-${i}`}
+                  className="rounded-xl border border-border bg-surface/50 backdrop-blur px-6 data-[state=open]:border-accent/40 transition-colors"
+                >
+                  <AccordionTrigger className="text-left text-base font-medium hover:no-underline">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-              <label className="flex flex-col gap-1.5">
-                <span className="text-xs text-muted-foreground">Budget</span>
-                <select
-                  name="budget"
-                  className="rounded-xl border border-border bg-background/50 px-4 py-3 text-sm outline-none focus:border-accent/60"
-                  defaultValue=""
-                >
-                  <option value="" disabled>Select…</option>
-                  <option>Under $2k</option>
-                  <option>$2k – $5k</option>
-                  <option>$5k – $15k</option>
-                  <option>$15k+</option>
-                </select>
-              </label>
-              <label className="flex flex-col gap-1.5">
-                <span className="text-xs text-muted-foreground">Service</span>
-                <select
-                  name="service"
-                  className="rounded-xl border border-border bg-background/50 px-4 py-3 text-sm outline-none focus:border-accent/60"
-                  defaultValue=""
-                >
-                  <option value="" disabled>Select…</option>
-                  {SERVICES.map((s) => <option key={s.title}>{s.title}</option>)}
-                </select>
-              </label>
-            </div>
-            <label className="mt-4 flex flex-col gap-1.5">
-              <span className="text-xs text-muted-foreground">Message</span>
-              <textarea
-                name="message"
-                required
-                rows={5}
-                className="rounded-xl border border-border bg-background/50 px-4 py-3 text-sm outline-none focus:border-accent/60 resize-none"
-              />
-            </label>
-            <div className="mt-6 flex items-center justify-between gap-4">
-              <p className="text-[11px] text-muted-foreground">
-                By submitting, you agree to our privacy policy.
-              </p>
-              <GlowButton type="submit">{sent ? "Sent ✓" : "Send Message"}</GlowButton>
-            </div>
-          </form>
+            </Accordion>
+          </div>>
         </div>
       </Container>
     </section>
@@ -1195,7 +1143,6 @@ export default function SoulAILanding() {
       <TechStack />
       <Stats />
       <Testimonials />
-      <FAQSection />
       <Contact />
       <SoulAIFooter />
       <FloatingCTA />
