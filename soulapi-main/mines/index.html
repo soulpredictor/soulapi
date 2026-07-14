@@ -1,0 +1,2749 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/mines/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Soul Predictor</title>
+    <meta property="og:title" content="Soul Predictor">
+    <meta property="og:url" content="https://soulpredictor.xyz">
+    <meta property="og:type" content="website">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/mines/styles.css">
+    <style>
+      /* ========================================
+         GLOBAL DARK THEME SETUP - PREMIUM STYLE
+         ======================================== */
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #030303;
+        color: #ffffff;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+      }
+
+      /* Premium Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #030303;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #222;
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #333;
+      }
+
+      /* ========================================
+         ADVANCED SELECTION INTERFACE - DARK THEME
+         ======================================== */
+      
+      .selection-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        background-color: #030303;
+      }
+
+      /* Subtle Grid Background */
+      .selection-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+        opacity: 1;
+        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+      }
+
+      /* Ambient Background Gradients */
+      .selection-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+          radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+
+      .selection-title {
+        margin-bottom: 4rem;
+        position: relative;
+        z-index: 2;
+        animation: fadeInDown 0.8s ease-out;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .selection-title h1 {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        position: relative;
+        display: inline-block;
+      }
+
+
+      .selection-title p {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-top: 1rem;
+      }
+
+      .selection-cards {
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        animation: fadeInUp 1s ease-out 0.2s both;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .selection-card {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 3.5rem 2.5rem;
+        width: 100%;
+        max-width: 380px;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+          0 4px 24px -1px rgba(0, 0, 0, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      }
+
+      /* Card Gradient Overlay */
+      .selection-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(155, 244, 54, 0.05) 0%,
+          rgba(107, 33, 168, 0.05) 50%,
+          rgba(55, 48, 163, 0.05) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      /* Shimmer Effect */
+      .selection-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 70%
+        );
+        transform: rotate(45deg);
+        transition: all 0.6s;
+        opacity: 0;
+      }
+
+      .selection-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: rgba(255, 255, 255, 0.2);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+        box-shadow: 
+          0 20px 40px -5px rgba(0, 0, 0, 0.4),
+          0 0 20px -5px rgba(124, 58, 237, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      .selection-card:hover::before {
+        opacity: 1;
+      }
+
+      .selection-card:hover::after {
+        left: 100%;
+        opacity: 1;
+        transition: left 0.6s;
+      }
+
+      /* Mines Card Special Styling */
+      .selection-card:nth-child(1):hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 
+          0 20px 40px -5px rgba(0, 0, 0, 0.4),
+          0 0 20px -5px rgba(124, 58, 237, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      /* Crash Card Special Styling */
+      .selection-card:nth-child(2):hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 
+          0 20px 40px -5px rgba(0, 0, 0, 0.4),
+          0 0 20px -5px rgba(124, 58, 237, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      /* Icon Container with Glow */
+      .selection-card .icon-wrapper {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2rem;
+      }
+
+      .selection-card i {
+        font-size: 4.5rem;
+        color: #fff;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 1;
+        filter: drop-shadow(0 0 20px rgba(155, 244, 54, 0.4));
+      }
+
+      .selection-card:nth-child(1) i {
+        background: linear-gradient(135deg, #9bf436, #7dd87d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .selection-card:nth-child(2) i {
+        background: linear-gradient(135deg, #6b21a8, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .selection-card:nth-child(3) i {
+        background: linear-gradient(135deg, #059669, #fbbf24);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .selection-card:hover i {
+        transform: scale(1.15) rotate(5deg);
+        filter: drop-shadow(0 0 30px currentColor);
+      }
+
+      /* Pulsing Glow Effect */
+      .selection-card .icon-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 120%;
+        height: 120%;
+        border-radius: 50%;
+        background: radial-gradient(circle, currentColor 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: 0;
+      }
+
+      .selection-card:hover .icon-wrapper::before {
+        opacity: 0.3;
+        animation: pulseGlow 2s ease-in-out infinite;
+      }
+
+      @keyframes pulseGlow {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+      }
+
+      .selection-card h3 {
+        color: #fff;
+        margin-bottom: 1.2rem;
+        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        position: relative;
+        z-index: 1;
+      }
+
+      .selection-card p {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 2.5rem;
+        font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+        line-height: 1.7;
+        font-weight: 400;
+        position: relative;
+        z-index: 1;
+      }
+
+      .selection-btn {
+        background: #ffffff;
+        color: #000000;
+        border: none;
+        padding: 1.2rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.02em;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        z-index: 1;
+      }
+
+      .selection-btn:hover {
+        background: #f3f4f6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .selection-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .selection-cards {
+          gap: 2rem;
+        }
+        
+        .selection-card {
+          max-width: 100%;
+          padding: 2.5rem 2rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .selection-container {
+          padding: 2rem 1rem;
+        }
+        
+        .selection-title {
+          margin-bottom: 3rem;
+        }
+      }
+
+      /* Crash Predictor Graph Styles - Premium Enhanced */
+      .crash-graph-container {
+        width: 100%;
+        height: 400px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 24px;
+        margin: 20px 0;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+          0 4px 24px -1px rgba(0, 0, 0, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      }
+
+      .crash-graph {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: transparent;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      /* Three.js Canvas Background */
+      #crash-three-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .graph-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 0;
+        width: 4px;
+        background: linear-gradient(to top, #9bf436, #6b21a8);
+        border-radius: 2px;
+        transition: height 2s ease-in-out;
+        box-shadow: 0 0 20px rgba(155, 244, 54, 0.5);
+      }
+
+      .game-values-container {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-height: 70px;
+        overflow-y: auto;
+        z-index: 10;
+      }
+
+      .game-value-box {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        color: #fff;
+        font-weight: 600;
+        min-width: 40px;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .game-value-box:hover {
+        background: linear-gradient(145deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+        border-color: rgba(139, 92, 246, 0.4);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      }
+
+      .game-value-box.high {
+        background: linear-gradient(145deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.08) 100%);
+        border-color: rgba(34, 197, 94, 0.3);
+        color: #22c55e;
+        box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+      }
+
+      .game-value-box.medium {
+        background: linear-gradient(145deg, rgba(234, 179, 8, 0.15) 0%, rgba(234, 179, 8, 0.08) 100%);
+        border-color: rgba(234, 179, 8, 0.3);
+        color: #eab308;
+        box-shadow: 0 2px 8px rgba(234, 179, 8, 0.2);
+      }
+
+      .game-value-box.low {
+        background: linear-gradient(145deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.08) 100%);
+        border-color: rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+      }
+
+      .linear-chart {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        height: 200px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        padding: 10px 0;
+      }
+
+      .chart-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .chart-y-axis {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .y-labels {
+        position: absolute;
+        left: -40px;
+        top: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+      }
+
+      .y-label {
+        transform: translateY(-50%);
+      }
+
+      .prediction-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        transition: all 2s ease-in-out;
+        border-radius: 1px;
+      }
+
+      .safe-line {
+        background: linear-gradient(90deg, #9bf436, #6b21a8);
+        box-shadow: 0 0 10px rgba(155, 244, 54, 0.5);
+      }
+
+      .medium-line {
+        background: linear-gradient(90deg, #ffc107, #ff6b6b);
+        box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+      }
+
+      .prediction-value {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        color: #9bf436;
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 0 0 20px rgba(155, 244, 54, 0.8);
+      }
+
+      .centered-prediction {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+        flex-direction: column;
+      }
+
+      .prediction-display {
+        color: #ffffff;
+        font-size: 5rem;
+        font-weight: 700;
+        text-shadow: 
+          0 0 20px rgba(139, 92, 246, 0.6),
+          0 0 40px rgba(139, 92, 246, 0.4),
+          0 0 60px rgba(139, 92, 246, 0.2);
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+      }
+
+      .prediction-display::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(20px);
+        animation: pulseGlow 3s ease-in-out infinite;
+      }
+
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+        50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+      }
+
+      .prediction-tiers {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 24px;
+        gap: 16px;
+      }
+
+      .prediction-tier {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+        flex: 1;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 
+          0 4px 24px -1px rgba(0, 0, 0, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .prediction-tier::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .prediction-tier:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 
+          0 8px 32px -4px rgba(0, 0, 0, 0.3),
+          0 0 20px -5px rgba(139, 92, 246, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      .prediction-tier:hover::before {
+        opacity: 1;
+      }
+
+      .prediction-tier.safe {
+        border-color: rgba(34, 197, 94, 0.2);
+      }
+
+      .prediction-tier.safe:hover {
+        border-color: rgba(34, 197, 94, 0.4);
+        box-shadow: 
+          0 8px 32px -4px rgba(0, 0, 0, 0.3),
+          0 0 20px -5px rgba(34, 197, 94, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      .prediction-tier.medium {
+        border-color: rgba(234, 179, 8, 0.2);
+      }
+
+      .prediction-tier.medium:hover {
+        border-color: rgba(234, 179, 8, 0.4);
+        box-shadow: 
+          0 8px 32px -4px rgba(0, 0, 0, 0.3),
+          0 0 20px -5px rgba(234, 179, 8, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      .prediction-tier.high {
+        border-color: rgba(239, 68, 68, 0.2);
+      }
+
+      .prediction-tier.high:hover {
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 
+          0 8px 32px -4px rgba(0, 0, 0, 0.3),
+          0 0 20px -5px rgba(239, 68, 68, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      .tier-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.875rem;
+        margin-bottom: 12px;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+        position: relative;
+        z-index: 1;
+      }
+
+      .tier-value {
+        color: #fff;
+        font-size: 1.75rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+      }
+
+      .auto-fetch-controls {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .auto-btn {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 
+          0 4px 12px -2px rgba(0, 0, 0, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auto-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .auto-btn:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.2);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+        box-shadow: 
+          0 6px 20px -2px rgba(0, 0, 0, 0.3),
+          0 0 20px -5px rgba(139, 92, 246, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      }
+
+      .auto-btn:hover::before {
+        left: 100%;
+      }
+
+      .auto-btn.active {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(124, 58, 237, 0.2) 100%);
+        border-color: rgba(139, 92, 246, 0.4);
+        box-shadow: 
+          0 4px 16px -2px rgba(139, 92, 246, 0.4),
+          0 0 20px -5px rgba(139, 92, 246, 0.3),
+          0 0 0 1px rgba(139, 92, 246, 0.2) inset;
+      }
+
+      .auto-btn.active:hover {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.4) 0%, rgba(124, 58, 237, 0.3) 100%);
+        border-color: rgba(139, 92, 246, 0.5);
+      }
+
+      .auto-btn i {
+        font-size: 0.875rem;
+      }
+
+      /* App will be controlled by JavaScript */
+
+      /* Avoid desktop zoom hacks (breaks centering on some browsers) */
+      
+      /* Status indicator styles */
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        background: rgba(47, 51, 70, 0.5);
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+      
+      .status-light {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-left: 10px;
+      }
+      
+      .status-light.active {
+        background-color: #8b5cf6;
+        box-shadow: 0 0 8px #8b5cf6;
+      }
+      
+      .status-light.inactive {
+        background-color: #ff4444;
+        box-shadow: 0 0 8px #ff4444;
+      }
+      
+      .status-light.connecting {
+        background-color: #ffaa33;
+        box-shadow: 0 0 8px #ffaa33;
+        animation: pulse 1.5s infinite;
+      }
+      
+      button.svelte-h4ldgr.connecting .content.svelte-h4ldgr {
+        opacity: 0.9;
+      }
+      
+      button.svelte-h4ldgr.connecting .loader.svelte-h4ldgr {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 9999px;
+        border: 2px solid rgba(139, 92, 246, 0.9);
+        border-top-color: transparent;
+        margin-left: 6px;
+        animation: spin 0.8s linear infinite;
+      }
+      
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      
+      @keyframes pulse {
+        0% { opacity: 0.4; }
+        50% { opacity: 1; }
+        100% { opacity: 0.4; }
+      }
+      
+      /* Enhanced Loading Overlay styles */
+      .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .loading-overlay.active {
+        display: flex;
+      }
+
+      .loading-spinner {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        border: 3px solid;
+        border-color: #FFF #FFF transparent transparent;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      .loading-spinner::after,
+      .loading-spinner::before {
+        content: '';  
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        border: 3px solid;
+        border-color: transparent transparent #9bf436 #9bf436;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        animation: rotationBack 0.5s linear infinite;
+        transform-origin: center center;
+      }
+
+      .loading-spinner::before {
+        width: 32px;
+        height: 32px;
+        border-color: #FFF #FFF transparent transparent;
+        animation: rotation 1.5s linear infinite;
+      }
+
+      .loading-message {
+        color: #9bf436;
+        font-size: 18px;
+        font-weight: 500;
+        text-align: center;
+        text-shadow: 0 0 10px rgba(155, 244, 54, 0.5);
+        opacity: 0;
+        animation: fadeInOut 2s ease-in-out infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes rotationBack {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-360deg);
+        }
+      }
+
+      @keyframes fadeInOut {
+        0% { opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { opacity: 0.3; }
+      }
+
+      /* Dynamic text sizing for bet input */
+      #bet {
+        font-size: 14px; /* Default size */
+        transition: font-size 0.2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Responsive font size based on content length */
+      #bet.long-text {
+        font-size: 12px;
+      }
+      #bet.very-long-text {
+        font-size: 10px;
+      }
+      
+      /* Ensure disabled inputs have consistent color */
+      input:disabled {
+        color: rgba(255, 255, 255, 0.7) !important; /* Match disabled state color */
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important; /* For webkit browsers */
+      }
+
+      /* Hide mines section when crash predictor is active */
+      body.crash-predictor-active .mines.svelte-hghcrj {
+        display: none !important;
+      }
+
+      /* Hide Stake UserName field in crash predictor, show Premium Status */
+      body.crash-predictor-active .game-info.svelte-hghcrj .bet.svelte-hghcrj {
+        display: none !important;
+      }
+
+      body.crash-predictor-active #crash-premium-status {
+        display: block !important;
+      }
+
+      /* Premium Status already matches Game Status width (same structure and classes) */
+
+      /* Hide Premium Status in mines predictor */
+      #crash-premium-status {
+        display: none;
+      }
+
+      /* Gem indicator styles (from testmines.js) - same size as bomb, no glow */
+      .gem-indicator {
+        position: absolute;
+        width: 60%;
+        height: 60%;
+        pointer-events: none;
+        z-index: 9998;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        opacity: 0;
+        animation: gemFadeIn 0.5s ease forwards;
+      }
+
+      .gem-indicator svg {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+      }
+
+      @keyframes gemFadeIn {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.5);
+        }
+        to {
+          opacity: 0.35;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      /* Bomb indicator styles (from testmines.js) */
+      .bomb-indicator {
+        position: absolute;
+        width: 60%;
+        height: 60%;
+        pointer-events: none;
+        z-index: 9998;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        opacity: 0;
+        animation: bombFadeIn 0.5s ease forwards;
+      }
+
+      @keyframes bombFadeIn {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.5);
+        }
+        to {
+          opacity: 0.35;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      /* Override gem tile styles to use light green-yellow highlighting matching connect button */
+      .tile.gem .cover,
+      .tile.gem.svelte-ad2de7 .cover.svelte-ad2de7,
+      .wrap .tile.gem .cover,
+      .wrap.svelte-1fb1q7t .tile.gem .cover.svelte-ad2de7 {
+        background: #ccff00 !important;
+        box-shadow: 0 0.3em #99cc00 !important;
+      }
+      
+      /* Ensure bomb tiles also have normal background (bomb SVG is separate) */
+      .tile.bomb .cover {
+        background: #212431 !important;
+        box-shadow: 0 0.3em rgba(0, 0, 0, 0.2) !important;
+      }
+    </style>
+    <link href="/mines/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      (function securePredictor() {
+        function redirectToPanel() {
+          try {
+            window.location.href = '/';
+          } catch (e) {
+            window.location.href = '/user';
+          }
+        }
+
+        function getStoredSession() {
+          try {
+            return {
+              email: localStorage.getItem('soulai_email') || null,
+              token: localStorage.getItem('soulai_user_token') || null
+            };
+          } catch (e) {
+            return { email: null, token: null };
+          }
+        }
+
+        function isPlanActive(plan, expiresAt) {
+          if (!plan) return false;
+          if (!expiresAt) return true;
+          try {
+            var exp = new Date(expiresAt).getTime();
+            if (!exp) return false;
+            return exp > Date.now();
+          } catch (e) {
+            return false;
+          }
+        }
+
+        function normalizePlan(plan) {
+          if (!plan) return null;
+          return String(plan).toLowerCase();
+        }
+
+        function fetchProfile(session) {
+          return fetch('https://api.soulpredictor.xyz/auth/profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: session.email || null,
+              user_token: session.token || null
+            })
+          }).then(function(res) { return res.json(); });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          var session = getStoredSession();
+          if (!session.email && !session.token) {
+            redirectToPanel();
+            return;
+          }
+
+          fetchProfile(session).then(function(result) {
+            if (!result || result.status !== 'success' || !result.user) {
+              redirectToPanel();
+              return;
+            }
+            var u = result.user;
+            var plan = normalizePlan(u.subscription_plan);
+            var active = isPlanActive(plan, u.plan_expires_at);
+            if (!plan || plan === 'free' || !active) {
+              redirectToPanel();
+              return;
+            }
+            window.soulAuthProfile = {
+              email: u.email,
+              plan: plan,
+              plan_expires_at: u.plan_expires_at
+            };
+          }).catch(function() {
+            redirectToPanel();
+          });
+        });
+      })();
+    </script>
+    <script src="/mines/script.js" defer></script>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <!-- Selection Interface -->
+    <div id="selection-interface" class="selection-container">
+      <div class="selection-title">
+        <h1>Choose Your Predictor</h1>
+        <p>Select the type of prediction you want to use</p>
+      </div>
+      
+      <div class="selection-cards">
+        <div class="selection-card" onclick="selectPredictor('mines')">
+          <div class="icon-wrapper">
+          <i class="fas fa-gem"></i>
+          </div>
+          <h3>Mines Predictor</h3>
+          <p>Predict safe tiles in the mines game with advanced pattern recognition and ML-powered predictions</p>
+          <button class="selection-btn">Start Mines Prediction</button>
+        </div>
+
+        <div class="selection-card" onclick="selectPredictor('moles')">
+          <div class="icon-wrapper">
+          <i class="fas fa-circle-dot"></i>
+          </div>
+          <h3>Moles Predictor</h3>
+          <p>Predict the most probable mole hole using latest rounds, transition learning, and adaptive confidence scoring</p>
+          <button class="selection-btn">Start Moles Prediction</button>
+        </div>
+        
+        <div class="selection-card" onclick="selectPredictor('crash')">
+          <div class="icon-wrapper">
+          <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Crash Predictor</h3>
+          <p>Predict crash multipliers with sophisticated ML analysis and real-time data processing</p>
+          <button class="selection-btn">Start Crash Prediction</button>
+        </div>
+
+        <div class="selection-card" onclick="selectPredictor('blackjack')">
+          <div class="icon-wrapper">
+          <i class="fas fa-diamond"></i>
+          </div>
+          <h3>Blackjack Predictor</h3>
+          <p>Live basic-strategy coach: auto-reads your Stake hand and recommends hit, stand, double, or split</p>
+          <button class="selection-btn">Start Blackjack Prediction</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="app-root" style="display: none">
+      <div class="app svelte-h81geu">
+        <div class="container svelte-hghcrj">
+          <div class="content-wrapper svelte-hghcrj">
+            <div class="game-frame svelte-hghcrj">
+              <div class="sidebar svelte-hghcrj">
+                <div class="soul-ai-banner" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(204, 255, 0, 0.15) 0%, rgba(21, 23, 34, 0.8) 100%); border: 1px solid rgba(204, 255, 0, 0.2); border-radius: 8px; margin-bottom: 15px; padding: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                  <span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; margin-right: 10px; border-radius: 8px; background: linear-gradient(135deg, rgba(204, 255, 0, 0.22) 0%, rgba(139, 92, 246, 0.18) 100%); border: 1px solid rgba(204, 255, 0, 0.25); box-shadow: 0 0 18px rgba(204, 255, 0, 0.18), 0 0 26px rgba(139, 92, 246, 0.12);">
+                    <span style="font-weight: 900; font-size: 1.05rem; line-height: 1; letter-spacing: -0.02em; background: linear-gradient(135deg, #ccff00 0%, #ffffff 45%, #a78bfa 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 6px rgba(204, 255, 0, 0.35));">S</span>
+                  </span>
+                  <span style="color: #ffffff; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.5px;">SoulAI <span style="color: #4a506b; margin: 0 5px;">|</span> <span style="color: #ccff00;">Automated Prediction</span></span>
+                </div>
+                <div class="stats svelte-hghcrj">
+                  <div class="pill-wrapper svelte-hghcrj">
+                    <div class="container svelte-1ooj8c4">
+                      <div class="pill svelte-1ooj8c4" style="justify-content: center;">
+                        <div class="text-wrapper svelte-1ooj8c4">
+                          <span class="text" id="service-name-text">Auto Service Used</span>
+                        </div>
+                        <div class="value-wrapper svelte-1ooj8c4">
+                          <span class="value" id="betsCounter">0</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <form action="?/predict" method="POST" class="svelte-hghcrj" id="predictor-form">
+                  <div class="input-wrapper svelte-hghcrj">
+                      <div class="container svelte-1lyc96t">
+                        <div class="label-wrapper svelte-1lyc96t">
+                          <div class="label svelte-1lyc96t">
+                            <label for="stake_token" class="svelte-1lyc96t">Stake API Token</label>
+                          </div>
+                          <span class="error svelte-1lyc96t"></span>
+                        </div>
+                        <div class="container  svelte-5drwik">
+                          <input placeholder="Paste your Stake API token" name="stake_token" id="stake_token" type="text" class="svelte-5drwik" autocomplete="off">
+                        </div>
+                        <div style="font-size: 11px; color: rgba(155, 244, 54, 0.8); margin-top: 5px; text-align: center;">
+                          Paste your Stake API token above and click Connect to start.
+                        </div>
+                      </div>
+                    <div class="game-status svelte-hghcrj">
+                        <div class="container svelte-1lyc96t">
+                          <div class="label-wrapper svelte-1lyc96t">
+                            <div class="label svelte-1lyc96t">
+                              <label class="svelte-1lyc96t">Game Status</label>
+                            </div>
+                          </div>
+                          <div class="status-indicator">
+                            <span id="game-status-text">Not connected</span>
+                            <div id="status-light" class="status-light inactive"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Crash Predictor: Premium Status -->
+                      <div class="game-status svelte-hghcrj" id="crash-premium-status" style="display: none;">
+                        <div class="container svelte-1lyc96t">
+                          <div class="label-wrapper svelte-1lyc96t">
+                            <div class="label svelte-1lyc96t">
+                              <label class="svelte-1lyc96t">Premium Status</label>
+                            </div>
+                          </div>
+                          <div class="status-indicator">
+                            <span id="premium-status-text">Active</span>
+                            <div id="premium-status-light" class="status-light active"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="game-info svelte-hghcrj">
+                        <div class="bet svelte-hghcrj">
+                        <div class="container svelte-1lyc96t">
+                          <div class="label-wrapper svelte-1lyc96t">
+                            <div class="label svelte-1lyc96t">
+                              <label for="bet" class="svelte-1lyc96t">Model</label>
+                            </div>
+                            <span class="error svelte-1lyc96t"></span>
+                          </div>
+                          <div class="container  svelte-5drwik">
+                            <input value="GPT 4.5" name="bet" id="bet" type="text" class="svelte-5drwik" style="color: inherit;" disabled>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mines svelte-hghcrj">
+                        <div class="container svelte-1lyc96t">
+                          <div class="label-wrapper svelte-1lyc96t">
+                            <div class="label svelte-1lyc96t">
+                              <label for="mines" class="svelte-1lyc96t">Mines</label>
+                            </div>
+                            <span class="error svelte-1lyc96t"></span>
+                          </div>
+                          <div class="wrapper svelte-68857j">
+                            <select name="mines" id="mines" class="svelte-68857j">
+                              <option value="1" class="svelte-68857j">1</option>
+                              <option value="2" class="svelte-68857j">2</option>
+                              <option value="3" class="svelte-68857j">3</option>
+                              <option value="4" class="svelte-68857j">4</option>
+                              <option value="5" class="svelte-68857j">5</option>
+                              <option value="6" class="svelte-68857j">6</option>
+                            </select>
+                            <div class="dropdown-icon-wrap svelte-68857j">
+                              <svg fill="currentColor" viewBox="0 0 64 64" class="svg-icon svelte-68857j">
+                                <title></title>
+                                <path d="M32.271 49.763 9.201 26.692l6.928-6.93 16.145 16.145 16.144-16.144 6.93 6.929-23.072 23.07h-.005Z"></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="svelte-h4ldgr" disabled>
+                      <div class="content svelte-h4ldgr">Connect</div>
+                      <div class="loader svelte-h4ldgr"></div>
+                    </button>
+                  </div>
+                </form>
+                <div class="bottom svelte-hghcrj">
+                  <div class="info-wrapper svelte-hghcrj">
+                    <div class="header svelte-hghcrj">
+                      <h6 class="svelte-hghcrj">Important Note</h6>
+                    </div>
+                    <div class="text svelte-hghcrj">
+                      <span id="important-note-text">@ After the 2.0 update, the predictions automatically generated from the (hashed) server seed are so accurate. Though the accuracy of the prediction cannot be guaranteed. The accuracy, along with the number of predictions, decreases as the number of mines increases. The amount of mines is limited to 6 to preserve accuracy. Upto 10 gems can be predicted at a time. The bet must be given in the correct currency and amount.</span>
+                    </div>
+                  </div>
+                  <div class="wrapper svelte-1gvfvc8">
+                    <div class="container svelte-1gvfvc8">
+                      <div class="header svelte-1gvfvc8">
+                        <h6 class="svelte-1gvfvc8">Our Official Links</h6>
+                      </div>
+                      <div class="logos svelte-1gvfvc8">
+                        <span class="instagram logo-container svelte-1gvfvc8">
+                          <a href="https://www.youtube.com/soulaipredictor" class="svelte-1gvfvc8">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="60px" height="70px" class="logo svelte-1gvfvc8">
+                                <path d="M20.2838235,29.7208546 L20.2817697,19.3775851 L30.0092421,24.5671906 L20.2838235,29.7208546 Z M41.6409276,17.5856462 C41.6409276,17.5856462 41.2890436,15.0488633 40.2097727,13.9319394 C38.8405739,12.4655276 37.3060444,12.4583393 36.6026186,12.3724221 C31.5649942,12 24.008044,12 24.008044,12 L23.9922983,12 C23.9922983,12 16.4356904,12 11.398066,12.3724221 C10.6939556,12.4583393 9.16045298,12.4655276 7.79091194,13.9319394 C6.71164104,15.0488633 6.36009927,17.5856462 6.36009927,17.5856462 C6.36009927,17.5856462 6,20.5646804 6,23.5437145 L6,26.3365376 C6,29.3152295 6.36009927,32.2946059 6.36009927,32.2946059 C6.36009927,32.2946059 6.71164104,34.8310466 7.79091194,35.9483127 C9.16045298,37.4147246 10.9592378,37.3681718 11.7605614,37.5218644 C14.6406709,37.8042616 24.0001711,37.8915481 24.0001711,37.8915481 C24.0001711,37.8915481 31.5649942,37.8799099 36.6026186,37.5074878 C37.3060444,37.4219129 38.8405739,37.4147246 40.2097727,35.9483127 C41.2890436,34.8310466 41.6409276,32.2946059 41.6409276,32.2946059 C41.6409276,32.2946059 42,29.3152295 42,26.3365376 L42,23.5437145 C42,20.5646804 41.6409276,17.5856462 41.6409276,17.5856462 L41.6409276,17.5856462 Z" id="Shape" fill="#E70000"></path>
+                            </svg>
+                          </a>
+                        </span>
+                        <span class="telegram logo-container">
+                          <a href="https://t.me/soulaipredictor" target="_blank" class="svelte-1gvfvc8">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px" class="logo svelte-1gvfvc8">
+                              <path d="M25,2c12.703,0,23,10.297,23,23S37.703,48,25,48S2,37.703,2,25S12.297,2,25,2z M32.934,34.375	c0.423-1.298,2.405-14.234,2.65-16.783c0.074-0.772-0.17-1.285-0.648-1.514c-0.578-0.278-1.434-0.139-2.427,0.219	c-1.362,0.491-18.774,7.884-19.78,8.312c-0.954,0.405-1.856,0.847-1.856,1.487c0,0.45,0.267,0.703,1.003,0.966	c0.766,0.273,2.695,0.858,3.834,1.172c1.097,0.303,2.346,0.04,3.046-0.395c0.742-0.461,9.305-6.191,9.92-6.693	c0.614-0.502,1.104,0.141,0.602,0.644c-0.502,0.502-6.38,6.207-7.155,6.997c-0.941,0.959-0.273,1.953,0.358,2.351	c0.721,0.454,5.906,3.932,6.687,4.49c0.781,0.558,1.573,0.811,2.298,0.811C32.191,36.439,32.573,35.484,32.934,34.375z"></path>
+                            </svg>
+                          </a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="game svelte-hghcrj">
+                <div class="container svelte-1fb1q7t">
+                  <main class="svelte-1fb1q7t">
+                    <!-- Mines Game Content -->
+                    <div id="mines-content" class="game-content svelte-1fb1q7t">
+                      <div class="wrap svelte-1fb1q7t">
+                        <button class="tile 1  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 2  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 3  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 4  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 5  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 6  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 7  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 8  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 9  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 10  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 11  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 12  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 13  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 14  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 15  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 16  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 17  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 18  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 19  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 20  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 21  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 22  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 23  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 24  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <button class="tile 25  svelte-ad2de7">
+                          <div class="cover svelte-ad2de7"></div>
+                        </button>
+                        <div class="overlay svelte-1fb1q7t"></div>
+                      </div>
+                    </div>
+
+                    <!-- Crash Predictor Content -->
+                    <div id="crash-content" class="game-content svelte-1fb1q7t" style="display: none;">
+                      <div class="crash-graph-container">
+                        <canvas id="crash-three-canvas"></canvas>
+                        <div class="crash-graph">
+                          <!-- SVG Background Pattern -->
+                          <svg class="crash-svg-pattern" width="100%" height="100%" style="position: absolute; top: 0; left: 0; opacity: 0.1; z-index: 1;">
+                            <defs>
+                              <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                              </pattern>
+                              <linearGradient id="gradient-overlay" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:rgba(139,92,246,0.1);stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:rgba(59,130,246,0.1);stop-opacity:1" />
+                              </linearGradient>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+                            <rect width="100%" height="100%" fill="url(#gradient-overlay)" />
+                          </svg>
+                          
+                          <div class="game-values-container" id="game-values-container">
+                            <!-- Game values will be populated here -->
+                          </div>
+                          
+                          <div class="centered-prediction" id="centered-prediction">
+                            <div class="prediction-display" id="prediction-display">0.00x</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="prediction-tiers">
+                        <div class="prediction-tier safe">
+                          <div class="tier-label">Safe Play (1.00x - 1.60x)</div>
+                          <div class="tier-value" id="safe-prediction">1.25x</div>
+                        </div>
+                        <div class="prediction-tier medium">
+                          <div class="tier-label">Medium Play (1.60x - 2.10x)</div>
+                          <div class="tier-value" id="medium-prediction">1.85x</div>
+                        </div>
+                      </div>
+
+                      <div class="auto-fetch-controls">
+                        <button class="auto-btn" id="auto-fetch-btn" onclick="toggleAutoFetch()">
+                          <i class="fas fa-play"></i> Auto Fetch
+                        </button>
+                        <button class="auto-btn" id="predict-btn" onclick="manualPredict()">
+                          <i class="fas fa-brain"></i> Predict Now
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Moles Predictor -->
+                    <div id="moles-content" class="game-content svelte-1fb1q7t" style="display: none;">
+                      <div class="moles-shell">
+                        <div class="moles-meta-bar">
+                          <div id="moles-bet-line" class="moles-bet-line">Waiting for extension...</div>
+                          <div id="moles-strategy-chip" class="moles-strategy-chip">Adaptive history model</div>
+                        </div>
+                        <div class="moles-board-wrap">
+                          <div id="moles-board" class="moles-board" role="img" aria-label="Moles board">
+                            <button class="moles-hole" data-hole="0"><span>1</span></button>
+                            <button class="moles-hole" data-hole="1"><span>2</span></button>
+                            <button class="moles-hole" data-hole="2"><span>3</span></button>
+                            <button class="moles-hole" data-hole="3"><span>4</span></button>
+                            <button class="moles-hole" data-hole="4"><span>5</span></button>
+                            <button class="moles-hole" data-hole="5"><span>6</span></button>
+                            <button class="moles-hole" data-hole="6"><span>7</span></button>
+                          </div>
+                        </div>
+                        <div id="moles-primary-advice" class="moles-primary-advice">
+                          <span class="moles-advice-label">Optimal hole</span>
+                          <span id="moles-advice-action" class="moles-advice-action">-</span>
+                          <p id="moles-advice-detail" class="moles-advice-detail"></p>
+                        </div>
+                        <div id="moles-prob-row" class="moles-prob-row"></div>
+                      </div>
+                    </div>
+
+                    <!-- Blackjack Predictor -->
+                    <div id="blackjack-content" class="game-content svelte-1fb1q7t" style="display: none;">
+                      <div class="bj-shell">
+                        <div class="bj-meta-bar">
+                          <div id="bj-bet-line" class="bj-bet-line">Waiting for extension...</div>
+                          <div id="bj-strategy-chip" class="bj-strategy-chip">Live card count | S17 | DAS</div>
+                        </div>
+                        <div class="bj-felt bj-felt--table">
+                          <div class="bj-ribbon" aria-hidden="true">Blackjack pays 3:2 | Insurance 2:1</div>
+                          <section class="bj-hand-block bj-dealer-block">
+                            <header class="bj-hand-title">Dealer</header>
+                            <div id="bj-dealer-cards" class="bj-card-row bj-card-row--fan"></div>
+                            <div id="bj-dealer-summary" class="bj-hand-summary"></div>
+                          </section>
+                          <section class="bj-hand-block bj-player-block">
+                            <header class="bj-hand-title">Your hand(s)</header>
+                            <div id="bj-player-areas" class="bj-player-areas"></div>
+                          </section>
+                        </div>
+                        <div id="bj-primary-advice" class="bj-primary-advice">
+                          <span class="bj-advice-label">Optimal play</span>
+                          <span id="bj-advice-action" class="bj-advice-action">-</span>
+                          <p id="bj-advice-detail" class="bj-advice-detail"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </main>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="svelte-announcer" aria-live="assertive" aria-atomic="true" style="position: absolute; left: 0px; top: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); overflow: hidden; white-space: nowrap; width: 1px; height: 1px;">Soul • Predictor</div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-message"></div>
+    </div>
+
+    <script>
+      // Global variables
+      let currentPredictor = null;
+      let autoFetchInterval = null;
+      let isAutoFetchActive = false;
+      let lastPredictionValue = null;
+      let lastGameValues = null;
+      let isCrashConnected = false;
+      
+      // Track prediction usage for statistics
+      function trackPredictionUsage(type) {
+        try {
+          // Prefer dashboard email (user panel identity), fallback to Stake username
+          const profileEmail = (window.soulAuthProfile && window.soulAuthProfile.email) || null;
+          const storedUsername = localStorage.getItem('stake_username') || 
+                               document.getElementById('bet')?.value || 
+                               getStoredStakeUsername();
+          const identifier = profileEmail || storedUsername;
+          
+          if (identifier) {
+            // Send tracking request to backend
+            fetch('https://api.soulpredictor.xyz/track-prediction', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                username: identifier,
+                email: profileEmail || undefined,
+                type: type,  // 'mines' or 'crash'
+                source: 'web',
+                plan: 'demo'
+              })
+            }).catch(err => {
+              console.log('Prediction tracking failed:', err);
+            });
+          }
+        } catch (e) {
+          console.log('Error tracking prediction:', e);
+        }
+      }
+      
+      // Helper function to get stored stake username
+      function getStoredStakeUsername() {
+        try {
+          return localStorage.getItem('stake_username') || '';
+        } catch (e) {
+          return '';
+        }
+      }
+      
+      // Initialize crash detection variables
+      if (!window.lastLatestCrashPoint) {
+        window.lastLatestCrashPoint = null;
+        window.lastCrashPointsCount = null;
+      }
+      
+      // Helper function to mask username (first 4 chars + xxx)
+      function maskUsername(username) {
+        if (!username || typeof username !== 'string') return username;
+        if (username.length <= 4) return username;
+        return username.substring(0, 4) + 'xxx';
+      }
+
+      // Function to select predictor type (make it globally accessible)
+      function selectPredictor(type) {
+        currentPredictor = type;
+        window.currentPredictor = type;
+        
+        // Track prediction usage
+        trackPredictionUsage(type);
+        
+        // Hide selection interface
+        document.getElementById('selection-interface').style.display = 'none';
+        
+        // Show main app by changing the parent div display
+        const appContainer = document.getElementById('app-root') || document.querySelector('.app')?.parentElement;
+        if (appContainer) {
+          // Avoid `display: contents` (mobile browsers can fail to paint children)
+          appContainer.style.display = 'block';
+        }
+        
+        // Add/remove body class for CSS targeting
+        if (type === 'crash' || type === 'blackjack' || type === 'moles') {
+          document.body.classList.add('crash-predictor-active');
+        } else {
+          document.body.classList.remove('crash-predictor-active');
+        }
+        document.body.dataset.predictor = type;
+        
+        // Show appropriate content
+        if (type === 'mines') {
+          document.getElementById('mines-content').style.display = 'block';
+          document.getElementById('crash-content').style.display = 'none';
+          const moles = document.getElementById('moles-content');
+          if (moles) moles.style.display = 'none';
+          const bj = document.getElementById('blackjack-content');
+          if (bj) bj.style.display = 'none';
+          
+          // Reset grid if resetGrid function exists (from script.js)
+          if (typeof resetGrid === 'function') {
+            resetGrid();
+          }
+          
+          // Hide premium status, show username field for mines
+          const premiumStatus = document.getElementById('crash-premium-status');
+          const usernameField = document.querySelector('.bet.svelte-hghcrj');
+          if (premiumStatus) premiumStatus.style.display = 'none';
+          if (usernameField) usernameField.style.display = 'block';
+          // Reset crash connection state when switching to mines
+          isCrashConnected = false;
+          
+          // Update service name for mines
+          const serviceNameText = document.getElementById('service-name-text');
+          if (serviceNameText) serviceNameText.textContent = 'Auto Service Used';
+          
+          // Update bets counter to show number for mines
+          const betsCounter = document.getElementById('betsCounter');
+          if (betsCounter && betsCounter.textContent === '97.5%') {
+            betsCounter.textContent = '0';
+          }
+          
+          // Update important note for mines
+          const importantNoteText = document.getElementById('important-note-text');
+          if (importantNoteText) {
+            importantNoteText.textContent = '@ After the 2.0 update, the predictions automatically generated from the (hashed) server seed are so accurate. Though the accuracy of the prediction cannot be guaranteed. The accuracy, along with the number of predictions, decreases as the number of mines increases. The amount of mines is limited to 6 to preserve accuracy. Upto 10 gems can be predicted at a time. The bet must be given in the correct currency and amount.';
+          }
+          const minesRowM = document.querySelector('.mines.svelte-hghcrj');
+          if (minesRowM) minesRowM.style.display = '';
+        } else if (type === 'crash') {
+          document.getElementById('mines-content').style.display = 'none';
+          document.getElementById('crash-content').style.display = 'block';
+          const moles = document.getElementById('moles-content');
+          if (moles) moles.style.display = 'none';
+          const bj = document.getElementById('blackjack-content');
+          if (bj) bj.style.display = 'none';
+          // Show premium status, hide username field for crash
+          const premiumStatus = document.getElementById('crash-premium-status');
+          const usernameField = document.querySelector('.bet.svelte-hghcrj');
+          if (premiumStatus) premiumStatus.style.display = 'block';
+          if (usernameField) usernameField.style.display = 'none';
+          
+          // Initialize Three.js for crash container
+          setTimeout(() => {
+            if (typeof initCrashThreeJS === 'function') {
+              initCrashThreeJS();
+            }
+          }, 200);
+          
+          // Update service name for crash predictor
+          const serviceNameText = document.getElementById('service-name-text');
+          if (serviceNameText) serviceNameText.textContent = 'Soul Crash Predictor';
+          
+          // Update bets counter to show percentage for crash
+          const betsCounter = document.getElementById('betsCounter');
+          if (betsCounter) betsCounter.textContent = '97.5%';
+          
+          // Update important note for crash predictor
+          const importantNoteText = document.getElementById('important-note-text');
+          if (importantNoteText) {
+            importantNoteText.textContent = '@ Our crash predictor uses advanced machine learning algorithms to analyze historical crash game data and generate accurate predictions. The predictions show safe multipliers (1.00x - 1.60x) and medium multipliers (1.60x - 2.10x) based on pattern recognition. While we strive for accuracy, predictions are not guaranteed. Always gamble responsibly and use predictions as a guide, not a guarantee.';
+          }
+          
+          // Update button state when crash predictor is selected
+          const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+          const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+          const predictButton = document.querySelector('button.svelte-h4ldgr');
+          
+          if (stakeToken && !isCrashConnected) {
+            // Show "Connect" button if token exists but not connected
+            updateCrashConnectionStatus('Not connected', 'inactive');
+            // Force ensure Connect button is shown and enabled (override any script.js changes)
+            if (buttonContent && predictButton && stakeToken) {
+              setTimeout(() => {
+                buttonContent.textContent = 'Connect';
+                predictButton.disabled = false;
+                predictButton.style.opacity = '1';
+                predictButton.style.cursor = 'pointer';
+              }, 100);
+            }
+          } else if (!stakeToken) {
+            // Show "Not Connected" if no token
+            updateCrashConnectionStatus('Not connected', 'inactive');
+          }
+        } else if (type === 'blackjack') {
+          document.getElementById('mines-content').style.display = 'none';
+          document.getElementById('crash-content').style.display = 'none';
+          const moles = document.getElementById('moles-content');
+          if (moles) moles.style.display = 'none';
+          const bj = document.getElementById('blackjack-content');
+          if (bj) bj.style.display = 'block';
+          const premiumStatus = document.getElementById('crash-premium-status');
+          const usernameField = document.querySelector('.bet.svelte-hghcrj');
+          if (premiumStatus) premiumStatus.style.display = 'block';
+          if (usernameField) usernameField.style.display = 'none';
+          isCrashConnected = false;
+          const serviceNameText = document.getElementById('service-name-text');
+          if (serviceNameText) serviceNameText.textContent = 'Soul Blackjack Predictor';
+          const betsCounter = document.getElementById('betsCounter');
+          if (betsCounter) betsCounter.textContent = 'Live';
+          const importantNoteText = document.getElementById('important-note-text');
+          if (importantNoteText) {
+            importantNoteText.textContent = '@ Advice uses advanced multi-deck basic strategy (S17, DAS) with automatic dealer up-card detection (hole vs visible card). The extension syncs your Stake hand live. Strategy maximizes expected value; it cannot guarantee wins. Play responsibly.';
+          }
+          const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+          const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+          const predictButton = document.querySelector('button.svelte-h4ldgr');
+          if (stakeToken && buttonContent && predictButton) {
+            setTimeout(() => {
+              buttonContent.textContent = 'Connect';
+              predictButton.disabled = false;
+              predictButton.style.opacity = '1';
+              predictButton.style.cursor = 'pointer';
+            }, 100);
+          }
+        } else if (type === 'moles') {
+          document.getElementById('mines-content').style.display = 'none';
+          document.getElementById('crash-content').style.display = 'none';
+          const bj = document.getElementById('blackjack-content');
+          if (bj) bj.style.display = 'none';
+          const moles = document.getElementById('moles-content');
+          if (moles) moles.style.display = 'block';
+          const premiumStatus = document.getElementById('crash-premium-status');
+          const usernameField = document.querySelector('.bet.svelte-hghcrj');
+          if (premiumStatus) premiumStatus.style.display = 'block';
+          if (usernameField) usernameField.style.display = 'none';
+          isCrashConnected = false;
+          const serviceNameText = document.getElementById('service-name-text');
+          if (serviceNameText) serviceNameText.textContent = 'Soul Moles Predictor';
+          const betsCounter = document.getElementById('betsCounter');
+          if (betsCounter) betsCounter.textContent = 'Live';
+          const importantNoteText = document.getElementById('important-note-text');
+          if (importantNoteText) {
+            importantNoteText.textContent = '@ Moles prediction uses latest resolved rounds and transition learning from API snapshots. It always adapts to fresh table state and highlights the highest-probability hole. Predictions are probabilistic, not guaranteed.';
+          }
+          const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+          const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+          const predictButton = document.querySelector('button.svelte-h4ldgr');
+          if (stakeToken && buttonContent && predictButton) {
+            setTimeout(() => {
+              buttonContent.textContent = 'Connect';
+              predictButton.disabled = false;
+              predictButton.style.opacity = '1';
+              predictButton.style.cursor = 'pointer';
+            }, 100);
+          }
+        }
+      }
+
+      window.selectPredictor = selectPredictor;
+
+      (function initPredictorFromQuery() {
+        try {
+          const params = new URLSearchParams(window.location.search || '');
+          const p = (params.get('predictor') || '').toLowerCase();
+          if (p === 'mines' || p === 'crash' || p === 'blackjack' || p === 'moles') {
+            window.selectPredictor(p);
+          }
+        } catch (e) {}
+      })();
+
+      // Function for manual prediction (always updates)
+      function manualPredict() {
+        // Reset stored values so it always updates on manual click
+        lastPredictionValue = null;
+        lastGameValues = null;
+        generateCrashPrediction();
+      }
+
+      // Function to fetch username for crash predictor
+      async function fetchCrashUsername(stakeToken) {
+        try {
+          const response = await fetch('https://api.soulpredictor.xyz/stake_game_data', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              access_token: stakeToken
+            })
+          });
+
+          const data = await response.json();
+          
+          if (response.ok) {
+            let username = '';
+            
+            // Try different possible locations for username
+            if (data.game_data?.user?.name) {
+              username = data.game_data.user.name;
+            } else if (data.game_data?.user?.username) {
+              username = data.game_data.user.username;
+            } else if (data.game_data?.user?.activeCasinoBet?.user?.name) {
+              username = data.game_data.user.activeCasinoBet.user.name;
+            } else if (data.user?.name) {
+              username = data.user.name;
+            } else if (data.user?.username) {
+              username = data.user.username;
+            }
+            
+            // Don't update bet input for crash predictor (it doesn't exist)
+            // Username is fetched but not displayed in crash predictor
+            
+            // Update connection status to connected if API responded successfully
+            updateCrashConnectionStatus('Connected', 'active');
+            return true;
+          } else {
+            updateCrashConnectionStatus('Not connected', 'inactive');
+            return false;
+          }
+        } catch (error) {
+          console.error('Error fetching username:', error);
+          updateCrashConnectionStatus('Not connected', 'inactive');
+          return false;
+        }
+      }
+
+      // Function to update crash connection status
+      function updateCrashConnectionStatus(text, status) {
+        const gameStatusText = document.getElementById('game-status-text');
+        const statusLight = document.getElementById('status-light');
+        const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+        const predictButton = document.querySelector('button.svelte-h4ldgr');
+        
+        if (gameStatusText) {
+          gameStatusText.textContent = text;
+        }
+        
+        if (statusLight) {
+          // Remove all status classes
+          statusLight.classList.remove('active', 'inactive', 'connecting');
+          // Add the appropriate class
+          if (status === 'active' || status === 'connected') {
+            statusLight.classList.add('active');
+            isCrashConnected = true;
+          } else if (status === 'connecting') {
+            statusLight.classList.add('connecting');
+          } else {
+            statusLight.classList.add('inactive');
+            isCrashConnected = false;
+          }
+        }
+        
+        if (buttonContent && currentPredictor === 'crash') {
+          if (predictButton) {
+            predictButton.classList.remove('connecting');
+          }
+          if (status === 'active' || status === 'connected') {
+            buttonContent.textContent = 'Connected';
+            if (predictButton) {
+              predictButton.disabled = false;
+              predictButton.style.opacity = '1';
+              predictButton.style.cursor = 'pointer';
+            }
+          } else {
+            // For crash predictor, always check token first
+            const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+            if (stakeToken) {
+              // Always show "Connect" button when token exists (not connected yet)
+              buttonContent.textContent = 'Connect';
+              if (predictButton) {
+                predictButton.disabled = false;
+                predictButton.style.opacity = '1';
+                predictButton.style.cursor = 'pointer';
+                if (status === 'connecting') {
+                  predictButton.classList.add('connecting');
+                }
+              }
+            } else {
+              buttonContent.textContent = 'Not Connected';
+              if (predictButton) {
+                predictButton.disabled = true;
+                predictButton.style.opacity = '0.5';
+                predictButton.style.cursor = 'not-allowed';
+              }
+            }
+          }
+        }
+      }
+
+      // Function to handle Connect button click for crash predictor
+      async function handleCrashConnect() {
+        const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+        
+        if (!stakeToken) {
+          alert('Please enter your Stake API token first');
+          return;
+        }
+
+        if (isCrashConnected) {
+          // Already connected, do nothing
+          return;
+        }
+
+        // Show connecting state
+        updateCrashConnectionStatus('Connecting...', 'connecting');
+        const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+        if (buttonContent) {
+          buttonContent.textContent = 'Connecting...';
+        }
+
+        try {
+          // Fetch username
+          const connected = await fetchCrashUsername(stakeToken);
+          
+          if (connected) {
+            // Start auto-fetch automatically
+            if (!isAutoFetchActive) {
+              const btn = document.getElementById('auto-fetch-btn');
+              if (btn) {
+                isAutoFetchActive = true;
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fas fa-pause"></i> Stop Auto';
+                
+                // Start fetching every 3 seconds (less frequent to avoid unnecessary API calls)
+                autoFetchInterval = setInterval(() => {
+                  generateCrashPrediction();
+                }, 3000);
+                
+                // Also fetch immediately
+                generateCrashPrediction();
+              }
+            }
+          } else {
+            updateCrashConnectionStatus('Connection failed', 'inactive');
+          }
+        } catch (error) {
+          console.error('Connection error:', error);
+          updateCrashConnectionStatus('Connection failed', 'inactive');
+        }
+      }
+
+      // Function to toggle auto fetch for crash predictor
+      function toggleAutoFetch() {
+        const btn = document.getElementById('auto-fetch-btn');
+        const icon = btn.querySelector('i');
+        
+        if (isAutoFetchActive) {
+          // Stop auto fetch
+          clearInterval(autoFetchInterval);
+          isAutoFetchActive = false;
+          btn.classList.remove('active');
+          icon.className = 'fas fa-play';
+          btn.innerHTML = '<i class="fas fa-play"></i> Auto Fetch';
+        } else {
+          // Start auto fetch
+          isAutoFetchActive = true;
+          btn.classList.add('active');
+          icon.className = 'fas fa-pause';
+          btn.innerHTML = '<i class="fas fa-pause"></i> Stop Auto';
+          
+          // Start fetching every 3 seconds (less frequent to avoid unnecessary API calls)
+          autoFetchInterval = setInterval(() => {
+            generateCrashPrediction();
+          }, 3000);
+        }
+      }
+
+      // Function to generate crash prediction
+      async function generateCrashPrediction() {
+        const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+        
+        if (!stakeToken) {
+          updateCrashConnectionStatus('Not connected', 'inactive');
+          if (!isAutoFetchActive) {
+          alert('Please enter your Stake API token first');
+          }
+          return;
+        }
+
+        // Show loading state only if not in auto-fetch mode
+          const predictBtn = document.getElementById('predict-btn');
+        let showLoading = !isAutoFetchActive;
+        
+        try {
+          if (showLoading) {
+          const originalText = predictBtn.innerHTML;
+          predictBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Predicting...';
+          predictBtn.disabled = true;
+          }
+
+          // First, check if extension has a fresh prediction (faster path)
+          if (currentExtensionToken && stakeToken === currentExtensionToken) {
+            try {
+              const extensionResponse = await fetch('https://api.soulpredictor.xyz/get_prediction', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: stakeToken })
+              });
+              
+              const extensionData = await extensionResponse.json();
+              if (extensionData.status === 'success' && extensionData.prediction && 
+                  extensionData.prediction.game_type === 'crash' && extensionData.prediction.predictions) {
+                console.log('✅ Using fresh prediction from extension cache');
+                const data = {
+                  status: 'success',
+                  predictions: extensionData.prediction.predictions,
+                  historical_data: extensionData.prediction.historical_data
+                };
+                // Continue with normal update flow below
+                handleCrashPredictionResponse(data);
+                return;
+              }
+            } catch (e) {
+              console.log('Extension prediction not available, using direct API call');
+            }
+          }
+
+          // Fetch crash history and generate prediction (backend always recalculates)
+          const response = await fetch('https://api.soulpredictor.xyz/crash_predict', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              access_token: stakeToken
+            })
+          });
+
+          const data = await response.json();
+          
+          handleCrashPredictionResponse(data);
+        } catch (error) {
+          
+          // Only update status if not connected, don't try to auto-connect
+          if (!isCrashConnected) {
+            updateCrashConnectionStatus('Not connected', 'inactive');
+          }
+          if (!isAutoFetchActive) {
+          alert('Error generating prediction: ' + error.message);
+          }
+        } finally {
+          // Reset button state only if we showed loading
+          if (showLoading) {
+          const predictBtn = document.getElementById('predict-btn');
+          predictBtn.innerHTML = '<i class="fas fa-brain"></i> Predict Now';
+          predictBtn.disabled = false;
+          }
+        }
+      }
+
+      // Handle crash prediction response
+      function handleCrashPredictionResponse(data) {
+        try {
+          if (data.status === 'success') {
+            // Only update username if already connected (don't auto-connect)
+            const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+            if (isCrashConnected && stakeToken) {
+              fetchCrashUsername(stakeToken);
+            }
+            
+            // Check if game values have changed by comparing the LATEST crash point
+            // This is more accurate than comparing first 20 points
+            let gameValuesChanged = false;
+            if (data.historical_data && data.historical_data.crash_points && data.historical_data.crash_points.length > 0) {
+              const crashPoints = data.historical_data.crash_points;
+              const latestCrashPoint = crashPoints[0]; // First element is the latest
+              const latestCrashPointStr = latestCrashPoint.toFixed(4); // Use 4 decimal precision
+              
+              // Store last latest crash point
+              if (!window.lastLatestCrashPoint) {
+                window.lastLatestCrashPoint = null;
+              }
+              
+              // Check if latest crash point changed
+              if (window.lastLatestCrashPoint === null || window.lastLatestCrashPoint !== latestCrashPointStr) {
+                gameValuesChanged = true;
+                window.lastLatestCrashPoint = latestCrashPointStr;
+                console.log(`🔄 New crash game detected! Latest point: ${latestCrashPointStr}x (was: ${window.lastLatestCrashPoint || 'none'})`);
+              } else {
+                // Also check if total count changed (new game added)
+                const currentCount = crashPoints.length;
+                if (!window.lastCrashPointsCount || window.lastCrashPointsCount !== currentCount) {
+                  gameValuesChanged = true;
+                  window.lastCrashPointsCount = currentCount;
+                  console.log(`🔄 New crash game added! Total games: ${currentCount}`);
+                } else {
+                  console.log('⏸️ No new crash game data - keeping current prediction');
+                }
+              }
+              
+              // Store full history for comparison (last 30 points for better detection)
+              const recentHistory = JSON.stringify(crashPoints.slice(0, 30));
+              lastGameValues = recentHistory;
+            }
+            
+            // Only update if game values changed or first time
+            const newPrediction = data.predictions.safe_prediction;
+            if (gameValuesChanged || lastPredictionValue === null) {
+              console.log(`[+] Updating crash prediction: ${newPrediction.toFixed(2)}x (Safe), ${data.predictions.medium_prediction.toFixed(2)}x (Medium)`);
+              lastPredictionValue = newPrediction;
+              updateCrashPrediction(data.predictions);
+              
+              // Update game values if available
+              if (data.historical_data && data.historical_data.crash_points) {
+                updateGameValues(data.historical_data.crash_points);
+              }
+            } else {
+              // No new data, don't update display
+              return;
+            }
+          } else {
+            // API responded but prediction failed
+            if (!isCrashConnected) {
+              updateCrashConnectionStatus('Not connected', 'inactive');
+            }
+          }
+        } catch (error) {
+          console.error('Error in handleCrashPredictionResponse:', error);
+          if (!isCrashConnected) {
+            updateCrashConnectionStatus('Not connected', 'inactive');
+          }
+        }
+      }
+
+      // Function to update crash prediction display
+      function updateCrashPrediction(predictions) {
+        const { safe_prediction, medium_prediction, confidence, trend } = predictions;
+        
+        // Track crash prediction usage when new prediction is applied
+        try {
+          if (typeof trackPredictionUsage === 'function') {
+            trackPredictionUsage('crash');
+          }
+        } catch (e) {}
+        
+        // Update tier values
+        document.getElementById('safe-prediction').textContent = safe_prediction.toFixed(2) + 'x';
+        document.getElementById('medium-prediction').textContent = medium_prediction.toFixed(2) + 'x';
+        
+        // Animate counting from 0 to safe prediction
+        animatePredictionCount(safe_prediction);
+      }
+
+      // Function to animate counting from 0 to target value
+      function animatePredictionCount(targetValue) {
+        const display = document.getElementById('prediction-display');
+        
+        // Reset to 0 first
+        display.textContent = '0.00x';
+        
+        // Clear any existing interval
+        if (window.predictionCountInterval) {
+          clearInterval(window.predictionCountInterval);
+        }
+        
+        const duration = 1500; // 1.5 seconds
+        const steps = Math.ceil(targetValue * 100); // Number of steps (0.01 increments)
+        const stepTime = duration / steps;
+        let current = 0;
+        
+        window.predictionCountInterval = setInterval(() => {
+          current += 0.01;
+          if (current >= targetValue) {
+            current = targetValue;
+            clearInterval(window.predictionCountInterval);
+            window.predictionCountInterval = null;
+          }
+          display.textContent = current.toFixed(2) + 'x';
+        }, stepTime);
+      }
+
+      // Function to update game values display
+      function updateGameValues(crashPoints) {
+        const container = document.getElementById('game-values-container');
+        container.innerHTML = '';
+        
+        // Show last 20 games
+        const recentPoints = crashPoints.slice(0, 20);
+        
+        recentPoints.forEach((point, index) => {
+          const box = document.createElement('div');
+          box.className = 'game-value-box';
+          box.textContent = point.toFixed(2) + 'x';
+          
+          // Color code based on value
+          if (point >= 2.0) {
+            box.classList.add('high');
+          } else if (point >= 1.5) {
+            box.classList.add('medium');
+          } else {
+            box.classList.add('low');
+          }
+          
+          // Add animation delay for staggered appearance
+          box.style.opacity = '0';
+          box.style.transform = 'scale(0.8)';
+          setTimeout(() => {
+            box.style.transition = 'all 0.3s ease';
+            box.style.opacity = '1';
+            box.style.transform = 'scale(1)';
+          }, index * 50);
+          
+          container.appendChild(box);
+        });
+      }
+
+
+      // Add pulse animation CSS
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes pulse {
+          0% { transform: translateY(-50%) scale(1); }
+          50% { transform: translateY(-50%) scale(1.1); }
+          100% { transform: translateY(-50%) scale(1); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Override script.js button updates for crash predictor
+      setInterval(function() {
+        if (currentPredictor === 'crash') {
+          const stakeToken = document.querySelector('input[id="stake_token"]')?.value?.trim();
+          const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+          const predictButton = document.querySelector('button.svelte-h4ldgr');
+          const buttonText = buttonContent?.textContent?.trim();
+          
+          // If not connected and token exists, always show Connect button
+          if (!isCrashConnected && stakeToken && buttonText && buttonText !== 'Connect' && buttonText !== 'Connected' && buttonText !== 'Connecting...') {
+            if (buttonContent) buttonContent.textContent = 'Connect';
+            if (predictButton) {
+              predictButton.disabled = false;
+              predictButton.style.opacity = '1';
+              predictButton.style.cursor = 'pointer';
+            }
+          }
+        }
+      }, 500); // Check every 500ms to override script.js
+
+      // Extension integration variables
+      let extensionCheckInterval = null;
+      let predictionPollInterval = null;
+      let tokenPollInterval = null;
+      let currentExtensionToken = null;
+      let isExtensionConnected = false;
+
+      // Poll for extension token and auto-fill
+      async function pollForExtensionToken() {
+        const stakeTokenInput = document.querySelector('input[id="stake_token"]');
+        if (!stakeTokenInput) return;
+        
+        // Don't poll if already connected
+        if (isExtensionConnected && currentExtensionToken) return;
+        
+        try {
+          const response = await fetch('https://api.soulpredictor.xyz/get_extension_token', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          
+          const data = await response.json();
+          
+          if (data.connected && data.token) {
+            // Auto-fill the token
+            stakeTokenInput.value = data.token;
+            stakeTokenInput.style.opacity = '1';
+            stakeTokenInput.style.color = '#1b7bf2';
+            
+            // Update placeholder
+            stakeTokenInput.placeholder = 'Token received from extension';
+            
+            // Trigger connection check
+            checkExtensionConnection();
+          }
+        } catch (error) {
+          console.error('Error polling for token:', error);
+        }
+      }
+
+      // Check for extension connection
+      async function checkExtensionConnection() {
+        const stakeTokenInput = document.querySelector('input[id="stake_token"]');
+        const token = stakeTokenInput?.value?.trim();
+        
+        if (!token) {
+          // Try to get token from backend
+          pollForExtensionToken();
+          return;
+        }
+        
+        try {
+          const response = await fetch('https://api.soulpredictor.xyz/check_extension', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: token })
+          });
+          
+          const data = await response.json();
+          
+          if (data.connected && !isExtensionConnected) {
+            // Extension just connected
+            isExtensionConnected = true;
+            currentExtensionToken = token;
+            onExtensionConnected();
+          } else if (!data.connected && isExtensionConnected) {
+            // Extension disconnected
+            isExtensionConnected = false;
+            currentExtensionToken = null;
+            onExtensionDisconnected();
+          }
+        } catch (error) {
+          console.error('Error checking extension:', error);
+        }
+      }
+
+      // Handle extension connected
+      function onExtensionConnected() {
+        console.log('Extension connected!');
+        
+        // Update UI to show connected state
+        const gameStatusText = document.getElementById('game-status-text');
+        const statusLight = document.getElementById('status-light');
+        const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+        
+        if (gameStatusText) gameStatusText.textContent = 'Extension Connected';
+        if (statusLight) {
+          statusLight.classList.remove('inactive', 'connecting');
+          statusLight.classList.add('active');
+        }
+        if (buttonContent) buttonContent.textContent = 'Extension Active';
+        
+        // Start polling for both crash and mines predictors
+        // Mines predictions are handled by script.js, but we can also poll here as backup
+          startPredictionPolling();
+      }
+
+      // Handle extension disconnected
+      function onExtensionDisconnected() {
+        console.log('Extension disconnected');
+        
+        // Update UI to show disconnected state
+        const gameStatusText = document.getElementById('game-status-text');
+        const statusLight = document.getElementById('status-light');
+        const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+        
+        if (gameStatusText) gameStatusText.textContent = 'Extension Disconnected';
+        if (statusLight) {
+          statusLight.classList.remove('active', 'connecting');
+          statusLight.classList.add('inactive');
+        }
+        if (buttonContent) buttonContent.textContent = 'Waiting for Extension';
+        
+        // Stop polling for predictions
+        if (predictionPollInterval) {
+          clearInterval(predictionPollInterval);
+          predictionPollInterval = null;
+        }
+      }
+
+      // Poll for predictions from backend (for both crash and mines)
+      async function pollForPrediction() {
+        if (!currentExtensionToken || !isExtensionConnected) return;
+        
+        try {
+          const response = await fetch('https://api.soulpredictor.xyz/get_prediction', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: currentExtensionToken })
+          });
+          
+          const data = await response.json();
+          
+          if (data.status === 'success' && data.prediction) {
+            // Handle both crash and mines predictions
+            if (data.prediction.game_type === 'crash') {
+              console.log('📥 Crash prediction received from backend');
+              handlePredictionReceived(data.prediction);
+            } else if (data.prediction.game_type === 'mines') {
+              // Mines predictions are handled by script.js polling
+              console.log('📥 Mines prediction received from backend (handled by script.js)');
+            } else if (data.prediction.game_type === 'moles') {
+              if (typeof window.selectPredictor === 'function' && window.currentPredictor !== 'moles') {
+                window.selectPredictor('moles');
+              }
+              if (typeof window.applyMolesPrediction === 'function') {
+                window.applyMolesPrediction(data.prediction);
+              }
+            } else if (data.prediction.game_type === 'blackjack') {
+              if (typeof window.selectPredictor === 'function' && window.currentPredictor !== 'blackjack') {
+                window.selectPredictor('blackjack');
+              }
+              if (typeof window.applyBlackjackPrediction === 'function') {
+                window.applyBlackjackPrediction(data.prediction);
+              }
+            }
+          } else if (data.status === 'waiting') {
+            // Waiting for prediction - but KEEP current one displayed
+            console.log('⏳ Waiting for new bet - keeping current prediction');
+            if (window.currentPredictor === 'blackjack' && typeof window.clearBlackjackPredictionUI === 'function') {
+              window.clearBlackjackPredictionUI();
+            }
+            
+            // Update button text to show waiting
+            const buttonContent = document.querySelector('.svelte-h4ldgr .content');
+            if (buttonContent && currentDisplayedPrediction) {
+              buttonContent.textContent = 'Waiting For New Bet';
+            }
+            // DON'T clear the grid - keep prediction visible
+          } else {
+            console.log('📭 No prediction yet, status:', data.status);
+          }
+        } catch (error) {
+          console.error('Error polling prediction:', error);
+        }
+      }
+
+      // Store current prediction to keep it displayed
+      let currentDisplayedPrediction = null;
+
+      // Handle prediction received from backend (only for crash predictor)
+      function handlePredictionReceived(prediction) {
+        // Only handle crash predictions - mines uses old auto-prediction system
+        if (prediction.game_type === 'crash') {
+          // Update crash prediction display
+          if (currentPredictor === 'crash' || !currentPredictor) {
+            if (!currentPredictor) selectPredictor('crash');
+            
+            if (prediction.predictions) {
+              // Check if this is truly new data before updating
+              let shouldUpdate = false;
+              
+              if (prediction.historical_data && prediction.historical_data.crash_points && prediction.historical_data.crash_points.length > 0) {
+                const crashPoints = prediction.historical_data.crash_points;
+                const latestCrashPoint = crashPoints[0];
+                const latestCrashPointStr = latestCrashPoint.toFixed(4);
+                
+                // Check if latest crash point changed
+                if (window.lastLatestCrashPoint === null || window.lastLatestCrashPoint !== latestCrashPointStr) {
+                  shouldUpdate = true;
+                  window.lastLatestCrashPoint = latestCrashPointStr;
+                  console.log(`🎯 New crash game from extension! Latest: ${latestCrashPointStr}x`);
+                } else {
+                  // Check if count changed
+                  const currentCount = crashPoints.length;
+                  if (!window.lastCrashPointsCount || window.lastCrashPointsCount !== currentCount) {
+                    shouldUpdate = true;
+                    window.lastCrashPointsCount = currentCount;
+                    console.log(`🎯 New crash game added from extension! Total: ${currentCount}`);
+                  } else {
+                    console.log('⏸️ Extension prediction received but no new game data');
+                  }
+                }
+              } else {
+                // No historical data, update anyway (first time)
+                shouldUpdate = true;
+              }
+              
+              if (shouldUpdate) {
+                console.log(`[+] Updating crash prediction from extension: ${prediction.predictions.safe_prediction.toFixed(2)}x (Safe), ${prediction.predictions.medium_prediction.toFixed(2)}x (Medium)`);
+                updateCrashPrediction(prediction.predictions);
+                lastPredictionValue = prediction.predictions.safe_prediction;
+                currentDisplayedPrediction = prediction;
+                
+                if (prediction.historical_data && prediction.historical_data.crash_points) {
+                  const recentHistory = JSON.stringify(prediction.historical_data.crash_points.slice(0, 30));
+                  lastGameValues = recentHistory;
+                  updateGameValues(prediction.historical_data.crash_points);
+                }
+              }
+            }
+          }
+        }
+        // Mines predictions are handled by the old auto-prediction system in script.js
+      }
+
+      // Display mines prediction - DISABLED: Mines uses old auto-prediction system in script.js
+      // This function is kept for crash predictor compatibility but not used for mines
+      function displayMinesPrediction(gems, bombs) {
+        // Do nothing - mines predictions are handled by script.js auto-prediction system
+        console.log('⚠️ displayMinesPrediction called but mines uses old auto-prediction system');
+      }
+
+      // Start polling for predictions
+      function startPredictionPolling() {
+        if (predictionPollInterval) {
+          clearInterval(predictionPollInterval);
+        }
+        
+        console.log('🔄 Starting prediction polling for extension');
+        // Poll every 1 second
+        predictionPollInterval = setInterval(pollForPrediction, 1000);
+        
+        // Also poll immediately
+        pollForPrediction();
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const stakeTokenInput = document.querySelector('input[id="stake_token"]');
+        const predictButton = document.querySelector('button.svelte-h4ldgr');
+        const buttonContent = predictButton ? predictButton.querySelector('.content') : null;
+
+        function updateMinesButtonState() {
+          if (!predictButton || !buttonContent) return;
+          if (currentPredictor !== 'mines') return;
+          const token = stakeTokenInput?.value?.trim() || '';
+          if (!token) {
+            buttonContent.textContent = 'Connect';
+            predictButton.disabled = true;
+            predictButton.style.opacity = '0.5';
+            predictButton.style.cursor = 'not-allowed';
+          } else {
+            buttonContent.textContent = 'Connect';
+            predictButton.disabled = false;
+            predictButton.style.opacity = '1';
+            predictButton.style.cursor = 'pointer';
+          }
+        }
+
+        if (stakeTokenInput) {
+          stakeTokenInput.addEventListener('input', function() {
+            updateMinesButtonState();
+          });
+        }
+
+        if (predictButton) {
+          predictButton.addEventListener('click', function(e) {
+            const buttonText = buttonContent?.textContent?.trim();
+
+            if (currentPredictor === 'mines') {
+              return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (buttonText === 'Extension Active' || buttonText === 'Extension Connected') {
+              return false;
+            }
+
+            if (buttonText === 'Waiting for Extension' || buttonText === 'Extension Disconnected') {
+              alert('Please connect the Soul Predictor extension on Stake.ac first.\n\nInstall the Tampermonkey script and enter your API token there.');
+              return false;
+            }
+
+            if (currentPredictor === 'crash' && buttonText === 'Connect') {
+              handleCrashConnect();
+              return false;
+            }
+
+            return false;
+          });
+        }
+
+        const predictorForm = document.getElementById('predictor-form');
+        if (predictorForm) {
+          predictorForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          });
+        }
+
+        updateMinesButtonState();
+      });
+
+      // Three.js initialization for crash predictor
+      let crashScene = null;
+      let crashRenderer = null;
+      let crashAnimationId = null;
+
+      function initCrashThreeJS() {
+        const canvas = document.getElementById('crash-three-canvas');
+        const container = document.querySelector('.crash-graph-container');
+        
+        if (!canvas || !container || typeof THREE === 'undefined') return;
+        
+        // Get container dimensions
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        
+        // Clear previous scene
+        if (crashAnimationId) {
+          cancelAnimationFrame(crashAnimationId);
+        }
+        
+        // Set canvas size
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Create scene
+        crashScene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        
+        // Create renderer
+        crashRenderer = new THREE.WebGLRenderer({ 
+          canvas: canvas, 
+          alpha: true, 
+          antialias: true 
+        });
+        crashRenderer.setSize(width, height);
+        crashRenderer.setClearColor(0x000000, 0);
+        
+        // Create particles
+        const particleCount = 300;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        
+        for (let i = 0; i < particleCount * 3; i++) {
+          positions[i] = (Math.random() - 0.5) * 800;
+        }
+        
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        
+        const material = new THREE.PointsMaterial({
+          color: 0x8b5cf6,
+          size: 2,
+          transparent: true,
+          opacity: 0.5,
+          blending: THREE.AdditiveBlending
+        });
+        
+        const particles = new THREE.Points(geometry, material);
+        crashScene.add(particles);
+        
+        // Position camera
+        camera.position.z = 500;
+        
+        // Animation
+        function animate() {
+          crashAnimationId = requestAnimationFrame(animate);
+          
+          particles.rotation.x += 0.001;
+          particles.rotation.y += 0.002;
+          
+          const positions = particles.geometry.attributes.position.array;
+          for (let i = 1; i < positions.length; i += 3) {
+            positions[i] += Math.sin(Date.now() * 0.001 + i) * 0.1;
+          }
+          particles.geometry.attributes.position.needsUpdate = true;
+          
+          crashRenderer.render(crashScene, camera);
+        }
+        
+        animate();
+        
+        // Handle resize
+        function handleResize() {
+          const newWidth = container.clientWidth;
+          const newHeight = container.clientHeight;
+          camera.aspect = newWidth / newHeight;
+          camera.updateProjectionMatrix();
+          crashRenderer.setSize(newWidth, newHeight);
+        }
+        
+        window.addEventListener('resize', handleResize);
+      }
+
+      // Attach event listeners to selection cards as fallback
+      document.addEventListener('DOMContentLoaded', function() {
+        const minesCard = document.querySelector('.selection-card[onclick*="mines"]');
+        const crashCard = document.querySelector('.selection-card[onclick*="crash"]');
+        const molesCard = document.querySelector('.selection-card[onclick*="moles"]');
+        
+        if (minesCard) {
+          minesCard.addEventListener('click', function() {
+            if (window.selectPredictor) {
+              window.selectPredictor('mines');
+            }
+          });
+        }
+        
+        if (crashCard) {
+          crashCard.addEventListener('click', function() {
+            if (window.selectPredictor) {
+              window.selectPredictor('crash');
+              setTimeout(initCrashThreeJS, 200);
+            }
+          });
+        }
+
+        if (molesCard) {
+          molesCard.addEventListener('click', function() {
+            if (window.selectPredictor) {
+              window.selectPredictor('moles');
+            }
+          });
+        }
+
+        const blackjackCard = document.querySelector('.selection-card[onclick*="blackjack"]');
+        if (blackjackCard) {
+          blackjackCard.addEventListener('click', function() {
+            if (window.selectPredictor) {
+              window.selectPredictor('blackjack');
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

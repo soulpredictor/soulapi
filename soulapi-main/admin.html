@@ -1,0 +1,1185 @@
+
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoulAI | Key Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #09090b;
+        }
+        
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .glass-panel {
+            background: linear-gradient(180deg, rgba(24, 24, 27, 0.6) 0%, rgba(24, 24, 27, 0.4) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel-hover:hover {
+            background: linear-gradient(180deg, rgba(39, 39, 42, 0.6) 0%, rgba(24, 24, 27, 0.5) 100%);
+            border-color: rgba(61, 246, 4, 0.2);
+        }
+
+        .glow-effect {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(61,246,4,0.08) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(61,246,4,0.5); }
+
+        /* Custom Toggle Switch styling base */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #3DF604;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #3DF604;
+        }
+    </style>
+</head>
+<body class="text-zinc-200 min-h-screen bg-grid-pattern relative antialiased selection:bg-[#3DF604]/20 selection:text-[#3DF604]">
+    
+    <div class="glow-effect"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-zinc-950/50 backdrop-blur-md border-b border-white/5">
+        <a href="1.html" class="flex items-center gap-3 group">
+            <div class="w-8 h-8 bg-zinc-900 border border-white/10 rounded flex items-center justify-center text-[#3DF604] group-hover:border-[#3DF604]/50 transition-colors">
+                <span class="text-sm font-medium tracking-tight">S</span>
+            </div>
+            <span class="font-medium tracking-tight text-lg text-zinc-100 hidden sm:block">SoulAI<span class="text-zinc-500 font-light"> / Admin</span></span>
+        </a>
+        
+        <div class="hidden md:flex items-center gap-1 bg-zinc-900/50 border border-white/5 rounded-full p-1 shadow-inner">
+            <a href="1.html#studio" class="text-xs font-medium text-zinc-400 hover:text-zinc-100 hover:bg-white/5 px-4 py-1.5 rounded-full transition-all">Studio</a>
+            <a href="1.html#custom-services" class="text-xs font-medium text-zinc-400 hover:text-zinc-100 hover:bg-white/5 px-4 py-1.5 rounded-full transition-all">Services</a>
+            <a href="user.html" class="text-xs font-medium text-zinc-400 hover:text-zinc-100 hover:bg-white/5 px-4 py-1.5 rounded-full transition-all">User Panel</a>
+        </div>
+
+        <button id="adminLogoutBtn" class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-zinc-900 border border-white/10 hover:border-red-500/50 hover:text-red-400 transition-colors">
+            <span>Logout</span>
+            <iconify-icon icon="solar:logout-2-linear" class="text-sm"></iconify-icon>
+        </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-28 pb-16 px-3 sm:px-6 lg:px-8 max-w-[1920px] mx-auto w-full">
+        
+        <!-- Header -->
+        <header class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-medium tracking-tight text-zinc-100">Key Management</h1>
+                <p class="mt-2 text-sm text-zinc-400 max-w-xl leading-relaxed">
+                    Overview and control panel for user access, predictor permissions, and support resolution.
+                </p>
+            </div>
+        </header>
+
+        <section class="mb-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-3">
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Users</p>
+                    <p id="adminStatTotalUsers" class="text-2xl font-medium text-zinc-100 mt-1">--</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Approved</p>
+                    <p id="adminStatApprovedUsers" class="text-2xl font-medium text-[#3DF604] mt-1">--</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Active Plans</p>
+                    <p id="adminStatActivePlans" class="text-2xl font-medium text-zinc-100 mt-1">--</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Turbo</p>
+                    <p id="adminStatTurboPlans" class="text-2xl font-medium text-amber-400 mt-1">--</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Tickets</p>
+                    <p id="adminStatOpenTickets" class="text-2xl font-medium text-zinc-100 mt-1">--</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Pending</p>
+                    <p id="adminStatPendingTickets" class="text-2xl font-medium text-amber-400 mt-1">--</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Session</p>
+                    <p id="adminSessionState" class="text-xs font-medium text-zinc-400 mt-2">Locked</p>
+                </div>
+                <div class="glass-panel rounded-2xl p-4">
+                    <p class="text-[10px] tracking-[0.2em] uppercase text-zinc-500">Last Sync</p>
+                    <p id="adminStatLastSync" class="text-xs font-medium text-zinc-400 mt-2">--</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Login -->
+        <section id="adminLoginSection" class="mb-8">
+            <div class="glass-panel rounded-2xl px-4 py-3 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <p class="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500">Admin Authentication</p>
+                    <p class="text-xs text-zinc-400 max-w-md">
+                        Enter the admin credential to unlock the directory, predictor controls and ticket console.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                    <input id="adminCredentialInput" type="password" class="w-full sm:w-52 bg-zinc-950/60 border border-white/10 rounded-full px-3 py-2 text-xs text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-[#3DF604]/50 focus:ring-1 focus:ring-[#3DF604]/40" placeholder="Admin credential">
+                    <button id="adminLoginBtn" class="px-4 py-2 rounded-full text-xs font-medium bg-[#3DF604]/10 text-[#3DF604] border border-[#3DF604]/30 hover:bg-[#3DF604]/20 transition-colors flex items-center justify-center gap-2">
+                        <span>Authenticate</span>
+                    </button>
+                </div>
+            </div>
+            <div id="adminLoginMessage" class="mt-2 text-[11px] text-zinc-500"></div>
+        </section>
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Left Column: Lists -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                
+                <!-- Users Panel -->
+                <div class="glass-panel rounded-2xl flex flex-col max-h-[500px]">
+                    <div class="p-5 border-b border-white/5 flex items-center justify-between bg-white/[0.01] rounded-t-2xl">
+                        <div class="flex items-center gap-2">
+                            <iconify-icon icon="solar:users-group-two-rounded-linear" class="text-[#3DF604] text-lg"></iconify-icon>
+                            <h2 class="text-sm font-medium text-zinc-100 tracking-tight">Access Directory</h2>
+                        </div>
+                        <button id="adminRefreshUsersBtn" class="text-xs text-zinc-400 hover:text-zinc-100 p-1.5 rounded-md hover:bg-white/5 transition-colors flex items-center gap-1">
+                            <iconify-icon icon="solar:refresh-circle-linear" class="text-sm"></iconify-icon>
+                        </button>
+                    </div>
+                    <div class="p-3 border-b border-white/5 bg-zinc-950/40 space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input id="adminUserFilterEmail" type="text" placeholder="Filter by email..." class="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#3DF604]/50">
+                            <select id="adminUserFilterStatus" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-[#3DF604]/50">
+                                <option value="">All statuses</option>
+                                <option value="approved">Approved</option>
+                                <option value="pending">Pending</option>
+                                <option value="revoked">Revoked</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input id="adminUserFilterFromDate" type="date" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-[#3DF604]/50">
+                            <input id="adminUserFilterToDate" type="date" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-[#3DF604]/50">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span id="adminUsersFilterCount" class="text-[11px] text-zinc-500">0 shown</span>
+                            <button id="adminUserFilterResetBtn" class="text-[11px] px-2 py-1 rounded-md border border-white/10 text-zinc-400 hover:text-zinc-100 hover:border-white/20 transition-colors">Reset filters</button>
+                        </div>
+                    </div>
+                    <div id="adminUsersList" class="p-3 space-y-2 overflow-y-auto flex-1">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Tickets Panel -->
+                <div class="glass-panel rounded-2xl flex flex-col max-h-[400px]">
+                    <div class="p-5 border-b border-white/5 flex items-center justify-between bg-white/[0.01] rounded-t-2xl">
+                        <div class="flex items-center gap-2">
+                            <iconify-icon icon="solar:ticket-linear" class="text-[#3DF604] text-lg"></iconify-icon>
+                            <h2 class="text-sm font-medium text-zinc-100 tracking-tight">Active Tickets</h2>
+                        </div>
+                        <button id="adminRefreshTicketsBtn" class="text-xs text-zinc-400 hover:text-zinc-100 p-1.5 rounded-md hover:bg-white/5 transition-colors flex items-center gap-1">
+                            <iconify-icon icon="solar:refresh-circle-linear" class="text-sm"></iconify-icon>
+                        </button>
+                    </div>
+                    <div id="adminTicketsList" class="p-3 space-y-2 overflow-y-auto flex-1">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Details -->
+            <div class="lg:col-span-8 flex flex-col gap-6">
+                
+                <!-- User Details Panel -->
+                <div class="glass-panel rounded-2xl">
+                    <div class="p-6 border-b border-white/5 bg-white/[0.01] rounded-t-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <p class="text-xs text-zinc-500 font-medium uppercase tracking-widest mb-1">Identity Profile</p>
+                            <h2 class="text-lg font-medium text-zinc-100 tracking-tight" id="adminUserEmailLabel">Select a user</h2>
+                        </div>
+                        <div id="adminUserStatusBadges" class="flex flex-wrap items-center gap-2">
+                            <!-- Badges injected here -->
+                        </div>
+                    </div>
+                    
+                    <div id="adminUserDetailsBody" class="p-6">
+                        <div class="h-40 flex items-center justify-center text-sm text-zinc-500 border border-dashed border-white/10 rounded-xl">
+                            Select a user from the directory to view and manage details.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ticket Details Panel -->
+                <div class="glass-panel rounded-2xl flex flex-col h-[400px]">
+                    <div class="p-5 border-b border-white/5 bg-white/[0.01] rounded-t-2xl">
+                        <p class="text-xs text-zinc-500 font-medium uppercase tracking-widest mb-1">Support Resolution</p>
+                        <h2 class="text-base font-medium text-zinc-100 tracking-tight truncate" id="adminTicketHeader">Select a ticket</h2>
+                    </div>
+                    
+                    <div class="flex-1 p-5 overflow-hidden flex flex-col">
+                        <div id="adminTicketConversation" class="flex-1 overflow-y-auto pr-2 space-y-4 mb-4 flex flex-col">
+                            <div class="m-auto text-sm text-zinc-500">No conversation selected.</div>
+                        </div>
+                        
+                        <div class="mt-auto relative">
+                            <input id="adminTicketReplyInput" type="text" class="w-full bg-zinc-900/80 border border-white/10 rounded-xl pl-4 pr-24 py-3 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#3DF604]/50 focus:ring-1 focus:ring-[#3DF604]/50 transition-all" placeholder="Type response...">
+                            <button id="adminTicketReplyBtn" class="absolute right-1.5 top-1.5 bottom-1.5 px-4 rounded-lg bg-zinc-800 text-zinc-300 text-xs font-medium hover:bg-[#3DF604] hover:text-zinc-950 transition-colors flex items-center gap-2">
+                                Send <iconify-icon icon="solar:plain-linear"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    <div class="glass-panel rounded-2xl p-5">
+                        <p class="text-xs text-zinc-500 font-medium uppercase tracking-widest mb-1">Operations Radar</p>
+                        <h3 class="text-base font-medium text-zinc-100 tracking-tight mb-4">Live Admin Context</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center justify-between p-3 rounded-lg bg-zinc-900/50 border border-white/5">
+                                <span class="text-zinc-500">Selected user</span>
+                                <span id="adminSelectedUserState" class="text-zinc-200 truncate max-w-[55%] text-right">None</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-lg bg-zinc-900/50 border border-white/5">
+                                <span class="text-zinc-500">Selected ticket</span>
+                                <span id="adminSelectedTicketState" class="text-zinc-200 truncate max-w-[55%] text-right">None</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-lg bg-zinc-900/50 border border-white/5">
+                                <span class="text-zinc-500">Queue health</span>
+                                <span id="adminQueueHealth" class="text-zinc-300">Idle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-5">
+                        <p class="text-xs text-zinc-500 font-medium uppercase tracking-widest mb-1">Quick Actions</p>
+                        <h3 class="text-base font-medium text-zinc-100 tracking-tight mb-4">Workflow Shortcuts</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <button id="adminQuickRefreshAllBtn" class="px-3 py-2 rounded-lg text-xs font-medium bg-zinc-900/70 border border-white/10 text-zinc-200 hover:border-[#3DF604]/40 hover:text-[#3DF604] transition-colors">Refresh Directory + Tickets</button>
+                            <button id="adminQuickResetAllBtn" class="px-3 py-2 rounded-lg text-xs font-medium bg-zinc-900/70 border border-white/10 text-zinc-200 hover:border-amber-400/40 hover:text-amber-400 transition-colors">Reset All Daily Limits</button>
+                            <button id="adminQuickOpenUserPanelBtn" class="px-3 py-2 rounded-lg text-xs font-medium bg-zinc-900/70 border border-white/10 text-zinc-200 hover:border-white/30 transition-colors">Open User Panel</button>
+                            <button id="adminQuickOpenSiteBtn" class="px-3 py-2 rounded-lg text-xs font-medium bg-zinc-900/70 border border-white/10 text-zinc-200 hover:border-white/30 transition-colors">Open Public Site</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+<script>
+(function() {
+    const API_BASE = window.API_BASE || 'https://api.soulpredictor.xyz';
+
+    function getAdminToken() {
+        try {
+            return sessionStorage.getItem('adminToken') || sessionStorage.getItem('admin_token') || 
+                   localStorage.getItem('adminToken') || localStorage.getItem('admin_token') || '';
+        } catch (e) {
+            return '';
+        }
+    }
+
+    function getAdminHeaders(extra) {
+        const headers = Object.assign({}, extra || {});
+        const token = getAdminToken();
+        if (token) headers['X-Admin-Token'] = token;
+        return headers;
+    }
+
+    // Modernized badge styling matching the professional theme
+    function statusBadge(text, type) {
+        const base = 'px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 border';
+        
+        let icon = '';
+        if (type === 'active') {
+            icon = '<span class="w-1.5 h-1.5 rounded-full bg-[#3DF604]"></span>';
+            return `<span class="${base} bg-[#3DF604]/10 text-[#3DF604] border-[#3DF604]/20">${icon}${text}</span>`;
+        }
+        if (type === 'pending') {
+            icon = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>';
+            return `<span class="${base} bg-amber-400/10 text-amber-400 border-amber-400/20">${icon}${text}</span>`;
+        }
+        if (type === 'danger') {
+            icon = '<span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>';
+            return `<span class="${base} bg-red-400/10 text-red-400 border-red-400/20">${icon}${text}</span>`;
+        }
+        icon = '<span class="w-1.5 h-1.5 rounded-full bg-zinc-400"></span>';
+        return `<span class="${base} bg-zinc-800/50 text-zinc-300 border-zinc-700">${icon}${text}</span>`;
+    }
+
+    let adminToken = '';
+
+    const usersListEl = document.getElementById('adminUsersList');
+    const ticketsListEl = document.getElementById('adminTicketsList');
+    const refreshUsersBtn = document.getElementById('adminRefreshUsersBtn');
+    const refreshTicketsBtn = document.getElementById('adminRefreshTicketsBtn');
+    const logoutBtn = document.getElementById('adminLogoutBtn');
+
+    const userEmailLabel = document.getElementById('adminUserEmailLabel');
+    const userStatusBadges = document.getElementById('adminUserStatusBadges');
+    const userDetailsBody = document.getElementById('adminUserDetailsBody');
+
+    const ticketHeader = document.getElementById('adminTicketHeader');
+    const ticketConversation = document.getElementById('adminTicketConversation');
+    const ticketReplyInput = document.getElementById('adminTicketReplyInput');
+    const ticketReplyBtn = document.getElementById('adminTicketReplyBtn');
+
+    const adminCredentialInput = document.getElementById('adminCredentialInput');
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    const adminLoginMessage = document.getElementById('adminLoginMessage');
+    const adminLoginSection = document.getElementById('adminLoginSection');
+    const statTotalUsersEl = document.getElementById('adminStatTotalUsers');
+    const statApprovedUsersEl = document.getElementById('adminStatApprovedUsers');
+    const statActivePlansEl = document.getElementById('adminStatActivePlans');
+    const statTurboPlansEl = document.getElementById('adminStatTurboPlans');
+    const statOpenTicketsEl = document.getElementById('adminStatOpenTickets');
+    const statPendingTicketsEl = document.getElementById('adminStatPendingTickets');
+    const statLastSyncEl = document.getElementById('adminStatLastSync');
+    const sessionStateEl = document.getElementById('adminSessionState');
+    const selectedUserStateEl = document.getElementById('adminSelectedUserState');
+    const selectedTicketStateEl = document.getElementById('adminSelectedTicketState');
+    const queueHealthEl = document.getElementById('adminQueueHealth');
+    const quickRefreshAllBtn = document.getElementById('adminQuickRefreshAllBtn');
+    const quickResetAllBtn = document.getElementById('adminQuickResetAllBtn');
+    const quickOpenUserPanelBtn = document.getElementById('adminQuickOpenUserPanelBtn');
+    const quickOpenSiteBtn = document.getElementById('adminQuickOpenSiteBtn');
+    const userFilterEmailInput = document.getElementById('adminUserFilterEmail');
+    const userFilterStatusSelect = document.getElementById('adminUserFilterStatus');
+    const userFilterFromDateInput = document.getElementById('adminUserFilterFromDate');
+    const userFilterToDateInput = document.getElementById('adminUserFilterToDate');
+    const userFilterResetBtn = document.getElementById('adminUserFilterResetBtn');
+    const usersFilterCountEl = document.getElementById('adminUsersFilterCount');
+
+    let adminUsers = [];
+    let adminTickets = [];
+    let currentTicketId = null;
+    let currentSelectedUserEmail = '';
+
+    function setStat(el, value) {
+        if (!el) return;
+        el.textContent = value;
+    }
+
+    function updateOperationsRadar() {
+        setStat(sessionStateEl, getAdminToken() ? 'Active' : 'Locked');
+        if (sessionStateEl) {
+            sessionStateEl.className = getAdminToken() ? 'text-xs font-medium text-[#3DF604] mt-2' : 'text-xs font-medium text-zinc-400 mt-2';
+        }
+        setStat(selectedUserStateEl, currentSelectedUserEmail || 'None');
+        const activeTicket = adminTickets.find(t => t.id === currentTicketId);
+        setStat(selectedTicketStateEl, activeTicket?.subject || 'None');
+        const openCount = adminTickets.filter(t => (t.status || '').toLowerCase() === 'open').length;
+        const pendingCount = adminUsers.filter(u => {
+            const status = (u.access_status || '').toLowerCase();
+            return status === 'pending' || status === '';
+        }).length;
+        const health = openCount > 10 ? 'Busy' : openCount > 0 || pendingCount > 0 ? 'Active' : 'Idle';
+        setStat(queueHealthEl, health);
+        if (queueHealthEl) {
+            queueHealthEl.className = health === 'Busy' ? 'text-red-400' : health === 'Active' ? 'text-amber-400' : 'text-zinc-300';
+        }
+    }
+
+    function updateAdminOverviewStats() {
+        const totalUsers = adminUsers.length;
+        const approvedUsers = adminUsers.filter(u => {
+            const status = (u.access_status || '').toLowerCase();
+            const plan = (u.subscription_plan || '').toLowerCase();
+            const expires = u.plan_expires_at ? new Date(u.plan_expires_at) : null;
+            const planActive = !!(plan && plan !== 'free' && expires && expires > new Date());
+            const hasPredictorAccess = u.mines_access_enabled === true || u.crash_access_enabled === true || u.blackjack_access_enabled === true || u.moles_access_enabled === true;
+            return status === 'approved' || planActive || hasPredictorAccess;
+        }).length;
+        const activePlans = adminUsers.filter(u => {
+            const plan = (u.subscription_plan || '').toLowerCase();
+            const expires = u.plan_expires_at ? new Date(u.plan_expires_at) : null;
+            return !!(plan && plan !== 'free' && expires && expires > new Date());
+        }).length;
+        const turboPlans = adminUsers.filter(u => (u.subscription_plan || '').toLowerCase() === 'turbo').length;
+        const openTickets = adminTickets.filter(t => (t.status || '').toLowerCase() === 'open').length;
+        const pendingTickets = adminTickets.filter(t => (t.status || '').toLowerCase() !== 'closed').length;
+        setStat(statTotalUsersEl, String(totalUsers));
+        setStat(statApprovedUsersEl, String(approvedUsers));
+        setStat(statActivePlansEl, String(activePlans));
+        setStat(statTurboPlansEl, String(turboPlans));
+        setStat(statOpenTicketsEl, String(openTickets));
+        setStat(statPendingTicketsEl, String(pendingTickets));
+        setStat(statLastSyncEl, new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+        updateOperationsRadar();
+    }
+
+    function showNotification(message, type) {
+        // Simplified console log for this scope, could be a toast system
+        console.log('[ADMIN]', type || 'info', message);
+    }
+
+    function getEffectiveUserStatus(user) {
+        const accessStatus = user.access_status || 'pending';
+        const planName = (user.subscription_plan || '').toString().toLowerCase();
+        const hasPlan = planName && planName !== 'free';
+        const planExpiresAt = user.plan_expires_at ? new Date(user.plan_expires_at) : null;
+        const now = new Date();
+        const planActive = !!(hasPlan && planExpiresAt && planExpiresAt > now);
+        const hasPredictorAccess = user.mines_access_enabled === true || user.crash_access_enabled === true || user.blackjack_access_enabled === true || user.moles_access_enabled === true;
+        if (planActive || hasPredictorAccess) return 'approved';
+        return accessStatus;
+    }
+
+    function getFilteredUsers(users) {
+        const emailFilter = (userFilterEmailInput?.value || '').trim().toLowerCase();
+        const statusFilter = (userFilterStatusSelect?.value || '').trim().toLowerCase();
+        const fromDateValue = userFilterFromDateInput?.value || '';
+        const toDateValue = userFilterToDateInput?.value || '';
+        const fromDate = fromDateValue ? new Date(fromDateValue + 'T00:00:00') : null;
+        const toDate = toDateValue ? new Date(toDateValue + 'T23:59:59.999') : null;
+
+        return users.filter(user => {
+            const email = String(user.email || '').toLowerCase();
+            const effectiveStatus = String(getEffectiveUserStatus(user) || '').toLowerCase();
+            const created = user.created_at ? new Date(user.created_at) : null;
+
+            if (emailFilter && !email.includes(emailFilter)) return false;
+            if (statusFilter && effectiveStatus !== statusFilter) return false;
+            if (fromDate && (!created || created < fromDate)) return false;
+            if (toDate && (!created || created > toDate)) return false;
+            return true;
+        });
+    }
+
+    function renderUsersList(users) {
+        if (!usersListEl) return;
+        usersListEl.innerHTML = '';
+        if (!Array.isArray(users) || users.length === 0) {
+            usersListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center">No users match current filters.</div>';
+            if (usersFilterCountEl) usersFilterCountEl.textContent = '0 shown';
+            return;
+        }
+
+        users.forEach(user => {
+            const effectiveStatus = getEffectiveUserStatus(user);
+            const el = document.createElement('button');
+            el.type = 'button';
+            el.className = 'w-full text-left p-3 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/[0.02] transition-all flex flex-col gap-2 group';
+
+            let badgeType = 'pending';
+            if (effectiveStatus === 'approved') badgeType = 'active';
+            if (effectiveStatus === 'revoked') badgeType = 'danger';
+
+            el.innerHTML = `
+                <div class="flex items-center justify-between w-full">
+                    <div class="text-sm font-medium text-zinc-300 truncate group-hover:text-zinc-100 transition-colors">${user.email || 'Unknown'}</div>
+                    ${statusBadge(effectiveStatus === 'approved' ? 'Approved' : effectiveStatus === 'revoked' ? 'Revoked' : 'Pending', badgeType)}
+                </div>
+                <div class="flex items-center justify-between text-xs text-zinc-500 w-full">
+                    <span class="capitalize">${user.status || 'unknown'}</span>
+                    <span>${user.created_at ? new Date(user.created_at).toLocaleDateString() : ''}</span>
+                </div>
+            `;
+            el.addEventListener('click', () => renderUserDetails(user));
+            usersListEl.appendChild(el);
+        });
+
+        if (usersFilterCountEl) usersFilterCountEl.textContent = `${users.length} shown`;
+        const selected = users.find(u => (u.email || '') === currentSelectedUserEmail) || users[0];
+        renderUserDetails(selected);
+    }
+
+    function getAdminToken() {
+        return adminToken || '';
+    }
+
+    function getAdminHeaders(extra) {
+        const headers = Object.assign({}, extra || {});
+        const token = getAdminToken();
+        if (token) headers['X-Admin-Token'] = token;
+        return headers;
+    }
+
+    function setAdminLoginMessage(text, type) {
+        if (!adminLoginMessage) return;
+        adminLoginMessage.textContent = text || '';
+        if (!text) {
+            adminLoginMessage.className = 'mt-2 text-[11px] text-zinc-500';
+            return;
+        }
+        if (type === 'error') {
+            adminLoginMessage.className = 'mt-2 text-[11px] text-red-400';
+        } else if (type === 'success') {
+            adminLoginMessage.className = 'mt-2 text-[11px] text-emerald-400';
+        } else {
+            adminLoginMessage.className = 'mt-2 text-[11px] text-zinc-300';
+        }
+    }
+
+    async function performAdminLogin() {
+        if (!adminCredentialInput || !adminLoginBtn) return;
+        const value = (adminCredentialInput.value || '').trim();
+        if (!value) {
+            setAdminLoginMessage('Enter the admin credential.', 'error');
+            return;
+        }
+        adminLoginBtn.disabled = true;
+        adminLoginBtn.innerHTML = '<span class="inline-flex items-center gap-2"><span class="w-3 h-3 rounded-full border-2 border-[#3DF604]/40 border-t-transparent animate-spin"></span><span>Verifying</span></span>';
+        setAdminLoginMessage('Authenticating with server…', '');
+        try {
+            const res = await fetch(API_BASE + '/admin-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ credential: value })
+            });
+            const json = await res.json();
+            if (json.status === 'success' && json.token) {
+                adminToken = json.token;
+                setAdminLoginMessage('Admin session active.', 'success');
+                if (adminLoginSection) adminLoginSection.classList.add('hidden');
+                loadUsers();
+                loadTickets();
+                updateAdminOverviewStats();
+            } else {
+                const msg = json.message || 'Invalid admin credential.';
+                setAdminLoginMessage(msg, 'error');
+            }
+        } catch (e) {
+            setAdminLoginMessage('Unable to reach admin endpoint.', 'error');
+        } finally {
+            adminLoginBtn.disabled = false;
+            adminLoginBtn.innerHTML = '<span>Authenticate</span>';
+        }
+    }
+
+    async function loadUsers() {
+        if (!usersListEl) return;
+        usersListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center animate-pulse">Fetching users...</div>';
+        try {
+            const res = await fetch(API_BASE + '/admin/users', { headers: getAdminHeaders() });
+            const json = await res.json();
+            if (json.status !== 'success' || !Array.isArray(json.users) || json.users.length === 0) {
+                usersListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center">Directory empty.</div>';
+                adminUsers = [];
+                if (usersFilterCountEl) usersFilterCountEl.textContent = '0 shown';
+                updateAdminOverviewStats();
+                return;
+            }
+            adminUsers = json.users.slice();
+            renderUsersList(getFilteredUsers(adminUsers));
+            updateAdminOverviewStats();
+        } catch (e) {
+            usersListEl.innerHTML = '<div class="p-4 text-xs text-red-400 text-center">Failed to connect to directory.</div>';
+            adminUsers = [];
+            if (usersFilterCountEl) usersFilterCountEl.textContent = '0 shown';
+            updateAdminOverviewStats();
+        }
+    }
+
+    function createToggle(id, label, isChecked, readonly) {
+        readonly = readonly === true;
+        return `
+            <label class="flex items-center justify-between ${readonly ? 'cursor-default' : 'cursor-pointer'} group bg-zinc-900/50 border border-white/5 rounded-lg p-3 hover:border-white/10 transition-colors">
+                <span class="text-xs font-medium text-zinc-300 group-hover:text-zinc-100 transition-colors">${label}</span>
+                <div class="relative">
+                    <input type="checkbox" id="${id}" class="sr-only" ${isChecked ? 'checked' : ''} ${readonly ? 'disabled' : ''}>
+                    <div class="block bg-zinc-800 w-10 h-6 rounded-full border border-zinc-700 transition-colors peer-checked:bg-[#3DF604]/20 peer-checked:border-[#3DF604]"></div>
+                    <div class="dot absolute left-1 top-1 bg-zinc-400 w-4 h-4 rounded-full transition-transform peer-checked:translate-x-4 peer-checked:bg-[#3DF604]"></div>
+                </div>
+            </label>
+            <style>
+                #${id}:checked ~ .dot { transform: translateX(100%); background-color: #3DF604; }
+                #${id}:checked ~ .block { background-color: rgba(61, 246, 4, 0.1); border-color: rgba(61, 246, 4, 0.3); }
+            </style>
+        `;
+    }
+
+    function renderUserDetails(user) {
+        if (!user || !userDetailsBody) return;
+        currentSelectedUserEmail = user.email || '';
+        updateOperationsRadar();
+        const accessStatus = user.access_status || 'pending';
+        const createdAt = user.access_created_at || user.created_at;
+        const approvedAt = user.access_approved_at;
+        const expiresAt = user.access_expires_at;
+
+        if (userEmailLabel) userEmailLabel.textContent = user.email || 'Unknown user';
+        
+        const planName = (user.subscription_plan || '').toString().toLowerCase();
+        const hasPlan = planName && planName !== 'free';
+        const planExpiresAt = user.plan_expires_at ? new Date(user.plan_expires_at) : null;
+        const now = new Date();
+        const planActive = !!(hasPlan && planExpiresAt && planExpiresAt > now);
+        const hasPredictorAccess = user.mines_access_enabled === true || user.crash_access_enabled === true || user.blackjack_access_enabled === true || user.moles_access_enabled === true;
+        let effectiveStatus = accessStatus;
+        if (planActive || hasPredictorAccess) {
+            effectiveStatus = 'approved';
+        }
+
+        if (userStatusBadges) {
+            let statusHtml = '';
+            if(effectiveStatus === 'approved') statusHtml += statusBadge('Access Granted', 'active');
+            else if(effectiveStatus === 'revoked') statusHtml += statusBadge('Access Revoked', 'danger');
+            else statusHtml += statusBadge('Review Pending', 'pending');
+
+            if (user.subscription_plan) statusHtml += statusBadge(String(user.subscription_plan).toUpperCase(), 'active');
+            else statusHtml += statusBadge('No Active Plan', 'danger');
+            
+            userStatusBadges.innerHTML = statusHtml;
+        }
+
+        const minesEnabled = user.mines_access_enabled === true;
+        const crashEnabled = user.crash_access_enabled === true;
+        const blackjackEnabled = user.blackjack_access_enabled === true;
+        const molesEnabled = user.moles_access_enabled === true;
+        const fakeMinesEnabled = accessStatus === 'approved';
+
+        const InfoRow = (label, val) => `
+            <div class="flex justify-between items-center py-2 border-b border-white/5 last:border-0">
+                <span class="text-xs text-zinc-500">${label}</span>
+                <span class="text-sm font-medium text-zinc-300 text-right truncate max-w-[60%]">${val}</span>
+            </div>
+        `;
+
+        userDetailsBody.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Info Column -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xs font-medium text-zinc-100 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <iconify-icon icon="solar:user-id-linear" class="text-zinc-500"></iconify-icon> Account Details
+                        </h3>
+                        <div class="bg-white/[0.02] border border-white/5 rounded-xl px-4 py-2">
+                            ${InfoRow('Email', user.email || '--')}
+                            ${InfoRow('Status', `<span class="capitalize">${user.status || 'unknown'}</span>`)}
+                            ${InfoRow('Created', createdAt ? new Date(createdAt).toLocaleString() : '--')}
+                            ${InfoRow('Approved', approvedAt ? new Date(approvedAt).toLocaleString() : '--')}
+                            ${InfoRow('Expires', expiresAt ? new Date(expiresAt).toLocaleString() : '--')}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-medium text-zinc-100 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <iconify-icon icon="solar:map-point-linear" class="text-zinc-500"></iconify-icon> Network Info
+                        </h3>
+                        <div class="bg-white/[0.02] border border-white/5 rounded-xl px-4 py-2">
+                            ${InfoRow('IP Address', user.ip_info?.ip || '--')}
+                            ${InfoRow('Location', `${user.ip_info?.city || '--'}, ${user.ip_info?.country || '--'}`)}
+                            ${InfoRow('Provider', user.ip_info?.isp || '--')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Column -->
+                <div class="space-y-6">
+                    
+                    <div>
+                        <h3 class="text-xs font-medium text-zinc-100 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <iconify-icon icon="solar:stars-minimalistic-linear" class="text-zinc-500"></iconify-icon> Plan Management
+                        </h3>
+                        <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4 space-y-4">
+                            <div class="flex items-center gap-3">
+                                <select id="adminPlanSelect" class="flex-1 bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-zinc-300 focus:border-[#3DF604]/50 focus:outline-none transition-colors">
+                                    <option value="free">Free</option>
+                                    <option value="silver">Silver</option>
+                                    <option value="gold">Gold</option>
+                                    <option value="turbo">Turbo</option>
+                                </select>
+                                <div class="flex items-center gap-2">
+                                    <input id="adminPlanDurationValue" type="number" value="30" min="1" class="w-16 bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-center focus:border-[#3DF604]/50 focus:outline-none transition-colors">
+                                    <select id="adminPlanDurationUnit" class="bg-zinc-900 border border-white/10 rounded-lg px-2 py-2 text-xs text-zinc-300 focus:border-[#3DF604]/50 focus:outline-none transition-colors">
+                                        <option value="d">Days</option>
+                                        <option value="h">Hours</option>
+                                        <option value="m">Minutes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500">Silver/Gold: Mines + Crash + Blackjack + Moles | Turbo: Fake Mines + all predictors</p>
+                            <div class="flex gap-2">
+                                <button id="adminPlanGrantBtn" class="flex-1 px-4 py-2.5 rounded-lg text-xs font-medium bg-[#3DF604]/10 text-[#3DF604] border border-[#3DF604]/20 hover:bg-[#3DF604]/20 transition-colors flex justify-center items-center gap-2">
+                                    <iconify-icon icon="solar:check-circle-linear" class="text-sm"></iconify-icon> Grant
+                                </button>
+                                <button id="adminPlanRevokeBtn" class="flex-1 px-4 py-2.5 rounded-lg text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition-colors flex justify-center items-center gap-2">
+                                    <iconify-icon icon="solar:close-circle-linear" class="text-sm"></iconify-icon> Revoke
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xs font-medium text-zinc-100 uppercase tracking-widest flex items-center gap-2">
+                                <iconify-icon icon="solar:magic-stick-3-linear" class="text-zinc-500"></iconify-icon> Access (from Plan)
+                            </h3>
+                        </div>
+                        <div class="space-y-2">
+                            ${createToggle('adminMinesAccessToggle', 'Mines Predictor', minesEnabled, true)}
+                            ${createToggle('adminCrashAccessToggle', 'Crash Predictor', crashEnabled, true)}
+                            ${createToggle('adminBlackjackAccessToggle', 'Blackjack Predictor', blackjackEnabled, true)}
+                            ${createToggle('adminMolesAccessToggle', 'Moles Predictor', molesEnabled, true)}
+                            ${createToggle('adminFakeMinesToggle', 'Fake Mines', fakeMinesEnabled, true)}
+                        </div>
+                        <p class="text-[11px] text-zinc-500 mt-2">Toggles update when Grant/Revoke is applied. Read-only display.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-medium text-zinc-100 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <iconify-icon icon="solar:restart-bold" class="text-zinc-500"></iconify-icon> Daily Limits Reset
+                        </h3>
+                        <div class="bg-white/[0.02] border border-white/5 rounded-xl p-4 space-y-3">
+                            <input id="adminLimitResetEmail" type="email" value="${user.email || ''}" placeholder="user@email.com" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-zinc-300 focus:border-[#3DF604]/50 focus:outline-none transition-colors">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <button id="adminResetSelectedLimitBtn" class="px-4 py-2.5 rounded-lg text-xs font-medium bg-[#3DF604]/10 text-[#3DF604] border border-[#3DF604]/20 hover:bg-[#3DF604]/20 transition-colors flex justify-center items-center gap-2">
+                                    <iconify-icon icon="solar:user-check-linear" class="text-sm"></iconify-icon> Reset This User
+                                </button>
+                                <button id="adminResetAllDailyBtn" class="px-4 py-2.5 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition-colors flex justify-center items-center gap-2">
+                                    <iconify-icon icon="solar:users-group-rounded-linear" class="text-sm"></iconify-icon> Reset All Users
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        `;
+
+        // Event Listeners Re-binding
+        const requestId = user.access_request_id || user.id;
+        const currentPlan = (user.subscription_plan || 'free').toString().toLowerCase();
+        const planSelectEl = document.getElementById('adminPlanSelect');
+        const planDurationValueEl = document.getElementById('adminPlanDurationValue');
+        const planDurationUnitEl = document.getElementById('adminPlanDurationUnit');
+        if (planSelectEl) {
+            planSelectEl.value = currentPlan;
+        }
+
+        document.getElementById('adminPlanGrantBtn')?.addEventListener('click', async () => {
+            if (!planSelectEl) return;
+            const plan = planSelectEl.value || 'free';
+            let duration = null;
+            let unit = 'd';
+            if (plan !== 'free' && planDurationValueEl && planDurationUnitEl) {
+                const val = parseInt(planDurationValueEl.value || '0', 10);
+                if (val < 1) {
+                    showNotification('Invalid plan duration', 'error');
+                    return;
+                }
+                duration = val;
+                unit = planDurationUnitEl.value || 'd';
+            }
+            const p = plan.toLowerCase();
+            // Plan access mapping:
+            // - Silver: Mines + Crash + Blackjack + Moles predictors
+            // - Gold: same as Silver
+            // - Turbo: All features (Mines + Crash + Blackjack + Moles + Fake Mines)
+            const minesEnabled = (p === 'silver' || p === 'gold' || p === 'turbo');
+            const crashEnabled = (p === 'silver' || p === 'gold' || p === 'turbo');
+            const blackjackEnabled = (p === 'silver' || p === 'gold' || p === 'turbo');
+            const molesEnabled = (p === 'silver' || p === 'gold' || p === 'turbo');
+            const fakeMinesEnabled = (p === 'turbo');
+            try {
+                const res = await fetch(API_BASE + '/admin/update-plan', {
+                    method: 'POST',
+                    headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                        body: JSON.stringify({
+                            user_id: user.id,
+                            email: user.email,
+                            subscription_plan: plan,
+                            duration,
+                            unit
+                        })
+                });
+                const json = await res.json();
+                if (json.status === 'success') {
+                    const ar = await fetch(API_BASE + '/update-predictor-access', {
+                        method: 'POST',
+                        headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                        body: JSON.stringify({
+                            request_id: requestId, email: user.email,
+                            mines_access_enabled: minesEnabled, crash_access_enabled: crashEnabled, blackjack_access_enabled: blackjackEnabled, moles_access_enabled: molesEnabled, fake_mines_access_enabled: fakeMinesEnabled,
+                            mines_duration: duration, mines_unit: unit, crash_duration: duration, crash_unit: unit, blackjack_duration: duration, blackjack_unit: unit, moles_duration: duration, moles_unit: unit
+                        })
+                    });
+                    const arj = await ar.json();
+                    if (p === 'turbo') {
+                        const approveRes = await fetch(API_BASE + '/approve-access', {
+                            method: 'POST',
+                            headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                            body: JSON.stringify({ request_id: requestId, email: user.email, duration, unit })
+                        });
+                    } else if (fakeMinesEnabled === false && accessStatus === 'approved') {
+                        const revokeRes = await fetch(API_BASE + '/revoke-access', {
+                            method: 'POST',
+                            headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                            body: JSON.stringify({ request_id: requestId, email: user.email })
+                        });
+                    }
+                    showNotification('Plan granted & access updated', 'success');
+                    loadUsers();
+                } else {
+                    showNotification(json.message || 'Failed to grant plan', 'error');
+                }
+            } catch (e) {
+                showNotification('Connection failed', 'error');
+            }
+        });
+
+        document.getElementById('adminPlanRevokeBtn')?.addEventListener('click', async () => {
+            try {
+                const res = await fetch(API_BASE + '/admin/update-plan', {
+                    method: 'POST',
+                    headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({
+                        user_id: user.id,
+                        email: user.email,
+                        subscription_plan: 'free'
+                    })
+                });
+                const json = await res.json();
+                if (json.status === 'success') {
+                    await fetch(API_BASE + '/update-predictor-access', {
+                        method: 'POST',
+                        headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                        body: JSON.stringify({
+                            request_id: requestId, email: user.email,
+                            mines_access_enabled: false, crash_access_enabled: false, blackjack_access_enabled: false, moles_access_enabled: false, fake_mines_access_enabled: false,
+                            mines_duration: null, mines_unit: 'd', crash_duration: null, crash_unit: 'd', blackjack_duration: null, blackjack_unit: 'd', moles_duration: null, moles_unit: 'd'
+                        })
+                    });
+                    await fetch(API_BASE + '/revoke-access', {
+                        method: 'POST',
+                        headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                        body: JSON.stringify({ request_id: requestId, email: user.email })
+                    });
+                    showNotification('Plan revoked & access cleared', 'success');
+                    loadUsers();
+                } else {
+                    showNotification(json.message || 'Failed to revoke plan', 'error');
+                }
+            } catch (e) {
+                showNotification('Connection failed', 'error');
+            }
+        });
+
+        document.getElementById('adminResetSelectedLimitBtn')?.addEventListener('click', async () => {
+            const emailInput = document.getElementById('adminLimitResetEmail');
+            const email = (emailInput?.value || user.email || '').trim();
+            if (!email) {
+                showNotification('Email is required', 'error');
+                return;
+            }
+            try {
+                const res = await fetch(API_BASE + '/admin/reset-user-limits', {
+                    method: 'POST',
+                    headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ email })
+                });
+                const json = await res.json();
+                if (json.status === 'success') {
+                    showNotification('User daily limits reset', 'success');
+                    loadUsers();
+                } else {
+                    showNotification(json.message || 'Failed to reset user limits', 'error');
+                }
+            } catch (e) {
+                showNotification('Connection failed', 'error');
+            }
+        });
+
+        document.getElementById('adminResetAllDailyBtn')?.addEventListener('click', async () => {
+            try {
+                const res = await fetch(API_BASE + '/admin/reset-all-daily-limits', {
+                    method: 'POST',
+                    headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({})
+                });
+                const json = await res.json();
+                if (json.status === 'success') {
+                    showNotification('All daily limits reset', 'success');
+                    loadUsers();
+                } else {
+                    showNotification(json.message || 'Failed to reset all limits', 'error');
+                }
+            } catch (e) {
+                showNotification('Connection failed', 'error');
+            }
+        });
+        
+    }
+
+    async function loadTickets() {
+        if (!ticketsListEl) return;
+        ticketsListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center animate-pulse">Fetching tickets...</div>';
+        try {
+            const res = await fetch(API_BASE + '/tickets', { headers: getAdminHeaders() });
+            const json = await res.json();
+            if (json.status !== 'success' || !Array.isArray(json.tickets) || json.tickets.length === 0) {
+                ticketsListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center">No active tickets.</div>';
+                ticketConversation.innerHTML = '<div class="m-auto text-sm text-zinc-500">No conversation selected.</div>';
+                adminTickets = [];
+                updateAdminOverviewStats();
+                return;
+            }
+            adminTickets = json.tickets.slice();
+            ticketsListEl.innerHTML = '';
+            
+            json.tickets.forEach(t => {
+                const el = document.createElement('button');
+                el.type = 'button';
+                el.className = 'w-full text-left p-3 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/[0.02] transition-all flex flex-col gap-2 group';
+                
+                const isOpen = t.status === 'open';
+                
+                el.innerHTML = `
+                    <div class="flex items-center justify-between w-full">
+                        <div class="text-sm font-medium text-zinc-300 truncate group-hover:text-zinc-100 transition-colors w-2/3">${t.subject || 'Support Request'}</div>
+                        ${statusBadge(isOpen ? 'Open' : 'Closed', isOpen ? 'pending' : 'danger')}
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-zinc-500 w-full">
+                        <span class="truncate max-w-[50%]">${t.username || 'Unknown'}</span>
+                        <span>${t.created_at ? new Date(t.created_at).toLocaleDateString() : ''}</span>
+                    </div>
+                `;
+                el.addEventListener('click', () => openTicket(t));
+                ticketsListEl.appendChild(el);
+            });
+            openTicket(json.tickets[0]);
+            updateAdminOverviewStats();
+        } catch (e) {
+            ticketsListEl.innerHTML = '<div class="p-4 text-xs text-red-400 text-center">Failed to load tickets.</div>';
+            adminTickets = [];
+            updateAdminOverviewStats();
+        }
+    }
+
+    function openTicket(ticket) {
+        if (!ticketConversation) return;
+        currentTicketId = ticket.id;
+        if (ticketHeader) ticketHeader.textContent = ticket.subject || 'Support Request';
+        updateOperationsRadar();
+        
+        const messages = Array.isArray(ticket.messages) ? ticket.messages : [];
+        if (!messages.length) {
+            ticketConversation.innerHTML = '<div class="m-auto text-sm text-zinc-500">Conversation is empty.</div>';
+            return;
+        }
+        
+        ticketConversation.innerHTML = messages.map(m => {
+            const isAdmin = m.from === 'admin';
+            return `
+                <div class="flex w-full ${isAdmin ? 'justify-end' : 'justify-start'}">
+                    <div class="max-w-[75%] flex flex-col gap-1">
+                        <div class="flex items-center gap-2 px-1 ${isAdmin ? 'justify-end' : 'justify-start'}">
+                            <span class="text-[10px] font-medium uppercase tracking-wider ${isAdmin ? 'text-[#3DF604]' : 'text-zinc-500'}">${isAdmin ? 'Support Team' : 'User'}</span>
+                            <span class="text-[10px] text-zinc-600">${m.created_at ? new Date(m.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : ''}</span>
+                        </div>
+                        <div class="px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${isAdmin ? 'bg-zinc-800 text-zinc-200 rounded-tr-sm border border-white/5' : 'bg-[#3DF604]/10 text-[#3DF604] border border-[#3DF604]/20 rounded-tl-sm'}">
+                            ${m.text || ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        ticketConversation.scrollTop = ticketConversation.scrollHeight;
+    }
+
+    if (ticketReplyBtn && ticketReplyInput) {
+        ticketReplyBtn.addEventListener('click', async () => {
+            const text = ticketReplyInput.value.trim();
+            if (!text || !currentTicketId) return;
+            try {
+                const res = await fetch(API_BASE + '/ticket-reply', {
+                    method: 'POST',
+                    headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ ticket_id: currentTicketId, sender: 'admin', message: text })
+                });
+                const json = await res.json();
+                if (json.status === 'success' && json.ticket) {
+                    ticketReplyInput.value = '';
+                    openTicket(json.ticket);
+                }
+            } catch (e) {}
+        });
+        
+        ticketReplyInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') ticketReplyBtn.click();
+        });
+    }
+
+    // Ticket status controls (open / paused / closed)
+    (function initTicketStatusControls() {
+        const container = document.getElementById('adminTicketHeader')?.parentElement;
+        if (!container) return;
+
+        let controls = document.getElementById('adminTicketStatusControls');
+        if (!controls) {
+            controls = document.createElement('div');
+            controls.id = 'adminTicketStatusControls';
+            controls.className = 'mt-2 flex flex-wrap gap-1';
+            controls.innerHTML = `
+                <button data-status="open" class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors">Open</button>
+                <button data-status="paused" class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 transition-colors">Pause</button>
+                <button data-status="closed" class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-colors">Close</button>
+            `;
+            container.appendChild(controls);
+        }
+
+        controls.addEventListener('click', async (e) => {
+            const btn = e.target.closest('button[data-status]');
+            if (!btn || !currentTicketId) return;
+            const status = btn.getAttribute('data-status');
+            try {
+                const res = await fetch(API_BASE + '/ticket-status', {
+                    method: 'POST',
+                    headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ ticket_id: currentTicketId, status })
+                });
+                const json = await res.json();
+                if (json.status === 'success' && json.ticket) {
+                    openTicket(json.ticket);
+                    loadTickets();
+                }
+            } catch (err) {}
+        });
+    })();
+
+    refreshUsersBtn?.addEventListener('click', () => {
+        if (!getAdminToken()) {
+            setAdminLoginMessage('Authenticate first to load users.', 'error');
+            return;
+        }
+        loadUsers();
+    });
+    refreshTicketsBtn?.addEventListener('click', () => {
+        if (!getAdminToken()) {
+            setAdminLoginMessage('Authenticate first to load tickets.', 'error');
+            return;
+        }
+        loadTickets();
+    });
+    logoutBtn?.addEventListener('click', () => {
+        adminToken = '';
+        currentSelectedUserEmail = '';
+        currentTicketId = null;
+        adminUsers = [];
+        adminTickets = [];
+        if (adminLoginSection) adminLoginSection.classList.remove('hidden');
+        if (usersListEl) usersListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center">Authenticate to load directory.</div>';
+        if (ticketsListEl) ticketsListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center">Authenticate to load tickets.</div>';
+        setAdminLoginMessage('Session cleared. Please authenticate again to continue.', '');
+        updateAdminOverviewStats();
+    });
+
+    quickRefreshAllBtn?.addEventListener('click', () => {
+        if (!getAdminToken()) {
+            setAdminLoginMessage('Authenticate first to refresh admin data.', 'error');
+            return;
+        }
+        loadUsers();
+        loadTickets();
+    });
+
+    quickResetAllBtn?.addEventListener('click', async () => {
+        if (!getAdminToken()) {
+            setAdminLoginMessage('Authenticate first to run reset.', 'error');
+            return;
+        }
+        try {
+            const res = await fetch(API_BASE + '/admin/reset-all-daily-limits', {
+                method: 'POST',
+                headers: getAdminHeaders({ 'Content-Type': 'application/json' }),
+                body: JSON.stringify({})
+            });
+            const json = await res.json();
+            if (json.status === 'success') {
+                showNotification('All daily limits reset', 'success');
+                loadUsers();
+            } else {
+                showNotification(json.message || 'Failed to reset all limits', 'error');
+            }
+        } catch (e) {
+            showNotification('Connection failed', 'error');
+        }
+    });
+
+    quickOpenUserPanelBtn?.addEventListener('click', () => {
+        window.open('/user', '_blank', 'noopener,noreferrer');
+    });
+
+    quickOpenSiteBtn?.addEventListener('click', () => {
+        window.open('/', '_blank', 'noopener,noreferrer');
+    });
+
+    userFilterEmailInput?.addEventListener('input', () => {
+        renderUsersList(getFilteredUsers(adminUsers));
+    });
+    userFilterStatusSelect?.addEventListener('change', () => {
+        renderUsersList(getFilteredUsers(adminUsers));
+    });
+    userFilterFromDateInput?.addEventListener('change', () => {
+        renderUsersList(getFilteredUsers(adminUsers));
+    });
+    userFilterToDateInput?.addEventListener('change', () => {
+        renderUsersList(getFilteredUsers(adminUsers));
+    });
+    userFilterResetBtn?.addEventListener('click', () => {
+        if (userFilterEmailInput) userFilterEmailInput.value = '';
+        if (userFilterStatusSelect) userFilterStatusSelect.value = '';
+        if (userFilterFromDateInput) userFilterFromDateInput.value = '';
+        if (userFilterToDateInput) userFilterToDateInput.value = '';
+        renderUsersList(getFilteredUsers(adminUsers));
+    });
+
+    if (usersListEl) {
+        usersListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center">Authenticate to load directory.</div>';
+    }
+    if (usersFilterCountEl) {
+        usersFilterCountEl.textContent = '0 shown';
+    }
+    if (ticketsListEl) {
+        ticketsListEl.innerHTML = '<div class="p-4 text-xs text-zinc-500 text-center">Authenticate to load tickets.</div>';
+    }
+    updateAdminOverviewStats();
+
+    if (adminLoginBtn && adminCredentialInput) {
+        adminLoginBtn.addEventListener('click', performAdminLogin);
+        adminCredentialInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performAdminLogin();
+            }
+        });
+    }
+})();
+</script>
+
+</body></html>

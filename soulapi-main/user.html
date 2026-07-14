@@ -1,0 +1,1898 @@
+<html lang="en" class="scroll-smooth antialiased"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoulAI Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: #08080f;
+            color: #EAEAEA;
+        }
+        
+        /* Themed Grid Background */
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
+
+        /* Grid Background */
+        .grid-bg {
+            background-size: 60px 60px;
+            background-image: linear-gradient(to right, rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+        }
+        
+        /* Ambient Background Orbs */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+        }
+        .ambient-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #8B5CF6 0%, transparent 70%);
+            top: -200px;
+            left: -100px;
+            animation: orbFloat1 20s ease-in-out infinite;
+        }
+        .ambient-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #06B6D4 0%, transparent 70%);
+            bottom: -150px;
+            right: -100px;
+            animation: orbFloat2 25s ease-in-out infinite;
+        }
+        .ambient-orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #EC4899 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbFloat3 18s ease-in-out infinite;
+            opacity: 0.08;
+        }
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(80px, 60px); }
+            66% { transform: translate(-40px, 30px); }
+        }
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(-60px, -40px); }
+            66% { transform: translate(30px, -60px); }
+        }
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        /* Glass Card Effect */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 27, 38, 0.7), rgba(15, 14, 20, 0.8));
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.2);
+            background: linear-gradient(145deg, rgba(35, 32, 43, 0.75), rgba(20, 19, 25, 0.85));
+        }
+
+        /* Premium Glass */
+        .premium-glass {
+            background: linear-gradient(145deg, rgba(30, 27, 38, 0.8), rgba(15, 14, 20, 0.9));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 10px 40px -5px rgba(139, 92, 246, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+        }
+        .premium-glass:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            background: linear-gradient(145deg, rgba(40, 35, 50, 0.9), rgba(20, 18, 28, 0.95));
+            box-shadow: 0 30px 60px -10px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.3) inset;
+        }
+
+        /* Shiny CTA Button */
+        .shiny-cta {
+            --gradient-angle: 0deg;
+            --gradient-angle-offset: 0deg;
+            --gradient-percent: 20%;
+            --gradient-shine: #A78BFA;
+            --shadow-size: 2px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 9999px;
+            padding: 0.875rem 2rem;
+            font-size: 1.125rem;
+            line-height: 1.5;
+            font-weight: 500;
+            color: #ffffff;
+            background: linear-gradient(#0f0f1a, #0f0f1a) padding-box,
+            conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)), transparent 0%, #7C3AED 7%, var(--gradient-shine) 15%, #06B6D4 23%, #7C3AED 30%, transparent 40%, transparent 100%) border-box;
+            border: 2px solid transparent;
+            box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.2), 0 0 20px rgba(139, 92, 246, 0);
+            outline: none;
+            transition: --gradient-angle-offset 800ms cubic-bezier(0.25, 1, 0.5, 1), --gradient-percent 800ms cubic-bezier(0.25, 1, 0.5, 1), --gradient-shine 800ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, transform 0.4s ease;
+            cursor: pointer;
+            isolation: isolate;
+            outline-offset: 4px;
+            font-family: 'Inter', sans-serif;
+            z-index: 0;
+            animation: border-spin 2.5s linear infinite;
+            text-decoration: none;
+            display: inline-block;
+        }
+        @keyframes border-spin { to { --gradient-angle: 360deg; } }
+        .shiny-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.4), 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        .shiny-cta:hover i, .shiny-cta:hover .fa-arrow-right-long {
+            transform: translateX(4px);
+            transition: transform 0.3s ease;
+        }
+        .shiny-cta i, .shiny-cta .fa-arrow-right-long {
+            transition: transform 0.3s ease;
+        }
+
+        /* Script Tabs */
+        .script-tab {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #71717a;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .script-tab.active {
+            color: #f4f4f5;
+            border-bottom-color: #8B5CF6;
+        }
+        .script-tab:hover:not(.active) {
+            color: #a1a1aa;
+        }
+
+        /* Predictor + legacy modules — full-width strip, stacks on small screens */
+        .user-modules-strip {
+            width: 100%;
+            min-width: 0;
+        }
+        .predictor-bento {
+            display: grid;
+            width: 100%;
+            min-width: 0;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        @media (min-width: 640px) {
+            .predictor-bento {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1.15rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .predictor-bento {
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                gap: 1.25rem;
+            }
+            .predictor-bento > *:nth-child(1),
+            .predictor-bento > *:nth-child(2),
+            .predictor-bento > *:nth-child(3) {
+                grid-column: span 2;
+            }
+            .predictor-bento > *:nth-child(4) {
+                grid-column: 2 / span 2;
+            }
+            .predictor-bento > *:nth-child(5) {
+                grid-column: 4 / span 2;
+            }
+        }
+        @media (min-width: 1536px) {
+            .predictor-bento {
+                gap: 1.5rem;
+            }
+        }
+        .predictor-module-card {
+            position: relative;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.25s ease;
+        }
+        .predictor-module-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(139, 92, 246, 0.12);
+        }
+    </style>
+</head>
+<body class="selection:bg-[#8B5CF6]/20 selection:text-[#8B5CF6] min-h-screen flex flex-col relative grid-bg">
+    <!-- Background Layers -->
+    <div class="fixed inset-0 z-0 pointer-events-none grid-bg"></div>
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+    <div class="fixed inset-0 z-0 pointer-events-none bg-gradient-to-t from-[#08080f] via-transparent to-transparent h-48 bottom-0 w-full"></div>
+
+    <!-- Removed Logo (Top Left) -->
+
+    <!-- Modern Floating Navigation -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+        <div id="modern-nav" class="flex items-center gap-2 px-4 py-2 rounded-[2rem] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]" style="background: rgba(20, 20, 25, 0.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+            
+            <a href="/" class="nav-item relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white/50 hover:text-white/90 transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Home</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-0 transition-opacity duration-300"></div>
+            </a>
+
+            <a href="javascript:void(0)" class="nav-item active relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-100 transition-opacity duration-300"></div>
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Dashboard</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-100 transition-opacity duration-300"></div>
+            </a>
+
+            <a href="https://t.me/veilchief" target="_blank" class="nav-item relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white/50 hover:text-white/90 transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Support</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-0 transition-opacity duration-300"></div>
+            </a>
+
+            <button id="logoutBtn" class="nav-item relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-rose-500/50 hover:text-rose-500 transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-rose-500/20 rounded-full blur-md -z-10 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Logout</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-rose-500 rounded-full shadow-[0_0_8px_#F43F5E] opacity-0 transition-opacity duration-300"></div>
+            </button>
+
+        </div>
+    </nav>
+
+    <script>
+        function setActiveNav(element) {
+            // Remove active state from all items
+            const items = document.querySelectorAll('#modern-nav .nav-item');
+            items.forEach(item => {
+                item.classList.remove('text-white');
+                item.classList.add('text-white/50');
+                item.querySelector('.active-bg')?.classList.remove('opacity-100');
+                item.querySelector('.active-bg')?.classList.add('opacity-0');
+                item.querySelector('.active-indicator')?.classList.remove('opacity-100');
+                item.querySelector('.active-indicator')?.classList.add('opacity-0');
+            });
+            
+            // Add active state to clicked item
+            element.classList.remove('text-white/50');
+            element.classList.add('text-white');
+            element.querySelector('.active-bg')?.classList.remove('opacity-0');
+            element.querySelector('.active-bg')?.classList.add('opacity-100');
+            element.querySelector('.active-indicator')?.classList.remove('opacity-0');
+            element.querySelector('.active-indicator')?.classList.add('opacity-100');
+        }
+    </script>
+
+    <main class="relative z-10 pt-32 pb-24 px-3 sm:px-6 md:px-8 lg:px-10 max-w-[1920px] mx-auto w-full flex-1">
+        <!-- Header -->
+        <header class="mb-12 max-w-3xl">
+            <h1 class="text-4xl md:text-5xl font-medium tracking-tighter text-zinc-50 leading-tight">Access Control</h1>
+            <p class="mt-4 text-base text-zinc-400 leading-relaxed">
+                Monitor and configure your active prediction nodes, cryptographic keys, and auxiliary tools across the global network.
+            </p>
+        </header>
+        
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 xl:gap-10 items-stretch">
+            
+            <!-- Left Column -->
+            <div class="space-y-8 lg:space-y-10 flex flex-col xl:col-span-7">
+                
+                <!-- Usage Statistics (Hero Data) -->
+                <section class="glass-card rounded-3xl p-6 md:p-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                        <div>
+                            <h2 class="text-lg font-medium tracking-tight text-zinc-100">Telemetry</h2>
+                            <p class="text-sm text-zinc-500 mt-1">Real-time usage metrics and active streams</p>
+                        </div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8B5CF6] opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#8B5CF6]"></span>
+                            </span>
+                            <span class="text-xs font-mono text-zinc-300" id="statsUsernameLabel">Unlinked</span>
+                        </div>
+                    </div>
+                    
+                    <div id="userStatsBody" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-5">
+                        <div class="bg-black/40 rounded-2xl p-4 border border-white/[0.04]">
+                            <div class="text-xs font-medium tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                                <iconify-icon icon="solar:ghost-linear" stroke-width="1.5"></iconify-icon> Fake Mines
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span id="statMinesLogins" class="text-3xl font-medium font-mono text-zinc-100 tracking-tighter">--</span>
+                            <span class="text-xs text-zinc-600 font-medium">web logins</span>
+                            </div>
+                        <p class="mt-1 text-[11px] text-zinc-500">Counts logins from this panel and injector.</p>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-4 border border-white/[0.04]">
+                            <div class="text-xs font-medium tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                                <iconify-icon icon="solar:code-square-linear" stroke-width="1.5"></iconify-icon> Scripts
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span id="statScriptUsage" class="text-3xl font-medium font-mono text-zinc-100 tracking-tighter">--</span>
+                                <span class="text-xs text-zinc-600 font-medium">pings</span>
+                            </div>
+                        <p class="mt-1 text-[11px] text-zinc-500">Incremented whenever the fake mines script reports usage.</p>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-4 border border-white/[0.04]">
+                            <div class="text-xs font-medium tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                                <iconify-icon icon="solar:monitor-linear" stroke-width="1.5"></iconify-icon> Web S-Free
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">Crash</span>
+                                    <span id="statWebCrash" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">Mines</span>
+                                    <span id="statWebMines" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">Blackjack</span>
+                                    <span id="statWebBlackjack" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                            </div>
+                        <p class="mt-1 text-[11px] text-zinc-500">S-Free counts from the public web predictors.</p>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-4 border border-white/[0.04]">
+                            <div class="text-xs font-medium tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                                <iconify-icon icon="solar:chat-round-line-linear" stroke-width="1.5"></iconify-icon> Telegram
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">S-Free</span>
+                                    <span id="statTgDemo" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">Pro</span>
+                                    <span id="statTgPremium" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                            </div>
+                        <p class="mt-1 text-[11px] text-zinc-500">S-Free vs premium activity on the Telegram bot.</p>
+                        </div>
+                        <div class="bg-black/40 rounded-2xl p-4 border border-white/[0.04] col-span-2 md:col-span-2 xl:col-span-2">
+                            <div class="text-xs font-medium tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                                <iconify-icon icon="solar:radar-2-linear" stroke-width="1.5"></iconify-icon> Predictor Usage
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">Mines</span>
+                                    <span id="statMinesPredictions" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">Crash</span>
+                                    <span id="statCrashPredictions" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-zinc-500 font-medium">Blackjack</span>
+                                    <span id="statBlackjackPredictions" class="font-mono text-sm text-zinc-300">--</span>
+                                </div>
+                            </div>
+                            <p class="mt-1 text-[11px] text-zinc-500">Aggregated predictions served across web and Telegram.</p>
+                        </div>
+                    </div>
+                    <div id="userStatsMessage" class="mt-6 text-xs text-zinc-500 text-center font-mono"></div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-6 lg:space-y-8 flex flex-col xl:col-span-5">
+                
+                <!-- Access Overview -->
+                <section class="glass-card rounded-3xl p-6 md:p-8" id="accessStatusCard">
+                    <div class="mb-8">
+                        <h2 class="text-lg font-medium tracking-tight text-zinc-100">Global Clearances</h2>
+                        <p class="text-sm text-zinc-500 mt-1">Summary of your current network permissions</p>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                            <span class="text-sm font-medium text-zinc-300">Fake Mines</span>
+                            <div class="flex items-center gap-4">
+                                <span id="overviewFakeMinesTime" class="text-sm font-mono text-zinc-400">--</span>
+                                <div class="inline-flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="overviewFakeMinesDot"></span>
+                                    <span id="overviewFakeMinesStatus" class="text-xs font-medium text-zinc-500">Inactive</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                            <span class="text-sm font-medium text-zinc-300">Mines Predictor</span>
+                            <div class="flex items-center gap-4">
+                                <span id="overviewMinesTime" class="text-sm font-mono text-zinc-400">--</span>
+                                <div class="inline-flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="overviewMinesDot"></span>
+                                    <span id="overviewMinesStatus" class="text-xs font-medium text-zinc-500">Inactive</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                            <span class="text-sm font-medium text-zinc-300">Crash Predictor</span>
+                            <div class="flex items-center gap-4">
+                                <span id="overviewCrashTime" class="text-sm font-mono text-zinc-400">--</span>
+                                <div class="inline-flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="overviewCrashDot"></span>
+                                    <span id="overviewCrashStatus" class="text-xs font-medium text-zinc-500">Inactive</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                            <span class="text-sm font-medium text-zinc-300">Blackjack Predictor</span>
+                            <div class="flex items-center gap-4">
+                                <span id="overviewBlackjackTime" class="text-sm font-mono text-zinc-400">--</span>
+                                <div class="inline-flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="overviewBlackjackDot"></span>
+                                    <span id="overviewBlackjackStatus" class="text-xs font-medium text-zinc-500">Inactive</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
+                            <span class="text-sm font-medium text-zinc-300">Moles Predictor</span>
+                            <div class="flex items-center gap-4">
+                                <span id="overviewMolesTime" class="text-sm font-mono text-zinc-400">--</span>
+                                <div class="inline-flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="overviewMolesDot"></span>
+                                    <span id="overviewMolesStatus" class="text-xs font-medium text-zinc-500">Inactive</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-6 mt-4 border-t border-white/5 grid grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-[10px] tracking-widest uppercase text-zinc-500 mb-2 font-medium">Subscription</div>
+                                <div class="flex items-center gap-2">
+                                    <span id="overviewPlanName" class="font-mono text-sm text-zinc-100">--</span>
+                                    <span id="overviewPlanStatus" class="inline-flex items-center rounded-md bg-white/5 border border-white/10 px-1.5 py-0.5 text-[10px] font-medium text-zinc-400">--</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] tracking-widest uppercase text-zinc-500 mb-2 font-medium">Uptime Left</div>
+                                <div id="overviewPlanTimeRemaining" class="font-mono text-sm text-zinc-100">--</div>
+                                <div id="overviewPlanExpires" class="text-[10px] text-zinc-600 mt-1 hidden">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Secure comm + live snapshot (fills space above Crash / Blackjack column) -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 xl:gap-10 mt-8 xl:mt-10 items-stretch w-full min-w-0">
+            <div class="xl:col-span-7 min-w-0 flex flex-col">
+                <section class="glass-card rounded-3xl p-6 md:p-8 flex flex-col min-h-[min(520px,70vh)] flex-1 border border-white/[0.06]">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                        <div>
+                            <h2 class="text-lg font-medium tracking-tight text-zinc-100">Secure Comm Link</h2>
+                            <p class="text-sm text-zinc-500 mt-1">Encrypted channel to network administration</p>
+                        </div>
+                        <button id="userTicketNewBtn" class="text-xs font-medium bg-white/10 hover:bg-white/15 border border-white/10 text-zinc-100 px-4 py-2 rounded-full transition-all flex items-center gap-2 backdrop-blur-md hover:text-[#8B5CF6] hover:border-[#8B5CF6]/50">
+                            <iconify-icon icon="solar:pen-new-square-linear" stroke-width="1.5"></iconify-icon>
+                            Compose
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 flex-1 min-h-0 border border-white/5 rounded-2xl bg-black/20 overflow-hidden">
+                        <div class="lg:col-span-2 flex flex-col border-r border-white/5 bg-white/[0.01] min-h-[280px]">
+                            <div class="p-4 border-b border-white/5 text-xs font-medium text-zinc-500 uppercase tracking-widest">
+                                Active Threads
+                            </div>
+                            <div class="flex-1 overflow-y-auto p-2 space-y-1" id="userTicketList">
+                                <div class="text-xs text-zinc-500 italic p-4 text-center">Establishing connection...</div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-3 flex flex-col bg-transparent relative min-h-[280px]">
+                            <div id="userTicketActiveHeader" class="px-6 py-4 border-b border-white/5 flex items-center justify-between hidden bg-white/[0.02]">
+                                <div class="font-medium text-sm text-zinc-100 truncate pr-4" id="userTicketActiveSubject"></div>
+                                <div id="userTicketActiveStatus" class="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-medium tracking-widest uppercase"></div>
+                            </div>
+
+                            <div id="userTicketConversation" class="flex-1 p-6 overflow-y-auto space-y-6">
+                                <div class="h-full flex items-center justify-center text-xs text-zinc-500">Select a thread to view logs.</div>
+                            </div>
+
+                            <div id="userTicketComposer" class="p-4 border-t border-white/5 bg-white/[0.02] space-y-3 hidden">
+                                <input id="userTicketSubject" type="text" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-[#8B5CF6] focus:bg-white/5 transition-all" placeholder="Thread Subject">
+                                <textarea id="userTicketMessage" rows="2" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-[#8B5CF6] focus:bg-white/5 transition-all resize-none" placeholder="Transmit message..."></textarea>
+                                <div class="flex items-center justify-between pt-1">
+                                    <div id="userTicketMessageStatus" class="text-xs text-rose-400 font-medium"></div>
+                                    <button id="userTicketSendBtn" class="bg-zinc-100 hover:bg-[#8B5CF6] hover:text-black hover:scale-[1.02] text-zinc-950 text-sm font-medium px-5 py-2 rounded-full transition-all flex items-center gap-2 ml-auto shadow-lg shadow-white/10">
+                                        Send
+                                        <iconify-icon icon="solar:plain-linear" stroke-width="1.5"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="xl:col-span-5 min-w-0 flex flex-col">
+                <section id="operationsSnapshotCard" class="glass-card predictor-module-card rounded-3xl p-6 md:p-8 flex flex-col min-h-[min(520px,70vh)] flex-1 h-full border border-white/[0.06]">
+                    <div class="flex items-start justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                                    <iconify-icon icon="solar:chart-square-linear" class="text-zinc-300 text-lg" stroke-width="1.5"></iconify-icon>
+                                </div>
+                                <span class="text-xs font-medium tracking-widest text-zinc-500 uppercase">Desk</span>
+                            </div>
+                            <h2 class="text-lg font-medium tracking-tight text-zinc-100">Live snapshot</h2>
+                            <p class="text-sm text-zinc-500 mt-1">Session totals aligned with predictor modules below</p>
+                        </div>
+                        <div id="snapshotSessionBadge" class="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="snapshotSessionDot"></span>
+                            <span id="snapshotSessionLabel">—</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 flex-1">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Stake handle</span>
+                            <span id="snapshotStakeHandle" class="font-mono text-sm text-zinc-200 truncate max-w-[55%] text-right">—</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Web S-Free (crash / mines / BJ)</span>
+                            <span id="snapshotWebDemosLine" class="font-mono text-sm text-zinc-200">—</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Telegram (S-Free / pro)</span>
+                            <span id="snapshotTelegramLine" class="font-mono text-sm text-zinc-200">—</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Predictor pulls (all modules)</span>
+                            <span id="snapshotTotalPredictions" class="font-mono text-sm text-[#8B5CF6]">—</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Script pings</span>
+                            <span id="snapshotScriptPings" class="font-mono text-sm text-zinc-200">—</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-white/5 space-y-3">
+                        <p class="text-[10px] tracking-widest uppercase text-zinc-600 font-medium">Quick support</p>
+                        <a href="https://t.me/soulpredictor_bot" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-zinc-200 hover:border-[#8B5CF6]/40 hover:text-white transition-colors">
+                            <span class="flex items-center gap-2">
+                                <iconify-icon icon="solar:chat-round-line-linear" class="text-zinc-400" stroke-width="1.5"></iconify-icon>
+                                Telegram predictor
+                            </span>
+                            <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500 shrink-0" stroke-width="1.5"></iconify-icon>
+                        </a>
+                        <a href="/mines" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-zinc-200 hover:border-[#8B5CF6]/40 hover:text-white transition-colors">
+                            <span class="flex items-center gap-2">
+                                <iconify-icon icon="solar:monitor-linear" class="text-zinc-400" stroke-width="1.5"></iconify-icon>
+                                Web predictor hub
+                            </span>
+                            <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-500 shrink-0" stroke-width="1.5"></iconify-icon>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Full-width predictor modules (uses page width; stacks on phones) -->
+        <div class="user-modules-strip mt-6 xl:mt-8 w-full min-w-0">
+            <div class="predictor-bento">
+                <!-- Fake Mines Card & Extension -->
+                <section class="glass-card predictor-module-card h-full flex flex-col rounded-3xl p-6 md:p-8 relative overflow-hidden group border border-white/[0.06]">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#8B5CF6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col flex-1 min-h-0">
+                        <div class="flex items-start justify-between mb-8">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                                        <iconify-icon icon="solar:ghost-linear" class="text-zinc-300 text-lg" stroke-width="1.5"></iconify-icon>
+                                    </div>
+                                    <span class="text-xs font-medium tracking-widest text-zinc-500 uppercase">Legacy System</span>
+                                </div>
+                                <h2 class="text-xl font-medium tracking-tight text-zinc-100">Fake Mines</h2>
+                                <div id="panelStakeUsername" class="text-sm text-zinc-500 mt-1 font-mono h-5"></div>
+                            </div>
+                            <div class="flex flex-col items-end gap-3">
+                                <div id="fakeMinesStatus" class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="fakeMinesStatusDot"></span>
+                                    <span id="fakeMinesStatusText">Inactive</span>
+                                </div>
+                                <button id="panelRefreshBtn" class="text-zinc-500 hover:text-zinc-200 transition-colors p-1" title="Refresh">
+                                    <iconify-icon icon="solar:refresh-linear" stroke-width="1.5"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="space-y-4 mb-8 flex-1">
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                                <span class="text-sm text-zinc-500">Last Login</span>
+                                <span id="fakeMinesLastLogin" class="font-mono text-sm text-zinc-300">--</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                                <span class="text-sm text-zinc-500">Last Used</span>
+                                <span id="fakeMinesLastUsed" class="font-mono text-sm text-zinc-300">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mines Predictor -->
+                <section class="glass-card predictor-module-card h-full flex flex-col rounded-3xl p-6 md:p-8 border border-white/[0.06]" id="minesPredictorCard">
+                    <div class="flex items-start justify-between mb-8">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                                    <iconify-icon icon="solar:bomb-minimalistic-linear" class="text-zinc-300 text-lg" stroke-width="1.5"></iconify-icon>
+                                </div>
+                                <span class="text-xs font-medium tracking-widest text-zinc-500 uppercase">Module</span>
+                            </div>
+                            <h2 class="text-xl font-medium tracking-tight text-zinc-100">Mines Predictor</h2>
+                            <div id="minesStakeUsername" class="text-sm text-zinc-500 mt-1 font-mono h-5"></div>
+                        </div>
+                        <div class="flex flex-col items-end gap-3">
+                            <div id="minesStatus" class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400">
+                                <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="minesStatusDot"></span>
+                                <span id="minesStatusText">Inactive</span>
+                            </div>
+                            <button id="minesRefreshBtn" class="text-zinc-500 hover:text-zinc-200 transition-colors p-1" title="Refresh">
+                                <iconify-icon icon="solar:refresh-linear" stroke-width="1.5"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-8 flex-1">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Login</span>
+                            <span id="minesLastLogin" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Used</span>
+                            <span id="minesLastUsed" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3 mt-auto">
+                        <button type="button" id="openMinesPredictorBtn" class="w-full bg-zinc-100 hover:bg-[#8B5CF6] hover:text-black text-zinc-950 text-sm font-medium px-4 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
+                            Initialize Predictor
+                        </button>
+                        <button type="button" id="requestMinesAccessBtn" class="w-full bg-transparent hover:bg-white/5 hover:border-[#8B5CF6]/50 border border-white/10 text-zinc-300 text-sm font-medium px-4 py-3 rounded-xl transition-colors">
+                            Request Access
+                        </button>
+                    </div>
+                    <p class="text-[10px] tracking-widest uppercase text-zinc-600 mt-5 text-center font-medium" id="minesAutoUpdateText">
+                        Auto-sync enabled
+                    </p>
+                </section>
+
+                <!-- Crash Predictor -->
+                <section class="glass-card predictor-module-card h-full flex flex-col rounded-3xl p-6 md:p-8 border border-white/[0.06]" id="crashPredictorCard">
+                    <div class="flex items-start justify-between mb-8">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                                    <iconify-icon icon="solar:chart-square-linear" class="text-zinc-300 text-lg" stroke-width="1.5"></iconify-icon>
+                                </div>
+                                <span class="text-xs font-medium tracking-widest text-zinc-500 uppercase">Module</span>
+                            </div>
+                            <h2 class="text-xl font-medium tracking-tight text-zinc-100">Crash Predictor</h2>
+                            <div id="crashStakeUsername" class="text-sm text-zinc-500 mt-1 font-mono h-5"></div>
+                        </div>
+                        <div class="flex flex-col items-end gap-3">
+                            <div id="crashStatus" class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400">
+                                <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="crashStatusDot"></span>
+                                <span id="crashStatusText">Inactive</span>
+                            </div>
+                            <button id="crashRefreshBtn" class="text-zinc-500 hover:text-zinc-200 transition-colors p-1" title="Refresh">
+                                <iconify-icon icon="solar:refresh-linear" stroke-width="1.5"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-8 flex-1">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Login</span>
+                            <span id="crashLastLogin" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Used</span>
+                            <span id="crashLastUsed" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3 mt-auto">
+                        <button type="button" id="openCrashPredictorBtn" class="w-full bg-zinc-100 hover:bg-[#8B5CF6] hover:text-black text-zinc-950 text-sm font-medium px-4 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
+                            Initialize Predictor
+                        </button>
+                        <button type="button" id="requestCrashAccessBtn" class="w-full bg-transparent hover:bg-white/5 hover:border-[#8B5CF6]/50 border border-white/10 text-zinc-300 text-sm font-medium px-4 py-3 rounded-xl transition-colors">
+                            Request Access
+                        </button>
+                    </div>
+                    <p class="text-[10px] tracking-widest uppercase text-zinc-600 mt-5 text-center font-medium" id="crashAutoUpdateText">
+                        Auto-sync enabled
+                    </p>
+                </section>
+
+                <!-- Blackjack Predictor -->
+                <section class="glass-card predictor-module-card h-full flex flex-col rounded-3xl p-6 md:p-8 border border-white/[0.06]" id="blackjackPredictorCard">
+                    <div class="flex items-start justify-between mb-8">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 shrink-0" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-[18px] h-[18px]" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2.5" y="6" width="10" height="13" rx="1.2"></rect>
+                                        <rect x="11.5" y="4" width="10" height="13" rx="1.2" opacity="0.9"></rect>
+                                        <path d="M6 10h2M6 12.5h2.5M14.5 9.5h2M14.5 12h2"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs font-medium tracking-widest text-zinc-500 uppercase">Module</span>
+                            </div>
+                            <h2 class="text-xl font-medium tracking-tight text-zinc-100">Blackjack Predictor</h2>
+                            <div id="blackjackStakeUsername" class="text-sm text-zinc-500 mt-1 font-mono h-5"></div>
+                        </div>
+                        <div class="flex flex-col items-end gap-3">
+                            <div id="blackjackStatus" class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400">
+                                <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="blackjackStatusDot"></span>
+                                <span id="blackjackStatusText">Inactive</span>
+                            </div>
+                            <button id="blackjackRefreshBtn" type="button" class="text-zinc-500 hover:text-zinc-200 transition-colors p-1" title="Refresh">
+                                <iconify-icon icon="solar:refresh-linear" stroke-width="1.5"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-8 flex-1">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Login</span>
+                            <span id="blackjackLastLogin" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Used</span>
+                            <span id="blackjackLastUsed" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3 mt-auto">
+                        <button type="button" id="openBlackjackPredictorBtn" class="w-full bg-zinc-100 hover:bg-[#8B5CF6] hover:text-black text-zinc-950 text-sm font-medium px-4 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
+                            Initialize Predictor
+                        </button>
+                        <button type="button" id="requestBlackjackAccessBtn" class="w-full bg-transparent hover:bg-white/5 hover:border-[#8B5CF6]/50 border border-white/10 text-zinc-300 text-sm font-medium px-4 py-3 rounded-xl transition-colors">
+                            Request Access
+                        </button>
+                    </div>
+                    <p class="text-[10px] tracking-widest uppercase text-zinc-600 mt-5 text-center font-medium" id="blackjackAutoUpdateText">
+                        Auto-sync enabled
+                    </p>
+                </section>
+
+                <!-- Moles Predictor -->
+                <section class="glass-card predictor-module-card h-full flex flex-col rounded-3xl p-6 md:p-8 border border-white/[0.06]" id="molesPredictorCard">
+                    <div class="flex items-start justify-between mb-8">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                                    <iconify-icon icon="solar:target-linear" class="text-zinc-300 text-lg" stroke-width="1.5"></iconify-icon>
+                                </div>
+                                <span class="text-xs font-medium tracking-widest text-zinc-500 uppercase">Module</span>
+                            </div>
+                            <h2 class="text-xl font-medium tracking-tight text-zinc-100">Moles Predictor</h2>
+                            <div id="molesStakeUsername" class="text-sm text-zinc-500 mt-1 font-mono h-5"></div>
+                        </div>
+                        <div class="flex flex-col items-end gap-3">
+                            <div id="molesStatus" class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400">
+                                <span class="w-1.5 h-1.5 rounded-full bg-zinc-600" id="molesStatusDot"></span>
+                                <span id="molesStatusText">Inactive</span>
+                            </div>
+                            <button id="molesRefreshBtn" type="button" class="text-zinc-500 hover:text-zinc-200 transition-colors p-1" title="Refresh">
+                                <iconify-icon icon="solar:refresh-linear" stroke-width="1.5"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-8 flex-1">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Login</span>
+                            <span id="molesLastLogin" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/[0.04]">
+                            <span class="text-sm text-zinc-500">Last Used</span>
+                            <span id="molesLastUsed" class="font-mono text-sm text-zinc-300">--</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3 mt-auto">
+                        <button type="button" id="openMolesPredictorBtn" class="w-full bg-zinc-100 hover:bg-[#8B5CF6] hover:text-black text-zinc-950 text-sm font-medium px-4 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]">
+                            Initialize Predictor
+                        </button>
+                        <button type="button" id="requestMolesAccessBtn" class="w-full bg-transparent hover:bg-white/5 hover:border-[#8B5CF6]/50 border border-white/10 text-zinc-300 text-sm font-medium px-4 py-3 rounded-xl transition-colors">
+                            Request Access
+                        </button>
+                    </div>
+                    <p class="text-[10px] tracking-widest uppercase text-zinc-600 mt-5 text-center font-medium" id="molesAutoUpdateText">
+                        Auto-sync enabled
+                    </p>
+                </section>
+            </div>
+        </div>
+
+        <!-- Assets & Scripts Section -->
+        <section id="assets" class="mt-16 pt-16 border-t border-white/5">
+            <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 max-w-4xl">
+                <div>
+                    <h2 class="text-3xl font-medium tracking-tight text-zinc-50">Asset Library</h2>
+                    <p class="mt-3 text-sm text-zinc-400 leading-relaxed max-w-xl">
+                        Secure repository for your active cryptographic keys, license hashes, and raw script injection payloads.
+                    </p>
+                </div>
+                <div class="text-xs font-mono font-medium tracking-widest uppercase text-zinc-500 bg-white/5 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md" id="assetsSummaryLabel">Offline</div>
+            </header>
+
+            <div id="assetsList" class="grid gap-6">
+                <div class="col-span-full p-12 border border-dashed border-white/10 bg-white/[0.01] rounded-3xl flex flex-col items-center justify-center text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                        <iconify-icon icon="solar:box-minimalistic-linear" class="text-zinc-500 text-3xl" stroke-width="1.5"></iconify-icon>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-medium">Awaiting network verification sync.</p>
+                </div>
+            </div>
+            
+            <div id="scriptsKeysContainer" class="mt-8 flex flex-col gap-8"></div>
+        </section>
+    </main>
+
+<script>
+    let currentUser = null;
+    let globalToastTimeout = null;
+
+    function showToast(message, type) {
+        let el = document.getElementById('globalToast');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'globalToast';
+            el.className = 'fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl text-xs font-medium shadow-lg shadow-black/40 border backdrop-blur-md transition-opacity duration-300';
+            document.body.appendChild(el);
+        }
+        let palette = 'bg-white/5 border-white/20 text-zinc-100';
+        if (type === 'error') palette = 'bg-rose-500/10 border-rose-500/40 text-rose-200';
+        else if (type === 'success') palette = 'bg-emerald-500/10 border-emerald-500/40 text-emerald-200';
+        else if (type === 'info') palette = 'bg-zinc-800/80 border-zinc-700 text-zinc-100';
+        el.className = 'fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl text-xs font-medium shadow-lg shadow-black/40 border backdrop-blur-md transition-opacity duration-300 ' + palette;
+        el.textContent = message;
+        el.style.opacity = '1';
+        if (globalToastTimeout) clearTimeout(globalToastTimeout);
+        globalToastTimeout = setTimeout(function() {
+            el.style.opacity = '0';
+        }, 4000);
+    }
+    let currentTicketId = null;
+    let panelTimer = null;
+    let minesAutoUpdateInterval = null;
+
+    function showPanelMessage(element, message, type) {
+        if (!element) return;
+        element.textContent = message;
+        element.className = 'mt-2 text-xs font-medium ' + (type === 'error'
+            ? 'text-rose-400'
+            : type === 'success'
+                ? 'text-[#3DF604]'
+                : 'text-zinc-500');
+    }
+
+    function getClientInfo() {
+        try {
+            const nav = navigator || {};
+            const screenObj = window.screen || {};
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            return {
+                user_agent: nav.userAgent || '',
+                language: nav.language || '',
+                platform: nav.platform || '',
+                timezone: tz || '',
+                viewport: window.innerWidth + 'x' + window.innerHeight,
+                screen: screenObj.width && screenObj.height ? screenObj.width + 'x' + screenObj.height : ''
+            };
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function formatDateSafe(value) {
+        if (!value) return '--';
+        try {
+            return new Date(value).toLocaleString(undefined, {
+                month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit'
+            });
+        } catch (e) {
+            return String(value);
+        }
+    }
+
+    function maskEmail(email) {
+        if (!email || typeof email !== 'string' || !email.includes('@')) return email || '';
+        const parts = email.split('@');
+        const local = parts[0] || '';
+        const domain = parts[1] || '';
+        const prefix = local.slice(0, 3) || local.slice(0, 1);
+        return prefix + 'xxxx@' + domain;
+    }
+
+    function formatDisplayIdentity(username) {
+        if (!username) return '';
+        if (String(username).includes('@')) return maskEmail(String(username));
+        return '@' + username;
+    }
+    
+    function updateIndicator(statusElement, dotElement, isActive) {
+        if (statusElement) {
+            statusElement.textContent = isActive ? 'Active' : 'Inactive';
+            statusElement.className = isActive ? 'text-xs font-medium text-[#8B5CF6]' : 'text-xs font-medium text-zinc-500';
+        }
+        if (dotElement) {
+            dotElement.className = isActive ? 'w-1.5 h-1.5 rounded-full bg-[#8B5CF6] shadow-[0_0_8px_rgba(139,92,246,0.6)]' : 'w-1.5 h-1.5 rounded-full bg-zinc-600';
+        }
+    }
+
+    function updateCardContainerStatus(containerId, dotId, textId, isActive) {
+        const container = document.getElementById(containerId);
+        if(container) {
+            container.className = 'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors ' + 
+                (isActive ? 'bg-[#8B5CF6]/10 border-[#8B5CF6]/20 text-[#8B5CF6]' : 'bg-white/5 border-white/10 text-zinc-400');
+        }
+        const dot = document.getElementById(dotId);
+        if(dot) {
+            dot.className = 'w-1.5 h-1.5 rounded-full transition-colors ' + (isActive ? 'bg-[#8B5CF6] shadow-[0_0_8px_rgba(139,92,246,0.6)]' : 'bg-zinc-600');
+        }
+        const text = document.getElementById(textId);
+        if(text) text.textContent = isActive ? 'Active' : 'Inactive';
+    }
+
+    function setPredictorLaunchState(buttonId, canLaunch, reasonText) {
+        const btn = document.getElementById(buttonId);
+        if (!btn) return;
+        btn.disabled = !canLaunch;
+        if (canLaunch) {
+            btn.className = 'w-full bg-zinc-100 hover:bg-[#8B5CF6] hover:text-black text-zinc-950 text-sm font-medium px-4 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02]';
+            btn.title = '';
+        } else {
+            btn.className = 'w-full bg-zinc-800 text-zinc-500 text-sm font-medium px-4 py-3 rounded-xl cursor-not-allowed border border-white/10';
+            btn.title = reasonText || 'Unavailable';
+        }
+    }
+
+    function updateMinesCardStatus(user) {
+        if (!document.getElementById('minesPredictorCard')) return;
+        
+        const minesAccessEnabled = user && user.mines_access_enabled === true;
+        const planActive = !!(user && user.plan_active);
+        const minesIsActive = minesAccessEnabled && (planActive || (user.status === 'approved' && user.active));
+        
+        const usernameEl = document.getElementById('minesStakeUsername');
+        if (usernameEl) usernameEl.textContent = formatDisplayIdentity(user.username);
+        
+        updateCardContainerStatus('minesStatus', 'minesStatusDot', 'minesStatusText', minesIsActive);
+        
+        const ll = document.getElementById('minesLastLogin');
+        if (ll) ll.textContent = formatDateSafe(user ? user.last_web_login_at : null);
+        const lu = document.getElementById('minesLastUsed');
+        if (lu) lu.textContent = formatDateSafe(user ? user.mines_last_used_at : null);
+        
+        const canLaunchMines = !!(user && user.plan_active && minesAccessEnabled);
+        setPredictorLaunchState('openMinesPredictorBtn', canLaunchMines, 'Mines requires an active plan.');
+    }
+    
+    function updateCrashCardStatus(user) {
+        if (!document.getElementById('crashPredictorCard')) return;
+        
+        const crashAccessEnabled = user && user.crash_access_enabled === true;
+        const planActive = !!(user && user.plan_active);
+        const crashIsActive = crashAccessEnabled && (planActive || (user.status === 'approved' && user.active));
+        
+        const usernameEl = document.getElementById('crashStakeUsername');
+        if (usernameEl) usernameEl.textContent = formatDisplayIdentity(user.username);
+        
+        updateCardContainerStatus('crashStatus', 'crashStatusDot', 'crashStatusText', crashIsActive);
+        
+        const ll = document.getElementById('crashLastLogin');
+        if (ll) ll.textContent = formatDateSafe(user ? user.last_web_login_at : null);
+        const lu = document.getElementById('crashLastUsed');
+        if (lu) lu.textContent = formatDateSafe(user ? user.crash_last_used_at : null);
+        
+        const canLaunchCrash = !!(user && crashAccessEnabled && (planActive || (user.status === 'approved' && user.active)));
+        setPredictorLaunchState('openCrashPredictorBtn', canLaunchCrash, 'Crash access is not active.');
+    }
+
+    function updateBlackjackCardStatus(user) {
+        if (!document.getElementById('blackjackPredictorCard')) return;
+
+        const blackjackAccessEnabled = user && user.blackjack_access_enabled === true;
+        const planActive = !!(user && user.plan_active);
+        const blackjackIsActive = blackjackAccessEnabled && (planActive || (user.status === 'approved' && user.active));
+
+        const usernameEl = document.getElementById('blackjackStakeUsername');
+        if (usernameEl) usernameEl.textContent = formatDisplayIdentity(user.username);
+
+        updateCardContainerStatus('blackjackStatus', 'blackjackStatusDot', 'blackjackStatusText', blackjackIsActive);
+
+        const ll = document.getElementById('blackjackLastLogin');
+        if (ll) ll.textContent = formatDateSafe(user ? user.last_web_login_at : null);
+        const lu = document.getElementById('blackjackLastUsed');
+        if (lu) lu.textContent = formatDateSafe(user ? user.blackjack_last_used_at : null);
+
+        const canLaunchBlackjack = !!(user && user.plan_active && blackjackAccessEnabled);
+        setPredictorLaunchState('openBlackjackPredictorBtn', canLaunchBlackjack, 'Blackjack requires an active plan.');
+    }
+
+    function updateMolesCardStatus(user) {
+        if (!document.getElementById('molesPredictorCard')) return;
+
+        const molesAccessEnabled = user && user.moles_access_enabled === true;
+        const planActive = !!(user && user.plan_active);
+        const molesIsActive = molesAccessEnabled && (planActive || (user.status === 'approved' && user.active));
+
+        const usernameEl = document.getElementById('molesStakeUsername');
+        if (usernameEl) usernameEl.textContent = formatDisplayIdentity(user.username);
+
+        updateCardContainerStatus('molesStatus', 'molesStatusDot', 'molesStatusText', molesIsActive);
+
+        const ll = document.getElementById('molesLastLogin');
+        if (ll) ll.textContent = formatDateSafe(user ? user.last_web_login_at : null);
+        const lu = document.getElementById('molesLastUsed');
+        if (lu) lu.textContent = formatDateSafe(user ? user.moles_last_used_at : null);
+
+        const canLaunchMoles = !!(user && molesAccessEnabled && (planActive || (user.status === 'approved' && user.active)));
+        setPredictorLaunchState('openMolesPredictorBtn', canLaunchMoles, 'Moles access is not active.');
+    }
+    
+    function updateAccessOverviewCard(user) {
+        if (!document.getElementById('accessStatusCard')) return;
+        
+        const isActive = user && user.status === 'approved' && user.active;
+        updateIndicator(document.getElementById('overviewFakeMinesStatus'), document.getElementById('overviewFakeMinesDot'), isActive);
+        
+        const fmt = document.getElementById('overviewFakeMinesTime');
+        if (fmt) fmt.textContent = user ? (user.time_remaining || '--') : '--';
+        
+        const planActive = !!(user && user.plan_active);
+        
+        const mActive = user && user.mines_access_enabled === true && (planActive || (user.status === 'approved' && user.active));
+        updateIndicator(document.getElementById('overviewMinesStatus'), document.getElementById('overviewMinesDot'), mActive);
+        const minesTimeEl = document.getElementById('overviewMinesTime');
+        if (minesTimeEl) {
+            const t = (user && (user.mines_time_remaining || user.plan_time_remaining || user.time_remaining)) || '--';
+            minesTimeEl.textContent = t || '--';
+        }
+        
+        const cActive = user && user.crash_access_enabled === true && (planActive || (user.status === 'approved' && user.active));
+        updateIndicator(document.getElementById('overviewCrashStatus'), document.getElementById('overviewCrashDot'), cActive);
+        const crashTimeEl = document.getElementById('overviewCrashTime');
+        if (crashTimeEl) {
+            const t = (user && (user.crash_time_remaining || user.plan_time_remaining || user.time_remaining)) || '--';
+            crashTimeEl.textContent = t || '--';
+        }
+
+        const bjActive = user && user.blackjack_access_enabled === true && (planActive || (user.status === 'approved' && user.active));
+        updateIndicator(document.getElementById('overviewBlackjackStatus'), document.getElementById('overviewBlackjackDot'), bjActive);
+        const blackjackTimeEl = document.getElementById('overviewBlackjackTime');
+        if (blackjackTimeEl) {
+            const t = (user && (user.blackjack_time_remaining || user.plan_time_remaining || user.time_remaining)) || '--';
+            blackjackTimeEl.textContent = t || '--';
+        }
+
+        const molesActive = user && user.moles_access_enabled === true && (planActive || (user.status === 'approved' && user.active));
+        updateIndicator(document.getElementById('overviewMolesStatus'), document.getElementById('overviewMolesDot'), molesActive);
+        const molesTimeEl = document.getElementById('overviewMolesTime');
+        if (molesTimeEl) {
+            const t = (user && (user.moles_time_remaining || user.plan_time_remaining || user.time_remaining)) || '--';
+            molesTimeEl.textContent = t || '--';
+        }
+
+        const pn = document.getElementById('overviewPlanName');
+        const ps = document.getElementById('overviewPlanStatus');
+        const pe = document.getElementById('overviewPlanExpires');
+        const pt = document.getElementById('overviewPlanTimeRemaining');
+
+        const PLAN_DISPLAY_NAMES = {
+            free: 'S-Free',
+            demo: 'S-Free',
+            trial: 'S-Free',
+            silver: 'S-Enterprise',
+            gold: 'S-Max',
+            turbo: 'S-OG'
+        };
+
+        function planDisplayName(plan) {
+            const key = plan ? String(plan).toLowerCase() : 'free';
+            return PLAN_DISPLAY_NAMES[key] || (plan ? String(plan) : 'S-Free');
+        }
+
+        const planNameRaw = user && user.subscription_plan;
+        const planName = planNameRaw ? planNameRaw : 'free';
+        const planKey = planName ? String(planName).toLowerCase() : 'free';
+        const isFree = !planName || planKey === 'free' || planKey === 'demo' || planKey === 'trial';
+
+        if (pn) pn.textContent = (user && user.subscription_plan_name) ? String(user.subscription_plan_name) : planDisplayName(planName);
+        if (ps) {
+            ps.textContent = isFree ? 'Unlimited' : (planActive ? 'Active' : 'Expired');
+            ps.className = 'inline-flex items-center rounded-md px-1.5 py-0.5 text-[10px] font-medium tracking-widest uppercase ' + 
+                (isFree || planActive ? 'bg-[#8B5CF6]/10 border-[#8B5CF6]/20 text-[#8B5CF6] border' : 'bg-white/5 border border-white/10 text-zinc-500');
+        }
+        if (pe) pe.textContent = user && user.plan_expires_at ? formatDateSafe(user.plan_expires_at) : (isFree ? '∞' : '--');
+        if (pt) pt.textContent = isFree ? '∞' : (user && user.plan_time_remaining ? user.plan_time_remaining : '--');
+    }
+    
+    function startMinesAutoUpdate() {
+        if (minesAutoUpdateInterval) clearInterval(minesAutoUpdateInterval);
+        minesAutoUpdateInterval = setInterval(() => {
+            if (currentUser && currentUser.username) {
+                fetch('https://api.soulpredictor.xyz/user-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: currentUser.username })
+                })
+                .then(r => r.json())
+                .then(result => {
+                    if (result.status === 'success' && result.user) {
+                        updateUserPanel(result.user);
+                        const txts = [document.getElementById('minesAutoUpdateText'), document.getElementById('crashAutoUpdateText'), document.getElementById('blackjackAutoUpdateText'), document.getElementById('molesAutoUpdateText')];
+                        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                        txts.forEach(t => { if(t) t.textContent = 'Sync: ' + time; });
+                    }
+                }).catch(() => {});
+            }
+        }, 30000);
+    }
+    
+    function stopMinesAutoUpdate() {
+        if (minesAutoUpdateInterval) {
+            clearInterval(minesAutoUpdateInterval);
+            minesAutoUpdateInterval = null;
+        }
+    }
+
+    // Element references
+    const panelStakeUsername = document.getElementById('panelStakeUsername');
+    const panelRefreshBtn = document.getElementById('panelRefreshBtn');
+
+    const userTicketNewBtn = document.getElementById('userTicketNewBtn');
+    const userTicketList = document.getElementById('userTicketList');
+    const userTicketActiveHeader = document.getElementById('userTicketActiveHeader');
+    const userTicketActiveSubject = document.getElementById('userTicketActiveSubject');
+    const userTicketActiveStatus = document.getElementById('userTicketActiveStatus');
+    const userTicketConversation = document.getElementById('userTicketConversation');
+    const userTicketComposer = document.getElementById('userTicketComposer');
+    const userTicketSubject = document.getElementById('userTicketSubject');
+    const userTicketMessage = document.getElementById('userTicketMessage');
+    const userTicketSendBtn = document.getElementById('userTicketSendBtn');
+    const userTicketMessageStatus = document.getElementById('userTicketMessageStatus');
+
+    const statsUsernameLabel = document.getElementById('statsUsernameLabel');
+    const userStatsMessage = document.getElementById('userStatsMessage');
+    const assetsList = document.getElementById('assetsList');
+    const assetsSummaryLabel = document.getElementById('assetsSummaryLabel');
+    
+    let ticketButtonResetTimeout = null;
+    const initialSendHtml = `Send <iconify-icon icon="solar:plain-linear" stroke-width="1.5"></iconify-icon>`;
+
+    function resetUserTicketButtonImmediate() {
+        if (!userTicketSendBtn) return;
+        if (ticketButtonResetTimeout) { clearTimeout(ticketButtonResetTimeout); ticketButtonResetTimeout = null; }
+        userTicketSendBtn.disabled = false;
+        userTicketSendBtn.innerHTML = initialSendHtml;
+    }
+
+    function setUserTicketButtonLoading() {
+        if (!userTicketSendBtn) return;
+        userTicketSendBtn.disabled = true;
+        userTicketSendBtn.innerHTML = '<iconify-icon icon="solar:restart-linear" class="animate-spin" stroke-width="1.5"></iconify-icon>';
+    }
+
+    function showUserTicketButtonResult() {
+        if (!userTicketSendBtn) return;
+        userTicketSendBtn.disabled = false;
+        userTicketSendBtn.textContent = 'Transmitted';
+        ticketButtonResetTimeout = setTimeout(resetUserTicketButtonImmediate, 2000);
+    }
+
+    function updateSnapshotCard(user) {
+        const handle = document.getElementById('snapshotStakeHandle');
+        if (handle) handle.textContent = user && user.username ? formatDisplayIdentity(user.username) : '—';
+        const label = document.getElementById('snapshotSessionLabel');
+        const dot = document.getElementById('snapshotSessionDot');
+        const badge = document.getElementById('snapshotSessionBadge');
+        const ok = !!(user && user.status === 'approved' && user.active);
+        if (label) label.textContent = ok ? 'Session live' : 'Limited';
+        if (dot) {
+            dot.className = ok
+                ? 'w-1.5 h-1.5 rounded-full bg-[#8B5CF6] shadow-[0_0_8px_rgba(139,92,246,0.5)]'
+                : 'w-1.5 h-1.5 rounded-full bg-zinc-600';
+        }
+        if (badge) {
+            badge.className = ok
+                ? 'shrink-0 inline-flex items-center gap-1.5 rounded-full border border-[#8B5CF6]/25 bg-[#8B5CF6]/10 px-2.5 py-1 text-xs font-medium text-[#8B5CF6]'
+                : 'shrink-0 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-medium text-zinc-400';
+        }
+    }
+
+    function updateUserPanel(user) {
+        currentUser = user;
+        
+        if (panelStakeUsername) {
+            panelStakeUsername.textContent = formatDisplayIdentity(user.username);
+        }
+        
+        const isActive = user.status === 'approved' && user.active;
+        updateCardContainerStatus('fakeMinesStatus', 'fakeMinesStatusDot', 'fakeMinesStatusText', isActive);
+        
+        const fmLastLogin = document.getElementById('fakeMinesLastLogin');
+        if (fmLastLogin) fmLastLogin.textContent = formatDateSafe(user.last_web_login_at);
+        
+        const fmLastUsed = document.getElementById('fakeMinesLastUsed');
+        if (fmLastUsed) fmLastUsed.textContent = formatDateSafe(user.last_script_used_at);
+        
+        updateAccessOverviewCard(user);
+        updateMinesCardStatus(user);
+        updateCrashCardStatus(user);
+        updateBlackjackCardStatus(user);
+        updateMolesCardStatus(user);
+        updateSnapshotCard(user);
+        
+        if (statsUsernameLabel) statsUsernameLabel.textContent = user.username ? formatDisplayIdentity(user.username) : 'Unlinked';
+        
+        if (user && user.active && user.status === 'approved') {
+            startMinesAutoUpdate();
+        } else {
+            stopMinesAutoUpdate();
+        }
+        
+        renderUserTickets(user.username);
+        loadUserStats(user.username);
+        loadUserAssets(user.username);
+    }
+
+    function renderUserTickets(username) {
+        if (!userTicketList || !username) return;
+        userTicketList.innerHTML = '<div class="text-xs text-zinc-500 text-center py-6 font-medium">Syncing...</div>';
+        fetch('https://api.soulpredictor.xyz/user-tickets/' + encodeURIComponent(username))
+            .then(r => r.json())
+            .then(result => {
+                if (result.status !== 'success' || !Array.isArray(result.tickets) || result.tickets.length === 0) {
+                    userTicketList.innerHTML = '<div class="text-xs text-zinc-600 font-medium text-center p-6 border border-dashed border-white/5 rounded-xl m-2 bg-white/[0.02]">No active threads.</div>';
+                    if (userTicketConversation) userTicketConversation.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-zinc-500 font-medium">No logs to display.</div>';
+                    if (userTicketActiveHeader) userTicketActiveHeader.classList.add('hidden');
+                    if (userTicketComposer) userTicketComposer.classList.add('hidden');
+                    currentTicketId = null;
+                    return;
+                }
+                userTicketList.innerHTML = '';
+                result.tickets
+                    .slice()
+                    .sort((a, b) => (b.updated_at || b.created_at || '').localeCompare(a.updated_at || a.created_at || ''))
+                    .forEach(t => {
+                        const s = t.status || 'open';
+                        const statusColor = s === 'open' ? 'text-[#3DF604] bg-[#3DF604]/10 border-[#3DF604]/20' : 
+                                          (s === 'paused' ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-zinc-500 bg-white/5 border-white/10');
+                        const lastMsg = Array.isArray(t.messages) && t.messages.length ? t.messages[t.messages.length - 1].text : '';
+                        
+                        const el = document.createElement('button');
+                        el.className = 'w-full text-left p-4 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/[0.04] transition-all group focus:outline-none focus:bg-white/[0.04]';
+                        el.innerHTML = `
+                            <div class="flex justify-between items-start mb-2 gap-2">
+                                <span class="text-sm font-medium text-zinc-200 truncate group-hover:text-white transition-colors">${t.subject || 'Untitled Thread'}</span>
+                            </div>
+                            <div class="text-xs text-zinc-500 line-clamp-1 mb-3 leading-relaxed">${lastMsg}</div>
+                            <div class="flex items-center justify-between">
+                                <div class="text-[10px] text-zinc-600 font-mono tracking-tight">${formatDateSafe(t.updated_at || t.created_at)}</div>
+                                <span class="px-2 py-0.5 rounded-md border text-[9px] font-medium uppercase tracking-widest ${statusColor}">${s}</span>
+                            </div>
+                        `;
+                        el.addEventListener('click', () => openUserTicketThread(t));
+                        userTicketList.appendChild(el);
+                    });
+            })
+            .catch(() => {
+                userTicketList.innerHTML = '<div class="text-xs text-rose-400 text-center py-6 font-medium">Sync failure.</div>';
+            });
+    }
+
+    function renderUserTicketMessages(ticket) {
+        if (!userTicketConversation) return;
+        const messages = Array.isArray(ticket.messages) ? ticket.messages : [];
+        if (!messages.length) {
+            userTicketConversation.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-zinc-500 font-medium">Empty log.</div>';
+            return;
+        }
+        userTicketConversation.innerHTML = '';
+        messages.forEach(msg => {
+            const isUser = msg.sender === 'user';
+            const wrap = document.createElement('div');
+            wrap.className = `flex w-full ${isUser ? 'justify-end' : 'justify-start'}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = `max-w-[85%] rounded-2xl px-5 py-3.5 text-sm shadow-sm ${
+                isUser 
+                ? 'bg-[#8B5CF6] text-black rounded-br-sm' 
+                : 'bg-black/40 border border-white/10 text-zinc-200 rounded-bl-sm backdrop-blur-md'
+            }`;
+            
+            bubble.innerHTML = `
+                <div class="whitespace-pre-wrap break-words leading-relaxed ${isUser ? 'font-medium' : ''}">${msg.text || ''}</div>
+                <div class="mt-2 text-[10px] font-mono ${isUser ? 'text-black/60' : 'text-zinc-500'} text-right">
+                    ${formatDateSafe(msg.created_at)}
+                </div>
+            `;
+            wrap.appendChild(bubble);
+            userTicketConversation.appendChild(wrap);
+        });
+        userTicketConversation.scrollTop = userTicketConversation.scrollHeight;
+    }
+
+    function openUserTicketThread(ticket) {
+        currentTicketId = ticket.id;
+        if (userTicketActiveHeader) {
+            userTicketActiveHeader.classList.remove('hidden');
+            document.getElementById('userTicketActiveSubject').textContent = ticket.subject || 'Untitled Thread';
+            
+            const statusEl = document.getElementById('userTicketActiveStatus');
+            const s = ticket.status || 'open';
+            statusEl.textContent = s;
+            statusEl.className = 'shrink-0 inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-medium tracking-widest uppercase border ' + 
+                (s === 'open' ? 'bg-[#8B5CF6]/10 border-[#8B5CF6]/20 text-[#8B5CF6]' : (s === 'paused' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' : 'bg-white/5 border-white/10 text-zinc-500'));
+        }
+        
+        if (userTicketComposer) {
+            userTicketComposer.classList.remove('hidden');
+            if (userTicketSubject) userTicketSubject.classList.add('hidden');
+            
+            if (ticket.status === 'closed') {
+                if (userTicketMessage) userTicketMessage.disabled = true;
+                if (userTicketSendBtn) {
+                    userTicketSendBtn.disabled = true;
+                    userTicketSendBtn.textContent = 'Channel Closed';
+                }
+            } else {
+                if (userTicketMessage) userTicketMessage.disabled = false;
+                resetUserTicketButtonImmediate();
+            }
+        }
+        renderUserTicketMessages(ticket);
+    }
+
+    function loadUserStats(username) {
+        if (!username) return;
+        if (userStatsMessage) userStatsMessage.textContent = 'Syncing telemetry...';
+        
+        fetch('https://api.soulpredictor.xyz/user-stats', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username })
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.status === 'success' && result.stats) {
+                const s = result.stats;
+                const els = {
+                    'statMinesLogins': s.fake_mines_login_count,
+                    'statScriptUsage': s.script_usage_count,
+                    'statWebCrash': s.web_crash_demo_count,
+                    'statWebMines': s.web_mines_demo_count,
+                    'statWebBlackjack': s.web_blackjack_demo_count,
+                    'statTgDemo': s.telegram_demo_count,
+                    'statTgPremium': s.telegram_premium_count,
+                    'statMinesPredictions': s.mines_predictions_count,
+                    'statCrashPredictions': s.crash_predictions_count,
+                    'statBlackjackPredictions': s.blackjack_predictions_count
+                };
+                for (const [id, val] of Object.entries(els)) {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = val ?? 0;
+                }
+                const wc = Number(s.web_crash_demo_count) || 0;
+                const wm = Number(s.web_mines_demo_count) || 0;
+                const wb = Number(s.web_blackjack_demo_count) || 0;
+                const td = Number(s.telegram_demo_count) || 0;
+                const tp = Number(s.telegram_premium_count) || 0;
+                const totalPred = (Number(s.mines_predictions_count) || 0) + (Number(s.crash_predictions_count) || 0) + (Number(s.blackjack_predictions_count) || 0);
+                const wdl = document.getElementById('snapshotWebDemosLine');
+                if (wdl) wdl.textContent = wc + ' / ' + wm + ' / ' + wb;
+                const tgl = document.getElementById('snapshotTelegramLine');
+                if (tgl) tgl.textContent = td + ' / ' + tp;
+                const tpl = document.getElementById('snapshotTotalPredictions');
+                if (tpl) tpl.textContent = String(totalPred);
+                const spl = document.getElementById('snapshotScriptPings');
+                if (spl) spl.textContent = String(s.script_usage_count ?? 0);
+                if (userStatsMessage) userStatsMessage.textContent = 'Telemetry linked dynamically.';
+            } else {
+                if (userStatsMessage) userStatsMessage.textContent = 'Telemetry inactive.';
+            }
+        }).catch(() => {
+            if (userStatsMessage) userStatsMessage.textContent = 'Telemetry connection lost.';
+        });
+    }
+
+    // Access Request Buttons
+    ['requestMinesAccessBtn', 'requestCrashAccessBtn', 'requestBlackjackAccessBtn', 'requestMolesAccessBtn'].forEach(id => {
+        const btn = document.getElementById(id);
+        if(btn) {
+            btn.addEventListener('click', function() {
+                if (!currentUser || !currentUser.username) {
+                    showToast('Authentication required', 'error');
+                    return;
+                }
+                let type = 'mines';
+                if (id.includes('Crash')) type = 'crash';
+                else if (id.includes('Blackjack')) type = 'blackjack';
+                else if (id.includes('Moles')) type = 'moles';
+                
+                fetch('https://api.soulpredictor.xyz/request-predictor-access', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: currentUser.username, predictor_type: type, request_message: `Requested ${type} module access via user panel.`
+                    })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showToast('Request routed to administration.', 'success');
+                    } else {
+                        showToast('Error: ' + (data.message || 'Unknown error'), 'error');
+                    }
+                })
+                .catch(function() {
+                    showToast('Network failure.', 'error');
+                });
+            });
+        }
+    });
+
+    // Predictor launch buttons (secure redirect to predictor interface)
+    (function initPredictorLaunchButtons() {
+        const minesBtn = document.getElementById('openMinesPredictorBtn');
+        const crashBtn = document.getElementById('openCrashPredictorBtn');
+        const blackjackBtn = document.getElementById('openBlackjackPredictorBtn');
+        const molesBtn = document.getElementById('openMolesPredictorBtn');
+
+        function buildPredictorUrl(type) {
+            const base = '/mines';
+            const params = new URLSearchParams();
+            params.set('predictor', type);
+            return base + '?' + params.toString();
+        }
+
+        function openPredictor(type) {
+            window.location.href = buildPredictorUrl(type);
+        }
+
+        if (minesBtn) {
+            minesBtn.addEventListener('click', function () {
+                if (minesBtn.disabled) return;
+                openPredictor('mines');
+            });
+        }
+        if (crashBtn) {
+            crashBtn.addEventListener('click', function () {
+                if (crashBtn.disabled) return;
+                openPredictor('crash');
+            });
+        }
+        if (blackjackBtn) {
+            blackjackBtn.addEventListener('click', function () {
+                if (blackjackBtn.disabled) return;
+                openPredictor('blackjack');
+            });
+        }
+        if (molesBtn) {
+            molesBtn.addEventListener('click', function () {
+                if (molesBtn.disabled) return;
+                openPredictor('moles');
+            });
+        }
+    })();
+
+    // Refresh Buttons
+    [panelRefreshBtn, minesRefreshBtn, crashRefreshBtn, blackjackRefreshBtn, molesRefreshBtn].forEach(btn => {
+        if(btn) {
+            btn.addEventListener('click', function() {
+                if (!currentUser || !currentUser.username) return;
+                
+                const icon = this.querySelector('iconify-icon');
+                if(icon) icon.classList.add('animate-spin');
+                
+                fetch('https://api.soulpredictor.xyz/user-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: currentUser.username })
+                })
+                .then(r => r.json())
+                .then(res => {
+                    if (res.status === 'success' && res.user) updateUserPanel(res.user);
+                })
+                .finally(() => {
+                    if(icon) setTimeout(() => icon.classList.remove('animate-spin'), 500);
+                });
+            });
+        }
+    });
+
+    // Tickets
+    if (userTicketNewBtn) {
+        userTicketNewBtn.addEventListener('click', function() {
+            if (!currentUser) return;
+            currentTicketId = null;
+            userTicketSubject.value = '';
+            userTicketMessage.value = '';
+            userTicketComposer.classList.remove('hidden');
+            userTicketSubject.classList.remove('hidden');
+            userTicketConversation.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-zinc-500 font-medium">Line secured. Awaiting input...</div>';
+            userTicketActiveHeader.classList.add('hidden');
+            resetUserTicketButtonImmediate();
+        });
+
+        userTicketSendBtn.addEventListener('click', function() {
+            if (!currentUser) return;
+            const message = userTicketMessage.value.trim();
+            if (!message) return;
+            
+            setUserTicketButtonLoading();
+            
+            const url = currentTicketId ? 'https://api.soulpredictor.xyz/user-ticket-reply' : 'https://api.soulpredictor.xyz/user-ticket';
+            const body = currentTicketId 
+                ? { ticket_id: currentTicketId, sender: 'user', message, username: currentUser.username, client_info: getClientInfo() }
+                : { username: currentUser.username, subject: userTicketSubject.value.trim() || 'General Inquiry', message, client_info: getClientInfo() };
+
+            fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+                .then(r => r.json())
+                .then(res => {
+                    if (res.status === 'success' && res.ticket) {
+                        userTicketMessage.value = '';
+                        renderUserTickets(currentUser.username);
+                        openUserTicketThread(res.ticket);
+                    }
+                })
+                .finally(() => showUserTicketButtonResult());
+        });
+    }
+
+    // Assets Injection HTML generation
+    function createKeyElement(key, label) {
+        return `
+            <div class="bg-black/40 border border-white/5 p-4 rounded-xl flex items-center justify-between gap-4 group hover:bg-white/[0.02] transition-colors">
+                <div class="min-w-0 flex-1">
+                    <div class="text-[10px] font-medium tracking-widest text-zinc-500 uppercase mb-1.5 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-zinc-700"></span> ${label}
+                    </div>
+                    <div class="text-xs text-zinc-300 font-mono truncate select-all">${key}</div>
+                </div>
+                <button type="button" class="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-zinc-400 hover:text-[#3DF604] hover:bg-white/10 hover:border-[#3DF604]/30 transition-colors asset-key-copy border border-white/5" data-key="${key.replace(/"/g, '&quot;')}">
+                    <iconify-icon icon="solar:copy-linear" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        `;
+    }
+
+    // Window global functions for inline HTML onclicks injected by JS
+    window.showScript = function(type, prefix) {
+        const pfx = prefix || '';
+        document.querySelectorAll(`.${pfx}script-content`).forEach(el => el.style.display = 'none');
+        document.querySelectorAll(`.${pfx}script-tab`).forEach(tab => tab.classList.remove('active'));
+        const target = document.getElementById(`${pfx}${type}Script`);
+        if(target) target.style.display = 'block';
+        
+        const tabs = document.querySelectorAll(`.${pfx}script-tab`);
+        tabs.forEach(tab => {
+            if(tab.getAttribute('data-target') === type) tab.classList.add('active');
+        });
+    };
+
+    window.copyToClipboard = function(text) {
+        navigator.clipboard.writeText(text);
+    };
+
+    // Store user plan assets
+    let userPlanAssets = null;
+
+    function renderPlanAssets(assets) {
+        const container = document.getElementById('scriptsKeysContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        const plan = assets.plan || 'free';
+        const PLAN_DISPLAY_NAMES = {
+            free: 'S-Free',
+            demo: 'S-Free',
+            trial: 'S-Free',
+            silver: 'S-Enterprise',
+            gold: 'S-Max',
+            turbo: 'S-OG'
+        };
+        const planKey = plan ? String(plan).toLowerCase() : 'free';
+        const planDisplay = assets.plan_name || assets.plan_display_name || assets.subscription_plan_name || PLAN_DISPLAY_NAMES[planKey] || 'S-Free';
+        const scripts = assets.scripts || [];
+        const features = assets.features || [];
+        const planActive = assets.plan_active || false;
+        const timeRemaining = assets.time_remaining || '--';
+        
+        // If plan is not active, lock all assets
+        const isLocked = !planActive && plan !== 'free';
+        
+        const mainWrapper = document.createElement('div');
+        mainWrapper.className = 'glass-card rounded-3xl p-6 md:p-8';
+        
+        // Plan badge color based on tier
+        let planColor = 'bg-zinc-500';
+        if (plan === 'silver') planColor = 'bg-slate-400';
+        else if (plan === 'gold') planColor = 'bg-amber-400';
+        else if (plan === 'turbo') planColor = 'bg-[#8B5CF6]';
+        
+        let html = `
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8 pb-8 border-b border-white/5">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 mb-3">
+                        <span class="w-1.5 h-1.5 rounded-full ${planColor} shadow-[0_0_8px_rgba(139,92,246,0.6)]"></span>
+                        <span class="text-[10px] font-medium tracking-widest text-zinc-300 uppercase">${String(planDisplay)} PLAN</span>
+                    </div>
+                    <h3 class="text-2xl font-medium tracking-tight text-zinc-100">${String(planDisplay)} Assets</h3>
+                    <p class="text-sm text-zinc-500 mt-2">${assets.description || 'Plan assets and scripts'}</p>
+                </div>
+                <div class="flex gap-4 text-sm bg-black/40 p-4 rounded-2xl border border-white/5 shadow-inner">
+                    <div><div class="text-[10px] font-medium tracking-widest text-zinc-500 uppercase mb-1">Status</div><span class="font-mono ${planActive ? 'text-[#8B5CF6]' : 'text-zinc-500'}">${planActive ? 'Active' : 'Inactive'}</span></div>
+                    <div class="w-px bg-white/10"></div><div><div class="text-[10px] font-medium tracking-widest text-zinc-500 uppercase mb-1">Time Left</div><span class="font-mono text-zinc-200">${timeRemaining}</span></div>
+                </div>
+            </div>
+        `;
+        
+        // Features section
+        if (features.length > 0) {
+            html += `
+                <div class="mb-6">
+                    <h4 class="text-xs font-medium tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
+                        <iconify-icon icon="solar:check-circle-linear" stroke-width="1.5"></iconify-icon> Features
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                        ${features.map(f => `<span class="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-xs text-zinc-300">${f}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Scripts section
+        if (scripts.length > 0 && !isLocked) {
+            html += `
+                <div class="mb-4">
+                    <h4 class="text-xs font-medium tracking-widest text-zinc-500 uppercase mb-4 flex items-center gap-2">
+                        <iconify-icon icon="solar:code-circle-linear" stroke-width="1.5"></iconify-icon> Predictor Scripts
+                    </h4>
+                    <div class="flex gap-4 border-b border-white/10 mb-6 px-2">
+                        ${scripts.map((s, idx) => `<button class="plan-script-tab script-tab ${idx === 0 ? 'active' : ''}" data-target="${s.type}" data-plan="${plan}">${s.name}</button>`).join('')}
+                    </div>
+                    
+                    <div class="rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden shadow-2xl relative group">
+                        <div class="h-10 bg-white/[0.02] border-b border-white/5 flex items-center px-4 gap-2">
+                            <div class="w-3 h-3 rounded-full bg-rose-500/20 border border-rose-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-amber-500/20 border border-amber-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#3DF604]/20 border border-[#3DF604]/50"></div>
+                            <div class="ml-4 text-[10px] font-mono text-zinc-600" id="scriptFilename">pump.js</div>
+                            
+                            <button id="copyScriptBtn" class="ml-auto flex items-center justify-center w-7 h-7 rounded-md bg-white/5 text-zinc-400 hover:text-[#3DF604] hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100" title="Copy script">
+                                <iconify-icon icon="solar:copy-linear" stroke-width="1.5"></iconify-icon>
+                            </button>
+                        </div>
+                        
+                        ${scripts.map((s, idx) => `
+                            <div id="${plan}_${s.type}Script" class="plan-script-content ${idx === 0 ? 'block' : 'hidden'} p-4 h-64 overflow-y-auto custom-scrollbar" data-code="${encodeURIComponent(s.code)}">
+                                <pre class="font-mono text-xs text-zinc-400 leading-relaxed"><code>${escapeHtml(s.code)}</code></pre>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        } else if (isLocked) {
+            // Plan expired - show locked message
+            html += `
+                <div class="p-8 border border-dashed border-rose-500/30 bg-rose-500/5 rounded-2xl flex flex-col items-center justify-center text-center">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-3">
+                        <iconify-icon icon="solar:lock-linear" class="text-rose-400 text-xl" stroke-width="1.5"></iconify-icon>
+                    </div>
+                    <p class="text-sm text-rose-300 font-medium">Assets Locked - Plan Expired</p>
+                    <p class="text-xs text-rose-400/60 mt-1">Your ${String(planDisplay)} plan has expired. Please renew to access scripts.</p>
+                </div>
+            `;
+        } else {
+            html += `
+                <div class="p-8 border border-dashed border-white/10 bg-white/[0.01] rounded-2xl flex flex-col items-center justify-center text-center">
+                    <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-3">
+                        <iconify-icon icon="solar:lock-linear" class="text-zinc-500 text-xl" stroke-width="1.5"></iconify-icon>
+                    </div>
+                    <p class="text-sm text-zinc-400 font-medium">No scripts available for S-Free plan</p>
+                    <p class="text-xs text-zinc-600 mt-1">Upgrade to S-Enterprise, S-Max, or S-OG to access predictor scripts</p>
+                </div>
+            `;
+        }
+        
+        mainWrapper.innerHTML = html;
+        container.appendChild(mainWrapper);
+        
+        // Add event listeners for tabs
+        document.querySelectorAll('.plan-script-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                const planName = this.getAttribute('data-plan');
+                
+                // Hide all content
+                document.querySelectorAll('.plan-script-content').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.plan-script-content').forEach(el => el.classList.remove('block'));
+                
+                // Remove active from all tabs
+                document.querySelectorAll('.plan-script-tab').forEach(t => t.classList.remove('active'));
+                
+                // Show target content
+                const targetEl = document.getElementById(`${planName}_${target}Script`);
+                if (targetEl) {
+                    targetEl.classList.remove('hidden');
+                    targetEl.classList.add('block');
+                }
+                
+                // Add active to clicked tab
+                this.classList.add('active');
+                
+                // Update filename
+                const filenameEl = document.getElementById('scriptFilename');
+                if (filenameEl) filenameEl.textContent = `${target}.js`;
+            });
+        });
+        
+        // Add copy button listener
+        const copyBtn = document.getElementById('copyScriptBtn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function() {
+                const visibleScript = document.querySelector('.plan-script-content.block');
+                if (visibleScript) {
+                    const code = decodeURIComponent(visibleScript.getAttribute('data-code') || '');
+                    navigator.clipboard.writeText(code);
+                    showToast('Script copied to clipboard', 'success');
+                }
+            });
+        }
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function loadUserAssets(email) {
+        if (!email) return;
+        
+        fetch('https://api.soulpredictor.xyz/user-assets', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.status === 'success' && result.assets) {
+                userPlanAssets = result.assets;
+                renderPlanAssets(result.assets);
+                if (assetsSummaryLabel) {
+                    const plan = result.assets.plan || 'free';
+                    const planDisplay = result.assets.plan_name || result.assets.plan_display_name || result.assets.subscription_plan_name || (
+                        ({ free: 'S-Free', demo: 'S-Free', trial: 'S-Free', silver: 'S-Enterprise', gold: 'S-Max', turbo: 'S-OG' }[String(plan).toLowerCase()]) || 'S-Free'
+                    );
+                    const planActive = result.assets.plan_active;
+                    assetsSummaryLabel.textContent = `${planDisplay} Plan${planActive ? ' Active' : ''}`;
+                    assetsSummaryLabel.className = planActive 
+                        ? "text-xs font-mono font-medium tracking-widest uppercase text-[#3DF604] bg-[#3DF604]/10 px-4 py-2 rounded-full border border-[#3DF604]/20"
+                        : "text-xs font-mono font-medium tracking-widest uppercase text-zinc-500 bg-white/5 px-4 py-2 rounded-full border border-white/10";
+                }
+                if (assetsList) assetsList.innerHTML = '';
+            } else {
+                if (assetsSummaryLabel) assetsSummaryLabel.textContent = 'No Assets';
+            }
+        })
+        .catch(() => {
+            if (assetsSummaryLabel) assetsSummaryLabel.textContent = 'Asset Sync Failed';
+        });
+    }
+
+    // Legacy function - kept for compatibility but not used
+    function renderScriptsAndKeys(items) {
+        // This function is deprecated - assets now come from user plan
+        console.log('Legacy renderScriptsAndKeys called - using plan-based assets instead');
+    }
+
+    // Load assets from user plan instead of storage
+    function loadAssetsFromStorage() {
+        // Assets are now loaded via loadUserAssets when user is logged in
+        if (currentUser && currentUser.username) {
+            loadUserAssets(currentUser.username);
+        }
+    }
+
+    function clearStoredSession() {
+        try {
+            localStorage.removeItem('soulai_email');
+            localStorage.removeItem('soulai_user_token');
+        } catch (e) {}
+    }
+
+    function logoutAndRedirectHome() {
+        clearStoredSession();
+        window.location.href = '/';
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logoutAndRedirectHome);
+    }
+
+    // Auto-login routine - require verified session in localStorage
+    (function attemptAutoLogin() {
+        let storedEmail = null;
+        let storedToken = null;
+        try {
+            storedEmail = localStorage.getItem('soulai_email');
+        } catch (e) {
+            storedEmail = null;
+        }
+        try {
+            storedToken = localStorage.getItem('soulai_user_token');
+        } catch (e) {
+            storedToken = null;
+        }
+        const urlEmail = new URLSearchParams(window.location.search).get('email');
+
+        // If no stored session but URL supplies an email, force back to login
+        if (!storedEmail && urlEmail) {
+            logoutAndRedirectHome();
+            return;
+        }
+
+        // No session, nothing to do
+        if (!storedEmail) {
+            return;
+        }
+
+        fetch('https://api.soulpredictor.xyz/user-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: storedEmail, user_token: storedToken })
+        })
+        .then(r => r.json())
+        .then(d => {
+            if (d.status === 'success' && d.user) {
+                updateUserPanel(d.user);
+            } else if (d.status === 'error' && (d.message || '').toLowerCase().includes('not registered')) {
+                logoutAndRedirectHome();
+            } else {
+                logoutAndRedirectHome();
+            }
+        })
+        .catch(() => {
+            logoutAndRedirectHome();
+        });
+    })();
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+</script>
+
+</body></html>

@@ -1,0 +1,2782 @@
+
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulAI | Premium AI Predictions</title>
+<link rel="icon" href="/favicon.png" type="image/png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Unbounded:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+html {
+font-size: 16px;
+}
+
+@media (max-width: 640px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+/* Prevent horizontal overflow on mobile */
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* Ensure all sections fit within viewport on mobile */
+section {
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* Mobile card grid - single column */
+@media (max-width: 768px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .grid-cols-4 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Ensure cards stack vertically on mobile */
+    #pricing-fbi,
+    #pricing-standard {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Hero text sizing for mobile */
+    h1 {
+        font-size: 2.5rem !important;
+        line-height: 1.1 !important;
+    }
+    
+    /* Ensure images don't overflow */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Padding adjustments for mobile */
+    .px-4 {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    .px-8 {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+.scrolling-text {
+animation: scroll 20s linear infinite;
+}
+@keyframes scroll {
+from { transform: translateX(0); }
+to { transform: translateX(-50%); }
+}
+.grid-bg {
+background-size: 60px 60px;
+background-image: linear-gradient(to right, rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+}
+
+/* Ambient Background Orbs */
+.ambient-orb {
+position: fixed;
+border-radius: 50%;
+filter: blur(120px);
+pointer-events: none;
+z-index: 0;
+opacity: 0.15;
+}
+.ambient-orb-1 {
+width: 600px;
+height: 600px;
+background: radial-gradient(circle, #8B5CF6 0%, transparent 70%);
+top: -200px;
+left: -100px;
+animation: orbFloat1 20s ease-in-out infinite;
+}
+.ambient-orb-2 {
+width: 500px;
+height: 500px;
+background: radial-gradient(circle, #06B6D4 0%, transparent 70%);
+bottom: -150px;
+right: -100px;
+animation: orbFloat2 25s ease-in-out infinite;
+}
+.ambient-orb-3 {
+width: 400px;
+height: 400px;
+background: radial-gradient(circle, #EC4899 0%, transparent 70%);
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+animation: orbFloat3 18s ease-in-out infinite;
+opacity: 0.08;
+}
+@keyframes orbFloat1 {
+0%, 100% { transform: translate(0, 0); }
+33% { transform: translate(80px, 60px); }
+66% { transform: translate(-40px, 30px); }
+}
+@keyframes orbFloat2 {
+0%, 100% { transform: translate(0, 0); }
+33% { transform: translate(-60px, -40px); }
+66% { transform: translate(30px, -60px); }
+}
+@keyframes orbFloat3 {
+0%, 100% { transform: translate(-50%, -50%) scale(1); }
+50% { transform: translate(-50%, -50%) scale(1.3); }
+}
+
+/* Shiny CTA Button CSS from 3.html */
+@property --gradient-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@property --gradient-angle-offset { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@property --gradient-percent { syntax: "<percentage>"; initial-value: 20%; inherits: false; }
+@property --gradient-shine { syntax: "<color>"; initial-value: #A78BFA; inherits: false; }
+
+.shiny-cta {
+--gradient-angle: 0deg;
+--gradient-angle-offset: 0deg;
+--gradient-percent: 20%;
+--gradient-shine: #A78BFA;
+--shadow-size: 2px;
+position: relative;
+overflow: hidden;
+border-radius: 9999px;
+padding: 0.875rem 2rem;
+font-size: 1.125rem;
+line-height: 1.5;
+font-weight: 500;
+color: #ffffff;
+background: linear-gradient(#0f0f1a, #0f0f1a) padding-box,
+conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)), transparent 0%, #7C3AED 7%, var(--gradient-shine) 15%, #06B6D4 23%, #7C3AED 30%, transparent 40%, transparent 100%) border-box;
+border: 2px solid transparent;
+box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.2), 0 0 20px rgba(139, 92, 246, 0);
+outline: none;
+transition: --gradient-angle-offset 800ms cubic-bezier(0.25, 1, 0.5, 1), --gradient-percent 800ms cubic-bezier(0.25, 1, 0.5, 1), --gradient-shine 800ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, transform 0.4s ease;
+cursor: pointer;
+isolation: isolate;
+outline-offset: 4px;
+font-family: 'Inter', sans-serif;
+z-index: 0;
+animation: border-spin 2.5s linear infinite;
+text-decoration: none;
+display: inline-block;
+}
+
+.shiny-cta:hover {
+transform: translateY(-2px);
+box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.4), 0 10px 30px rgba(139, 92, 246, 0.4);
+}
+.shiny-cta:hover i, .shiny-cta:hover .fa-arrow-right-long {
+transform: translateX(4px);
+transition: transform 0.3s ease;
+}
+.shiny-cta i, .shiny-cta .fa-arrow-right-long {
+transition: transform 0.3s ease;
+}
+
+.nav-get-started {
+padding: 0.875rem 2rem !important;
+}
+@keyframes border-spin { to { --gradient-angle: 360deg; } }
+.shiny-cta:active { transform: translateY(1px); }
+.shiny-cta::before {
+content: ''; pointer-events: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 0;
+--size: calc(100% - 6px); --position: 2px; --space: 4px; width: var(--size); height: var(--size);
+background: radial-gradient(circle at var(--position) var(--position), white 0.5px, transparent 0) padding-box;
+background-size: var(--space) var(--space); background-repeat: space;
+mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg), black, transparent 10% 90%, black);
+border-radius: inherit; opacity: 0.4;
+}
+.shiny-cta::after {
+content: ''; pointer-events: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1;
+width: 100%; aspect-ratio: 1; background: linear-gradient(-50deg, transparent, #7C3AED, transparent);
+mask-image: radial-gradient(circle at bottom, transparent 40%, black); opacity: 0.6;
+animation: shimmer 4s linear infinite;
+}
+.shiny-cta span { position: relative; z-index: 2; display: inline-block; }
+.shiny-cta span::before {
+content: ''; pointer-events: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: -1;
+--size: calc(100% + 1rem); width: var(--size); height: var(--size);
+box-shadow: inset 0 -1ex 2rem 4px #7C3AED; opacity: 0; border-radius: inherit;
+transition: opacity 800ms cubic-bezier(0.25, 1, 0.5, 1); animation: breathe 4.5s linear infinite;
+}
+@keyframes shimmer { to { transform: translate(-50%, -50%) rotate(360deg);} }
+@keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1);} 50% { transform: translate(-50%, -50%) scale(1.20);} }
+
+/* Glass Card Effect */
+.glass-card {
+background: linear-gradient(145deg, rgba(30, 27, 38, 0.7), rgba(15, 14, 20, 0.8));
+border: 1px solid rgba(139, 92, 246, 0.15);
+backdrop-filter: blur(24px);
+-webkit-backdrop-filter: blur(24px);
+box-shadow: 0 0 40px rgba(139, 92, 246, 0.05);
+}
+::-webkit-scrollbar {
+width: 6px;
+}
+::-webkit-scrollbar-track {
+background: #08080f;
+}
+::-webkit-scrollbar-thumb {
+background: #333;
+border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #8B5CF6;
+}
+.fade-enter {
+opacity: 0;
+transform: translateY(10px);
+}
+.fade-enter-active {
+opacity: 1;
+transform: translateY(0);
+transition: opacity 300ms, transform 300ms;
+}
+.fade-in {
+	opacity: 0;
+	animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(10px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-out {
+	opacity: 1;
+	animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+	from { opacity: 1; transform: translateY(0); }
+	to { opacity: 0; transform: translateY(-10px); }
+}
+.page-transition {
+transition: opacity 0.5s ease-in-out;
+}
+.premium-glass {
+background: linear-gradient(145deg, rgba(30, 27, 38, 0.8), rgba(15, 14, 20, 0.9));
+backdrop-filter: blur(24px);
+-webkit-backdrop-filter: blur(24px);
+border: 1px solid rgba(139, 92, 246, 0.2);
+box-shadow: 0 10px 40px -5px rgba(139, 92, 246, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+.premium-card {
+transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.premium-card:hover {
+border-color: rgba(139, 92, 246, 0.5);
+background: linear-gradient(145deg, rgba(40, 35, 50, 0.9), rgba(20, 18, 28, 0.95));
+transform: translateY(-6px) scale(1.02);
+box-shadow: 0 30px 60px -10px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.3) inset;
+}
+.support-tickets-card {
+display: flex;
+flex-direction: column;
+}
+.support-tickets-card .tickets-grid {
+flex: 1;
+min-height: 0;
+}
+#ticketConversation {
+height: auto;
+overflow-y: auto;
+}
+#ticketList {
+height: auto;
+overflow-y: auto;
+}
+.modal-scroll-card {
+max-height: calc(100vh - 40px);
+overflow-y: auto;
+}
+@media (max-width: 768px) {
+.support-tickets-card {
+max-height: none;
+}
+.modal-scroll-card {
+width: 100%;
+max-width: calc(100% - 32px);
+margin: 16px;
+}
+}
+@keyframes float-slow {
+0% { transform: translateY(0px); }
+50% { transform: translateY(-12px); }
+100% { transform: translateY(0px); }
+}
+
+.floating-card {
+transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-card:hover {
+transform: translateY(-8px);
+box-shadow: 0 30px 60px -12px rgba(139, 92, 246, 0.3), 0 0 0 1px rgba(139, 92, 246, 0.2) inset;
+}
+.animate-float {
+animation: float-slow 8s ease-in-out infinite;
+}
+@keyframes float-icon {
+0%,100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+25% { transform: translateY(-20px) translateX(10px) rotate(4deg); }
+50% { transform: translateY(-10px) translateX(-6px) rotate(-3deg); }
+75% { transform: translateY(-16px) translateX(8px) rotate(2deg); }
+}
+.floating-icon {
+animation: float-icon 12s ease-in-out infinite;
+opacity: 0.8;
+pointer-events: none;
+filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.08));
+}
+.btn-animated-border {
+position: relative;
+box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.0);
+animation: borderPulse 2.2s ease-in-out infinite;
+}
+@keyframes borderPulse {
+0%,100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.0); }
+50% { box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.35); }
+}
+.card-animated-border {
+position: relative;
+}
+.pricing-panel {
+transition: opacity 300ms ease, transform 300ms ease;
+}
+.pricing-panel-active {
+opacity: 1;
+transform: translateY(0);
+pointer-events: auto;
+position: relative;
+}
+.pricing-panel-inactive {
+opacity: 0;
+transform: translateY(16px);
+pointer-events: none;
+position: absolute;
+inset: 0;
+}
+.pricing-toggle-active {
+background-color: #8B5CF6;
+color: #08080f;
+}
+
+.currency-toggle-active {
+background-color: #8B5CF6;
+color: #08080f;
+}
+.modal {
+display: none;
+position: fixed;
+z-index: 10000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.85);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+align-items: center;
+justify-content: center;
+}
+.modal-content {
+position: relative;
+animation: modalFadeIn 0.3s ease-out;
+}
+@keyframes modalFadeIn {
+from { opacity: 0; transform: scale(0.9) translateY(-20px); }
+to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.key-input:focus {
+outline: none;
+border-color: #8B5CF6 !important;
+box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3) !important;
+}
+.key-input::placeholder {
+color: #6B7280;
+}
+.check-key-btn:hover {
+background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%) !important;
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+}
+.key-status-result.success {
+background: rgba(56, 161, 105, 0.1);
+border: 1px solid rgba(56, 161, 105, 0.2);
+color: #48BB78;
+}
+.key-status-result.error {
+background: rgba(229, 62, 62, 0.1);
+border: 1px solid rgba(229, 62, 62, 0.2);
+color: #F56565;
+}
+.key-status-result.warning {
+background: rgba(236, 201, 75, 0.1);
+border: 1px solid rgba(236, 201, 75, 0.2);
+color: #ECC94B;
+}
+.border-gradient {
+border: 0;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(139, 92, 246, 0.4), rgba(6, 182, 212, 0.4), transparent);
+}
+</style></head>
+<body class="bg-[#08080f] text-[#EAEAEA] font-['Space_Mono'] antialiased overflow-x-hidden selection:bg-[#8B5CF6] selection:text-black relative">
+
+    <!-- Background Layers -->
+    <div class="fixed inset-0 z-0 pointer-events-none grid-bg"></div>
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+    <div class="fixed inset-0 z-0 pointer-events-none bg-gradient-to-t from-[#08080f] via-transparent to-transparent h-48 bottom-0 w-full"></div>
+
+    <!-- Removed Logo (Top Left) -->
+
+    <!-- Modern Floating Navigation -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+        <div id="modern-nav" class="flex items-center gap-2 px-4 py-2 rounded-[2rem] border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)]" style="background: rgba(20, 20, 25, 0.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+            
+            <a href="javascript:switchView('home-view')" onclick="setActiveNav(this)" class="nav-item active relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-100 transition-opacity duration-300"></div>
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Home</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-100 transition-opacity duration-300"></div>
+            </a>
+
+            <a href="javascript:void(0)" data-open-user-dashboard onclick="setActiveNav(this)" class="nav-item relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white/50 hover:text-white/90 transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                <i data-lucide="log-in" class="w-5 h-5"></i>
+                <span id="homeDashboardLabel" class="text-[10px] font-medium tracking-wide">Login</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-0 transition-opacity duration-300"></div>
+            </a>
+
+            <a href="javascript:switchView('projects-view')" onclick="setActiveNav(this)" class="nav-item relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white/50 hover:text-white/90 transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                <i data-lucide="grid" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Projects</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-0 transition-opacity duration-300"></div>
+            </a>
+
+            <a href="#pricing" onclick="switchView('home-view'); setActiveNav(this)" class="nav-item relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white/50 hover:text-white/90 transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                <i data-lucide="tag" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Pricing</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-0 transition-opacity duration-300"></div>
+            </a>
+
+            <a href="https://t.me/veilchief" target="_blank" class="nav-item relative flex flex-col items-center justify-center gap-1 w-16 md:w-20 h-14 text-white/50 hover:text-white/90 transition-all duration-300">
+                <div class="active-bg absolute inset-0 bg-[#8B5CF6]/20 rounded-full blur-md -z-10 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium tracking-wide">Support</span>
+                <div class="active-indicator absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#8B5CF6] rounded-full shadow-[0_0_8px_#8B5CF6] opacity-0 transition-opacity duration-300"></div>
+            </a>
+
+        </div>
+    </nav>
+
+    <script>
+        function setActiveNav(element) {
+            // Remove active state from all items
+            const items = document.querySelectorAll('#modern-nav .nav-item');
+            items.forEach(item => {
+                item.classList.remove('text-white');
+                item.classList.add('text-white/50');
+                item.querySelector('.active-bg').classList.remove('opacity-100');
+                item.querySelector('.active-bg').classList.add('opacity-0');
+                item.querySelector('.active-indicator').classList.remove('opacity-100');
+                item.querySelector('.active-indicator').classList.add('opacity-0');
+            });
+            
+            // Add active state to clicked item
+            element.classList.remove('text-white/50');
+            element.classList.add('text-white');
+            element.querySelector('.active-bg').classList.remove('opacity-0');
+            element.querySelector('.active-bg').classList.add('opacity-100');
+            element.querySelector('.active-indicator').classList.remove('opacity-0');
+            element.querySelector('.active-indicator').classList.add('opacity-100');
+        }
+    </script>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-full z-40 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="toggleMobileMenu()"></div>
+        <div class="absolute top-0 right-0 w-72 h-full bg-[#08080f] border-l border-white/[0.06] flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b border-white/[0.04]">
+                <span class="font-['Unbounded'] text-lg bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Menu</span>
+                <button onclick="toggleMobileMenu()" class="w-8 h-8 flex items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] backdrop-blur-md text-gray-300 hover:text-[#8B5CF6] hover:border-[#8B5CF6]/30 transition-all">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <nav class="flex-1 p-4">
+                <button onclick="switchView('projects-view'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all mb-2">PROJECTS</button>
+                <a href="#studio" onclick="switchView('home-view'); toggleMobileMenu()" class="block w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all mb-2">EXPERTISE</a>
+                <a href="#pricing" onclick="switchView('home-view'); toggleMobileMenu()" class="block w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all mb-2">PRICING</a>
+                <a href="#custom-services" onclick="switchView('home-view'); toggleMobileMenu()" class="block w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all mb-2">SERVICES</a>
+                <button onclick="toggleModal('contact-modal'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all mb-2">ABOUT</button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- MAIN HOME VIEW -->
+    <main id="home-view" class="relative z-10 pt-32 pb-20 page-transition">
+
+        <!-- Hero Section -->
+        <section class="px-4 md:px-8 mb-20 relative">
+            <div class="absolute top-0 right-0 md:right-8 opacity-20 hidden md:block">
+                <i data-lucide="maximize" class="w-32 h-32 animate-spin-slow text-gray-500" style="animation-duration: 20s;"></i>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="w-2 h-2 bg-[#8B5CF6] rounded-full animate-pulse" style="box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);"></span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-gray-400">System Online / Berlin</span>
+                </div>
+                
+                <h1 class="font-['Unbounded'] font-black text-5xl md:text-8xl lg:text-[9rem] leading-[0.85] uppercase tracking-tighter">
+                    <span class="bg-gradient-to-r from-white via-white to-gray-400 bg-clip-text text-transparent">SoulAI</span> <br>
+                    <span class="text-transparent" style="-webkit-text-stroke: 1px rgba(255,255,255,0.4);">Prediction</span> <br>
+                    <span class="bg-gradient-to-r from-[#8B5CF6] via-[#06B6D4] to-[#8B5CF6] bg-clip-text text-transparent italic pr-4">Engine</span>
+                </h1>
+                
+                <div class="md:absolute bottom-4 right-0 md:right-8 max-w-sm mt-8 md:mt-0">
+                    <p class="text-xs md:text-sm text-gray-400 leading-relaxed border-l-2 border-gradient-vertical pl-4" style="border-image: linear-gradient(to bottom, #8B5CF6, #06B6D4) 1;">
+                        Experience unprecedented accuracy and reliability with our AI-powered prediction system, trusted by thousands of successful users.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SoulAI Overview -->
+        <section class="px-4 md:px-8 mb-20">
+            <div class="max-w-6xl mx-auto grid gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-start">
+                <div class="space-y-5">
+                    <div>
+                        <span class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">About SoulAI</span>
+                        <h2 class="mt-2 font-['Unbounded'] text-2xl md:text-3xl uppercase">Precision for high‑stakes prediction</h2>
+                    </div>
+                    <p class="text-sm md:text-base text-gray-300 leading-relaxed">
+                        SoulAI is a cutting-edge prediction platform that combines advanced AI algorithms with real-time data analysis to provide highly accurate predictions for various games.
+                    </p>
+                    <p class="text-sm md:text-base text-gray-300 leading-relaxed">
+                        Our system has been developed and refined over years, achieving an industry-leading <span class="text-[#8B5CF6] font-semibold">95% accuracy rate</span> that has helped thousands of users worldwide transform their gambling experience.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs md:text-sm text-gray-300">
+                        <div class="space-y-2">
+                            <h3 class="font-['Unbounded'] text-sm uppercase text-white">Key Features</h3>
+                            <ul class="space-y-1">
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>Advanced AI Algorithms</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>Real-time Predictions</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>95% Success Rate</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>24/7 Support</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="font-['Unbounded'] text-sm uppercase text-white">Our Focus</h3>
+                            <ul class="space-y-1">
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>Continuous Improvement</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>User Success</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]"></span>Reliable Predictions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="glass-card p-4 rounded-xl premium-card card-animated-border floating-card transition-colors group relative overflow-hidden">
+                        
+                        <div class="flex justify-between items-start mb-3 relative z-10">
+                            <div class="w-9 h-9 bg-gradient-to-br from-[#8B5CF6]/20 to-[#06B6D4]/10 rounded-lg flex items-center justify-center text-white">
+                                <iconify-icon icon="lucide:target" class="text-sm text-[#8B5CF6]"></iconify-icon>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-['Unbounded'] uppercase mb-1 relative z-10">AI Technology</h3>
+                        <p class="text-[11px] text-slate-300 leading-relaxed relative z-10">
+                            Advanced machine learning algorithms analyze patterns with 95% accuracy for precise predictions.
+                        </p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl premium-card card-animated-border floating-card transition-colors group relative overflow-hidden">
+                        
+                        <div class="flex justify-between items-start mb-3 relative z-10">
+                            <div class="w-9 h-9 bg-gradient-to-br from-[#06B6D4]/20 to-[#8B5CF6]/10 rounded-lg flex items-center justify-center text-white">
+                                <iconify-icon icon="lucide:bar-chart-2" class="text-sm text-[#06B6D4]"></iconify-icon>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-['Unbounded'] uppercase mb-1 relative z-10">Real-time Analysis</h3>
+                        <p class="text-[11px] text-slate-300 leading-relaxed relative z-10">
+                            Instant data processing and pattern recognition for up-to-the-moment predictions.
+                        </p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl premium-card card-animated-border floating-card transition-colors group relative overflow-hidden">
+                        
+                        <div class="flex justify-between items-start mb-3 relative z-10">
+                            <div class="w-9 h-9 bg-gradient-to-br from-[#EC4899]/20 to-[#8B5CF6]/10 rounded-lg flex items-center justify-center text-white">
+                                <iconify-icon icon="lucide:shield" class="text-sm text-[#EC4899]"></iconify-icon>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-['Unbounded'] uppercase mb-1 relative z-10">Pattern Recognition</h3>
+                        <p class="text-[11px] text-slate-300 leading-relaxed relative z-10">
+                            Sophisticated models identify winning patterns and trends in live game data.
+                        </p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl premium-card card-animated-border floating-card transition-colors group relative overflow-hidden">
+                        
+                        <div class="flex justify-between items-start mb-3 relative z-10">
+                            <div class="w-9 h-9 bg-gradient-to-br from-[#F59E0B]/20 to-[#8B5CF6]/10 rounded-lg flex items-center justify-center text-white">
+                                <iconify-icon icon="lucide:layers" class="text-sm text-[#F59E0B]"></iconify-icon>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-['Unbounded'] uppercase mb-1 relative z-10">Multiple Predictors</h3>
+                        <p class="text-[11px] text-slate-300 leading-relaxed relative z-10">
+                            Access Crash, Mines, Dice and Moles predictors from a unified SoulAI interface.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Infinite Marquee -->
+        <div class="w-full border-t border-b border-white/10 py-4 mb-24 overflow-hidden bg-gradient-to-r from-[#0c0c14] via-[#0f0f1a] to-[#0c0c14] relative">
+            <div class="whitespace-nowrap scrolling-text flex gap-8">
+                <span class="font-['Unbounded'] text-4xl md:text-6xl text-transparent font-bold uppercase" style="-webkit-text-stroke: 1px #333;">Creative Direction</span>
+                <span class="font-['Unbounded'] text-4xl md:text-6xl bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] bg-clip-text text-transparent font-bold uppercase">×</span>
+                <span class="font-['Unbounded'] text-4xl md:text-6xl text-transparent font-bold uppercase" style="-webkit-text-stroke: 1px #333;">Set Design</span>
+                <span class="font-['Unbounded'] text-4xl md:text-6xl bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] bg-clip-text text-transparent font-bold uppercase">×</span>
+                <span class="font-['Unbounded'] text-4xl md:text-6xl text-transparent font-bold uppercase" style="-webkit-text-stroke: 1px #333;">Lighting</span>
+                <span class="font-['Unbounded'] text-4xl md:text-6xl bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] bg-clip-text text-transparent font-bold uppercase">×</span>
+                <span class="font-['Unbounded'] text-4xl md:text-6xl text-transparent font-bold uppercase" style="-webkit-text-stroke: 1px #333;">Audio Visual</span>
+                <span class="font-['Unbounded'] text-4xl md:text-6xl bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] bg-clip-text text-transparent font-bold uppercase">×</span>
+            </div>
+        </div>
+
+        <!-- Bento Grid Layout -->
+        <section id="work" class="px-4 md:px-8 max-w-[1800px] mx-auto scroll-mt-24">
+            <div class="flex items-end justify-between mb-8 pb-4" style="border-bottom: 1px solid; border-image: linear-gradient(to right, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3), transparent) 1;">
+                <h2 class="font-['Unbounded'] text-2xl uppercase">Our Products</h2>
+                <span class="text-xs text-[#8B5CF6] font-mono">[AI-POWERED]</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(300px,auto)]">
+                
+                <!-- Main Feature: Soul Predictor -->
+                <article onclick="switchView('projects-view')" class="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-sm border border-white/10 cursor-pointer bg-gradient-to-br from-[#0a0a12] to-[#111118]">
+                    <div class="absolute inset-0 bg-black/20 z-10 group-hover:bg-transparent transition-all"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="brain" class="w-24 h-24 text-[#8B5CF6]/20 group-hover:text-[#8B5CF6]/40 transition-all duration-500"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent z-20">
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <div class="text-[#8B5CF6] text-xs font-bold mb-1">FLAGSHIP PRODUCT</div>
+                                <h3 class="font-['Unbounded'] text-3xl uppercase text-white">Soul Predictor</h3>
+                                <p class="text-xs text-gray-400 mt-2 max-w-xs">Advanced AI algorithms delivering 95% accuracy across multiple games.</p>
+                            </div>
+                            <button class="bg-white/10 backdrop-blur rounded-full p-3 hover:bg-[#8B5CF6] hover:text-black transition-colors">
+                                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Stat Card: Accuracy -->
+                <div class="md:col-span-1 bg-[#111118] border border-white/10 p-6 flex flex-col justify-between group hover:border-[#8B5CF6] transition-colors rounded-sm">
+                    <i data-lucide="target" class="w-8 h-8 bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] bg-clip-text" style="color: #8B5CF6;"></i>
+                    <div>
+                        <div class="text-4xl font-['Unbounded'] font-bold mb-1 bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] bg-clip-text text-transparent">95%</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider">Prediction Accuracy</div>
+                    </div>
+                </div>
+
+                <!-- Secondary: Mines Predictor -->
+                <article onclick="switchView('projects-view')" class="md:col-span-1 md:row-span-2 relative group border border-white/10 rounded-sm overflow-hidden bg-gradient-to-b from-[#111118] to-[#0a0a12] cursor-pointer">
+                     <div class="absolute inset-0 flex items-center justify-center">
+                        <i data-lucide="gem" class="w-16 h-16 text-[#8B5CF6]/20 group-hover:text-[#8B5CF6]/40 transition-all duration-500"></i>
+                     </div>
+                     <div class="absolute top-4 right-4 bg-black/50 backdrop-blur px-3 py-1 rounded-full border border-white/10 text-xs">
+                        POPULAR
+                     </div>
+                     <div class="absolute bottom-4 left-4 right-4">
+                        <h3 class="font-['Unbounded'] text-xl uppercase">Mines Predictor</h3>
+                        <p class="text-xs text-gray-400 mt-1">Strategic tile analysis</p>
+                     </div>
+                </article>
+
+                <!-- Service Card: Access -->
+                <div class="md:col-span-1 bg-gradient-to-br from-[#8B5CF6] to-[#06B6D4] text-black p-6 flex flex-col justify-between rounded-sm">
+                    <div class="flex justify-between items-start">
+                        <i data-lucide="smartphone" class="w-8 h-8"></i>
+                        <span class="font-bold text-xs border border-black px-2 rounded-full">EASY</span>
+                    </div>
+                    <div>
+                        <h3 class="font-['Unbounded'] font-bold text-xl leading-tight mb-2 uppercase">Multi-Platform</h3>
+                        <p class="text-xs font-bold opacity-70">Access via Web, Telegram, or Browser Extensions.</p>
+                    </div>
+                </div>
+
+                <!-- Wide: What We Offer -->
+                <article onclick="switchView('projects-view')" class="md:col-span-3 h-[300px] relative group overflow-hidden border border-white/10 rounded-sm bg-gradient-to-r from-[#0a0a12] via-[#111118] to-[#0a0a12] cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80 z-10"></div>
+                    
+                    <div class="absolute inset-0 z-20 flex items-center justify-between px-8 md:px-16">
+                        <div class="max-w-md">
+                            <span class="text-[#8B5CF6] text-xs font-mono tracking-widest mb-2 block">COMPLETE SUITE</span>
+                            <h3 class="font-['Unbounded'] text-3xl md:text-5xl uppercase leading-none mb-4">What We<br>Offer</h3>
+                            <button class="inline-flex items-center gap-2 text-xs border-b border-white pb-1 hover:text-[#8B5CF6] hover:border-[#8B5CF6] transition-colors">
+                                EXPLORE ALL <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        
+                        <ul class="hidden md:block text-right text-xs font-mono text-gray-300 space-y-2 border-r border-white/20 pr-6">
+                            <li>MINES PREDICTOR</li>
+                            <li>CRASH PREDICTOR</li>
+                            <li>MOLES PREDICTOR</li>
+                            <li>BLACKJACK PREDICTOR</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Interactive Box -> LINK TO PRODUCTS PAGE -->
+                <div onclick="switchView('projects-view')" class="md:col-span-1 bg-[#111118] border border-white/10 flex flex-col items-center justify-center text-center p-6 gap-4 hover:bg-[#1a1a24] hover:border-[#8B5CF6] transition-colors rounded-sm cursor-pointer group">
+                    <div class="w-16 h-16 rounded-full border border-dashed border-gray-600 group-hover:border-[#8B5CF6] flex items-center justify-center animate-spin-slow group-hover:animate-none transition-all">
+                        <i data-lucide="arrow-right" class="text-[#8B5CF6] w-6 h-6 group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <div class="font-['Unbounded'] text-sm uppercase group-hover:text-[#8B5CF6] transition-colors">Know More</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SoulAI Predictors -->
+        <section class="mt-32 px-4 md:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+                    <div>
+                        <span class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">SoulAI Suite</span>
+                        <h2 class="mt-2 font-['Unbounded'] text-2xl md:text-4xl uppercase">Our Predictors</h2>
+                        <p class="text-sm md:text-base text-gray-400 max-w-lg mt-3">Choose from our range of AI-powered tools tailored for different game types. Each predictor is engineered for maximum accuracy and reliability.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Mines Predictor -->
+                    <div class="glass-card premium-card card-animated-border rounded-2xl p-6 md:p-8 border border-white/10 flex flex-col justify-between group relative overflow-hidden transition-colors text-center min-h-[380px]">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="w-16 h-16 bg-gradient-to-br from-[#8B5CF6]/30 to-[#06B6D4]/10 rounded-xl flex items-center justify-center text-white mx-auto mb-4 border border-[#8B5CF6]/20">
+                                <iconify-icon icon="lucide:gem" class="text-2xl text-[#8B5CF6]"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-['Unbounded'] uppercase mb-3">Mines Predictor</h3>
+                            <div class="text-xs text-slate-300 leading-relaxed mb-4 flex-grow space-y-2">
+                                <p>Strategic mine predictions with proven success rate.</p>
+                                <ul class="text-left space-y-1 text-[11px] text-gray-400 mt-3">
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Real-time tile probability</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Pattern recognition AI</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Risk assessment per move</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>95% accuracy rate</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="#pricing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="shiny-cta mt-4 inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3 w-full">
+                            <span>GET NOW</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                    <!-- Crash Predictor -->
+                    <div class="glass-card premium-card card-animated-border rounded-2xl p-6 md:p-8 border border-white/10 flex flex-col justify-between group relative overflow-hidden transition-colors text-center min-h-[380px]">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="w-16 h-16 bg-gradient-to-br from-[#06B6D4]/30 to-[#8B5CF6]/10 rounded-xl flex items-center justify-center text-white mx-auto mb-4 border border-[#06B6D4]/20">
+                                <iconify-icon icon="lucide:trending-up" class="text-2xl text-[#06B6D4]"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-['Unbounded'] uppercase mb-3">Crash Predictor</h3>
+                            <div class="text-xs text-slate-300 leading-relaxed mb-4 flex-grow space-y-2">
+                                <p>Advanced algorithm with high accuracy predictions.</p>
+                                <ul class="text-left space-y-1 text-[11px] text-gray-400 mt-3">
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Live multiplier analysis</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Statistical probability</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Multi-round tracking</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Auto-cashout signals</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="#pricing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="shiny-cta mt-4 inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3 w-full">
+                            <span>GET NOW</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                    <!-- Moles Predictor -->
+                    <div class="glass-card premium-card card-animated-border rounded-2xl p-6 md:p-8 border border-white/10 flex flex-col justify-between group relative overflow-hidden transition-colors text-center min-h-[380px]">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="w-16 h-16 bg-gradient-to-br from-[#EC4899]/30 to-[#8B5CF6]/10 rounded-xl flex items-center justify-center text-white mx-auto mb-4 border border-[#EC4899]/20">
+                                <iconify-icon icon="lucide:zap" class="text-2xl text-[#EC4899]"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-['Unbounded'] uppercase mb-3">Moles Predictor</h3>
+                            <div class="text-xs text-slate-300 leading-relaxed mb-4 flex-grow space-y-2">
+                                <p>Adaptive mole-hole probability tracking with live board-state analysis.</p>
+                                <ul class="text-left space-y-1 text-[11px] text-gray-400 mt-3">
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Latest rounds learning</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Hole transition modeling</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Confidence-scored picks</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Live API sync engine</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="#pricing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="shiny-cta mt-4 inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3 w-full">
+                            <span>GET NOW</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                    <!-- Blackjack Predictor -->
+                    <div class="glass-card premium-card card-animated-border rounded-2xl p-6 md:p-8 border border-white/10 flex flex-col justify-between group relative overflow-hidden transition-colors text-center min-h-[380px]">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="w-16 h-16 bg-gradient-to-br from-[#F59E0B]/30 to-[#8B5CF6]/10 rounded-xl flex items-center justify-center text-white mx-auto mb-4 border border-[#F59E0B]/20">
+                                <iconify-icon icon="lucide:spade" class="text-2xl text-[#F59E0B]"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-['Unbounded'] uppercase mb-3">Blackjack Predictor</h3>
+                            <div class="text-xs text-slate-300 leading-relaxed mb-4 flex-grow space-y-2">
+                                <p>Card counting AI with optimal strategy suggestions.</p>
+                                <ul class="text-left space-y-1 text-[11px] text-gray-400 mt-3">
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Real-time odds calc</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Optimal move suggestions</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Card counting assist</li>
+                                    <li class="flex items-center gap-2"><span class="w-1 h-1 bg-[#8B5CF6] rounded-full"></span>Strategy optimization</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="#pricing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" class="shiny-cta mt-4 inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3 w-full">
+                            <span>GET NOW</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services / Philosophy Section -->
+        <section id="studio" class="mt-32 px-4 md:px-8 scroll-mt-24">
+            <div class="border-t border-gradient"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/20 border-b border-white/20">
+                
+                <div class="glass-card p-8 group floating-card transition-colors relative overflow-hidden">
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-12">
+                            <span class="font-['Unbounded'] text-5xl opacity-20 group-hover:opacity-100 group-hover:text-[#8B5CF6] transition-all">01</span>
+                            <i data-lucide="ruler" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold uppercase mb-4">Model Architecture</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed max-w-[80%]">
+                            We design resilient prediction pipelines, from feature engineering to post-processing, for mission-critical decisions.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 group floating-card transition-colors relative overflow-hidden">
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-12">
+                            <span class="font-['Unbounded'] text-5xl opacity-20 group-hover:opacity-100 group-hover:text-[#8B5CF6] transition-all">02</span>
+                            <i data-lucide="monitor" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold uppercase mb-4">Signal Fusion</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed max-w-[80%]">
+                            We combine market, social and on-chain signals to deliver stable, explainable SoulAI forecasts.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 group floating-card transition-colors relative overflow-hidden">
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-12">
+                            <span class="font-['Unbounded'] text-5xl opacity-20 group-hover:opacity-100 group-hover:text-[#8B5CF6] transition-all">03</span>
+                            <i data-lucide="waves" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold uppercase mb-4">Risk Guardrails</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed max-w-[80%]">
+                            Built‑in risk filters and alerting layers help you act on signals, not noise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SoulAI Pricing -->
+        <section id="pricing" class="mt-32 px-4 md:px-8 scroll-mt-24">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-6" style="border-bottom: 1px solid; border-image: linear-gradient(to right, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3), transparent) 1;">
+                    <div>
+                        <span class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">SoulAI Plans</span>
+                        <h2 class="font-['Unbounded'] text-3xl md:text-4xl uppercase mt-2">Choose your plan</h2>
+                        <p class="text-xs md:text-sm text-gray-400 max-w-md mt-3">
+                            Balance Injector for global users (USD) · MinesAI for Indian users (INR).
+                        </p>
+                    </div>
+                    <button id="keyStatusBtn" class="shiny-cta inline-flex items-center gap-2 text-xs font-bold uppercase px-6 py-4">
+                        <i class="fa-solid fa-robot text-[12px]"></i>
+                        <span>Free Demo</span>
+                    </button>
+                </div>
+
+                <div class="mt-8 inline-flex bg-white/5 border border-white/10 rounded-full p-1 text-xs font-mono">
+                    <button id="toggle-fbi" class="px-4 py-2 rounded-full pricing-toggle-active">Balance Injector</button>
+                    <button id="toggle-standard" class="px-4 py-2 rounded-full text-gray-400 hover:text-white">MinesAI</button>
+                </div>
+                
+                <!-- Currency Toggle -->
+                <div class="mt-4 flex flex-wrap items-center gap-3">
+                    <div class="inline-flex bg-white/5 border border-white/10 rounded-full p-1 text-xs font-mono">
+                        <button id="currency-usd" class="px-4 py-2 rounded-full currency-toggle-active">USD</button>
+                        <button id="currency-inr" class="px-4 py-2 rounded-full text-gray-400 hover:text-white">INR</button>
+                    </div>
+                    <span class="text-[10px] text-gray-500 font-mono uppercase tracking-widest">International / India</span>
+                </div>
+
+                <div class="mt-10 relative min-h-[260px]">
+                    <!-- Balance Injector Plans -->
+                    <div id="pricing-fbi" class="pricing-panel pricing-panel-active grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="premium-glass premium-card card-animated-border rounded-xl p-6 md:p-8 border border-white/10 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <p class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">Monthly</p>
+                                        <h3 class="font-['Unbounded'] text-xl md:text-2xl uppercase mt-1">Balance Injector</h3>
+                                    </div>
+                                    <span class="text-[10px] uppercase text-gray-400 border border-white/10 rounded-full px-3 py-1">30 days access</span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mb-4">
+                                    <span class="text-3xl md:text-4xl font-['Unbounded'] font-bold">$6</span>
+                                    <span class="text-xs text-gray-400">/ 30 days</span>
+                                </div>
+                                <ul class="space-y-2 text-xs text-gray-300 mb-6">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Standard Balance Injector prediction stream</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Real-time anomaly and spike detection</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Daily risk summary inside SoulAI console</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://pay.oxapay.com/11522416" target="_blank" class="shiny-cta inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3">
+                                <span>Pay Now</span>
+                                <i class="fa-solid fa-arrow-right-long text-[11px]"></i>
+                            </a>
+                        </div>
+
+                        <div class="premium-glass premium-card card-animated-border rounded-xl p-6 md:p-8 border border-[#8B5CF6]/40 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute right-4 top-4 text-[10px] font-mono uppercase tracking-[0.2em] text-black bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] px-3 py-1 rounded-full">
+                                Best Value
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <p class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">Extended</p>
+                                        <h3 class="font-['Unbounded'] text-xl md:text-2xl uppercase mt-1">Balance Injector Pro</h3>
+                                    </div>
+                                    <span class="text-[10px] uppercase text-gray-400 border border-white/10 rounded-full px-3 py-1">60 days access</span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mb-4">
+                                    <span class="text-3xl md:text-4xl font-['Unbounded'] font-bold">$12</span>
+                                    <span class="text-xs text-gray-400">/ 60 days</span>
+                                </div>
+                                <ul class="space-y-2 text-xs text-gray-300 mb-6">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Everything in Balance Injector</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Priority access to new SoulAI models</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Deeper lookback windows for key assets</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Email + Telegram alert hooks</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://pay.oxapay.com/17254239" target="_blank" class="shiny-cta inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3">
+                                <span>Pay Now</span>
+                                <i class="fa-solid fa-arrow-right-long text-[11px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- MinesAI Plans -->
+                    <div id="pricing-standard" class="pricing-panel pricing-panel-inactive grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="premium-glass premium-card card-animated-border rounded-xl p-6 md:p-8 border border-white/10 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <p class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">Predictor</p>
+                                        <h3 class="font-['Unbounded'] text-lg md:text-xl uppercase mt-1 whitespace-nowrap">S-Enterprise</h3>
+                                    </div>
+                                    <span class="text-[10px] uppercase text-gray-400 border border-white/10 rounded-full px-3 py-1">25 days access</span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mb-4">
+                                    <span class="text-3xl md:text-4xl font-['Unbounded'] font-bold">$7</span>
+                                    <span class="text-xs text-gray-400">/ 25 days</span>
+                                </div>
+                                <ul class="space-y-2 text-xs text-gray-300 mb-6">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Limit: Infinity</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Success Rate: 95%</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Includes: Crash, Mines, Blackjack, Moles</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://pay.oxapay.com/16579184" target="_blank" class="shiny-cta inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3">
+                                <span>Pay Now</span>
+                                <i class="fa-solid fa-arrow-right-long text-[11px]"></i>
+                            </a>
+                        </div>
+
+                        <div class="premium-glass premium-card card-animated-border rounded-xl p-6 md:p-8 border border-white/10 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute right-4 top-4 text-[10px] font-mono uppercase tracking-[0.2em] text-black bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] px-3 py-1 rounded-full">
+                                Most Popular
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <p class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">Predictor</p>
+                                        <h3 class="font-['Unbounded'] text-xl md:text-2xl uppercase mt-1">S-Max</h3>
+                                    </div>
+                                    <span class="text-[10px] uppercase text-gray-400 border border-white/10 rounded-full px-3 py-1">35 days access</span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mb-4">
+                                    <span class="text-3xl md:text-4xl font-['Unbounded'] font-bold">$10</span>
+                                    <span class="text-xs text-gray-400">/ 35 days</span>
+                                </div>
+                                <ul class="space-y-2 text-xs text-gray-300 mb-6">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Limit: Infinity</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Success Rate: 98%</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Includes: Crash, Mines, Blackjack, Moles</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://pay.oxapay.com/15532063" target="_blank" class="shiny-cta inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3">
+                                <span>Pay Now</span>
+                                <i class="fa-solid fa-arrow-right-long text-[11px]"></i>
+                            </a>
+                        </div>
+
+                        <div class="premium-glass premium-card card-animated-border rounded-xl p-6 md:p-8 border border-white/10 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <p class="text-xs font-mono text-[#8B5CF6] uppercase tracking-[0.2em]">Predictor</p>
+                                        <h3 class="font-['Unbounded'] text-xl md:text-2xl uppercase mt-1">S-Free</h3>
+                                    </div>
+                                    <span class="text-[10px] uppercase text-gray-400 border border-white/10 rounded-full px-3 py-1">Unlimited duration</span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mb-4">
+                                    <span class="text-3xl md:text-4xl font-['Unbounded'] font-bold">$0</span>
+                                    <span class="text-xs text-gray-400">/ free</span>
+                                </div>
+                                <ul class="space-y-2 text-xs text-gray-300 mb-6">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Limit: 28 times per 12 hours</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Success Rate: 65-75%</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#8B5CF6] text-[10px]"></i>
+                                        <span>Includes: Crash, Mines, Blackjack, Moles</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="https://t.me/soulpredictor_bot" target="_blank" class="shiny-cta inline-flex items-center justify-center gap-2 text-xs font-bold uppercase px-6 py-3">
+                                <span>Claim</span>
+                                <i class="fa-solid fa-arrow-right-long text-[11px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Services Section -->
+        <section id="custom-services" class="mt-24 px-4 md:px-8 scroll-mt-24">
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-card card-animated-border rounded-2xl p-8 md:p-12 text-center group floating-card relative overflow-hidden">
+                    
+                    <div class="relative z-10">
+                        <div class="mb-8">
+                            <iconify-icon icon="lucide:sparkles" class="text-5xl md:text-6xl text-[#8B5CF6] mb-4" style="filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));"></iconify-icon>
+                            <h3 class="text-2xl md:text-3xl font-['Unbounded'] font-semibold text-white mb-3 uppercase">Custom Services</h3>
+                            <p class="text-sm text-slate-300 max-w-xl mx-auto">
+                                Get tailored SoulAI builds for your desk, fund or research stack. We shape prediction tools around your exact workflow.
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 text-left text-sm text-slate-200">
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-[#8B5CF6]"></iconify-icon>
+                                <span>Custom Tools</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <iconify-icon icon="lucide:check" class="text-[#8B5CF6]"></iconify-icon>
+                                <span>Scripts Development</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-[#8B5CF6]"></iconify-icon>
+                                <span>Custom Websites</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-[#8B5CF6]"></iconify-icon>
+                                <span>Design Services</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-[#8B5CF6]"></iconify-icon>
+                                <span>API Integration</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <iconify-icon icon="lucide:check" class="text-[#8B5CF6]"></iconify-icon>
+                                <span>Automation Solutions</span>
+                            </div>
+                        </div>
+                        <a href="https://t.me/veilchief" target="_blank" class="shiny-cta inline-flex w-full sm:w-auto items-center justify-center gap-2 py-3 px-8 text-white text-xs font-bold uppercase">
+                            <span>Contact Now</span>
+                            <i class="fa-solid fa-paper-plane text-[11px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA / Footer -->
+        <section id="footer" class="mt-32 px-4 md:px-8 pb-12">
+            <div onclick="toggleModal('contact-modal')" class="bg-gradient-to-br from-[#8B5CF6] via-[#7C3AED] to-[#06B6D4] text-black rounded-2xl p-8 md:p-16 relative overflow-hidden group cursor-pointer">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-end gap-8">
+                    <div>
+                        <div class="text-sm font-bold uppercase tracking-widest mb-4 border-b border-black/20 inline-block pb-1">Availability: Q6 2026</div>
+                        <h2 class="font-['Unbounded'] text-4xl md:text-7xl font-black uppercase leading-none">
+                            Let's Make<br>Some Noise
+                        </h2>
+                    </div>
+                    <div class="w-16 h-16 bg-black/80 backdrop-blur rounded-full flex items-center justify-center text-[#8B5CF6] group-hover:scale-125 transition-transform duration-300">
+                        <i data-lucide="arrow-up-right" class="w-8 h-8"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="mt-16 flex flex-col md:flex-row justify-between items-end pt-8 gap-6" style="border-top: 1px solid; border-image: linear-gradient(to right, transparent, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3), transparent) 1;">
+                <div class="flex flex-col gap-4">
+                    <a href="#" class="font-['Unbounded'] text-2xl font-bold tracking-tight">SoulAI</a>
+                    <div class="flex gap-4 text-gray-500">
+                        <i data-lucide="instagram" class="w-5 h-5 hover:text-[#8B5CF6] transition-colors cursor-pointer"></i>
+                        <i data-lucide="twitter" class="w-5 h-5 hover:text-[#8B5CF6] transition-colors cursor-pointer"></i>
+                        <i data-lucide="linkedin" class="w-5 h-5 hover:text-[#8B5CF6] transition-colors cursor-pointer"></i>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-x-12 gap-y-2 text-xs text-gray-400 font-mono uppercase">
+                    <a href="#" class="hover:text-white">Impressum</a>
+                    <a href="#" class="hover:text-white">Privacy</a>
+                    <a href="#" class="hover:text-white">Contact</a>
+                    <a href="#" class="hover:text-white">Press Kit</a>
+                </div>
+                
+                <div class="text-[10px] text-gray-600 font-mono uppercase text-right">
+                    © 2026 SoulAI Predictor.<br>Predicting the improbable.
+                </div>
+            </footer>
+        </section>
+    </main>
+
+    <!-- PROJECT ARCHIVE PAGE (Overlay) -->
+    <div id="projects-view" class="fixed inset-0 z-40 bg-[#08080f]/98 hidden flex-col pt-32 animate-fade-in overflow-hidden" style="backdrop-filter: blur(20px);">
+        <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#08080f] to-transparent z-10 pointer-events-none"></div>
+
+        <div class="flex flex-1 h-full relative">
+            
+            <!-- Left: Project List -->
+            <div class="w-full md:w-1/3 h-full overflow-y-auto border-r border-white/10 px-4 md:px-8 pb-12 pt-4 custom-scrollbar">
+                <div class="mb-8">
+                    <h2 class="font-['Unbounded'] text-2xl uppercase mb-2">Our Products</h2>
+                    <p class="text-xs text-gray-500">Select to learn more about our offerings.</p>
+                </div>
+                <ul class="space-y-4 font-['Unbounded'] text-lg md:text-xl uppercase">
+                    <!-- Product Items -->
+                    <li onclick="updateProject(0)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300 active-project" data-index="0">Soul Predictor</li>
+                    <li onclick="updateProject(1)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300" data-index="1">What We Offer</li>
+                    <li onclick="updateProject(2)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300" data-index="2">Mines Predictor</li>
+                    <li onclick="updateProject(3)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300" data-index="3">Crash Predictor</li>
+                    <li onclick="updateProject(4)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300" data-index="4">Moles Predictor</li>
+                    <li onclick="updateProject(5)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300" data-index="5">Blackjack Predictor</li>
+                    <li onclick="updateProject(6)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300" data-index="6">How To Access</li>
+                    <li onclick="updateProject(7)" class="cursor-pointer text-white/50 hover:text-[#8B5CF6] hover:pl-2 transition-all duration-300" data-index="7">Security</li>
+                </ul>
+            </div>
+
+            <!-- Right: Content Display (Visible on all devices) -->
+            <div class="w-full md:w-2/3 h-full bg-gradient-to-br from-[#0c0c14] to-[#0a0a12] relative flex-col justify-center items-center p-6 md:p-12 flex">
+                <div id="project-display" class="relative w-full h-full flex flex-col items-center justify-center transition-opacity duration-500 opacity-100 overflow-y-auto">
+                    
+                    <div class="w-full max-w-2xl text-left">
+                        <div class="flex items-baseline justify-between border-b border-white/10 pb-4 mb-4">
+                            <h2 id="project-title" class="font-['Unbounded'] text-2xl md:text-4xl uppercase font-bold text-white">Soul Predictor</h2>
+                            <span id="project-year" class="font-mono text-[#8B5CF6] text-sm md:text-base">Premium</span>
+                        </div>
+                        <div id="project-desc" class="text-sm text-gray-400 font-mono leading-relaxed space-y-4">
+                            <p>Experience the future of prediction with SoulAI's flagship product. Our advanced AI algorithms analyze patterns in real-time to deliver highly accurate predictions across multiple games.</p>
+                            <p>With a proven 95% accuracy rate, Soul Predictor has helped thousands of users worldwide transform their gaming experience.</p>
+                        </div>
+                        <div class="mt-6 flex flex-wrap gap-4 text-xs font-bold uppercase tracking-wider text-gray-500">
+                            <span id="project-client" class="text-[#8B5CF6]">AI-Powered</span>
+                            <span>•</span>
+                            <span id="project-role">Real-time Analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- --- MODALS --- -->
+
+    <!-- Contact / About Modal -->
+    <div id="contact-modal" class="hidden fixed inset-0 z-[100] bg-[#08080f]/95 backdrop-blur-xl items-center justify-center p-4">
+        <div class="w-full max-w-2xl bg-[#0c0c14] border border-white/10 rounded-sm relative shadow-2xl animate-fade-in">
+            <!-- Close Button -->
+            <button onclick="toggleModal('contact-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-[#8B5CF6] transition-colors">
+                <i data-lucide="x-circle" class="w-8 h-8"></i>
+            </button>
+            
+            <div class="p-8 md:p-12">
+                <div class="mb-8">
+                    <span class="bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] bg-clip-text text-transparent text-xs font-mono mb-2 block uppercase">About / Contact</span>
+                    <h2 class="font-['Unbounded'] text-3xl md:text-4xl font-bold uppercase">Get In Touch</h2>
+                </div>
+                
+                <div class="mb-8 text-sm text-gray-400 font-mono pl-4" style="border-left: 2px solid; border-image: linear-gradient(to bottom, #8B5CF6, #06B6D4) 1;">
+                    <p class="mb-2">SoulAI is an AI-native prediction studio building tools for traders, funds and builders who need reliable machine-driven signals.</p>
+                    <p>Based in Berlin, operating globally.</p>
+                </div>
+
+                <form onsubmit="event.preventDefault();" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase text-gray-500">Name / Org</label>
+                            <input type="text" placeholder="Enter identification" class="w-full bg-transparent border-b border-white/20 py-2 focus:border-[#8B5CF6] outline-none font-mono text-sm transition-colors">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase text-gray-500">Email</label>
+                            <input type="email" placeholder="contact@domain.com" class="w-full bg-transparent border-b border-white/20 py-2 focus:border-[#8B5CF6] outline-none font-mono text-sm transition-colors">
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase text-gray-500">Project Type</label>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <button type="button" class="text-xs border border-white/20 px-3 py-1 rounded-full hover:bg-white hover:text-black transition-colors">Event Production</button>
+                            <button type="button" class="text-xs border border-white/20 px-3 py-1 rounded-full hover:bg-white hover:text-black transition-colors">Installation</button>
+                            <button type="button" class="text-xs border border-white/20 px-3 py-1 rounded-full hover:bg-white hover:text-black transition-colors">Visuals</button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase text-gray-500">Brief</label>
+                        <textarea rows="4" placeholder="Describe your vision..." class="w-full bg-transparent border-b border-white/20 py-2 focus:border-[#8B5CF6] outline-none font-mono text-sm transition-colors resize-none"></textarea>
+                    </div>
+
+                    <div class="pt-4 flex justify-between items-center">
+                        <span class="text-[10px] text-gray-600 max-w-[200px]">By submitting, you agree to enter our digital ecosystem.</span>
+                        <button class="shiny-cta font-['Unbounded'] font-bold text-white text-sm px-8 py-3 flex items-center gap-2">
+                            TRANSMIT <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Login & Dashboard Modal -->
+    <div id="userDashboardModal" class="modal">
+        <div class="glass-card modal-content modal-scroll-card max-w-3xl w-full mx-4 p-8 rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(139,92,246,0.15)]" style="background: linear-gradient(145deg, rgba(30, 27, 38, 0.95), rgba(15, 14, 20, 0.98)); backdrop-filter: blur(20px);">
+            <button class="close-user-dashboard absolute right-5 top-5 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-[#8B5CF6]/20 transition-all text-xl leading-none">&times;</button>
+            <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-white/5 pb-6">
+                <div class="flex items-center gap-4">
+                    <div class="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#8B5CF6]/20 to-[#06B6D4]/20 flex items-center justify-center border border-[#8B5CF6]/30 shadow-[0_0_20px_rgba(139,92,246,0.2)]">
+                        <div class="absolute inset-0 rounded-xl bg-[#8B5CF6] blur-md opacity-20 animate-pulse"></div>
+                        <i data-lucide="shield-check" class="w-6 h-6 text-[#8B5CF6] relative z-10"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-['Unbounded'] font-bold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Predictor Access</h2>
+                        <p class="text-xs text-gray-400 mt-1 font-mono tracking-wide">Secure one-time code login. Session saved to device.</p>
+                    </div>
+                </div>
+                <div id="userStatusBadge" class="text-xs px-3 py-1 rounded-full border border-white/10 bg-white/5 text-gray-300 hidden"></div>
+            </div>
+            <div id="userLoginSection" class="space-y-5 max-w-md mx-auto">
+                <div class="space-y-1.5">
+                    <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B5CF6] ml-1">Email Address</label>
+                    <input id="userLoginUsername" type="email" class="key-input w-full px-5 py-4 rounded-xl bg-[#08080f]/80 border border-white/10 focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/50 text-sm text-white font-mono placeholder:text-gray-600 transition-all shadow-inner" placeholder="Enter your email address">
+                </div>
+                <div class="space-y-1.5">
+                    <input id="userLoginCode" type="text" maxlength="6" class="key-input w-full px-5 py-4 rounded-xl bg-[#08080f]/80 border border-white/10 focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/50 text-sm text-center tracking-[0.5em] text-white font-mono placeholder:tracking-normal placeholder:text-center placeholder:text-gray-600 hidden transition-all shadow-inner" placeholder="Enter 6-digit OTP">
+                </div>
+                <div class="rounded-xl border border-[#06B6D4]/20 bg-[#06B6D4]/5 px-4 py-3 text-[11px] text-[#06B6D4] font-medium flex gap-3 items-start">
+                    <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                    <p>No password needed. Enter your email, verify the OTP code, and continue to your dashboard.</p>
+                </div>
+                <button id="userLoginBtn" class="shiny-cta w-full py-4 rounded-xl text-white text-sm font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all relative overflow-hidden group">
+                    <span class="relative z-10">Continue</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <div id="userLoginMessage" class="key-status-result mt-4 text-sm rounded-xl hidden"></div>
+            </div>
+            
+            <div id="userDashboardSection" class="hidden mt-2 space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <div class="lg:col-span-2 premium-glass rounded-2xl p-5 premium-card">
+                        <div class="flex items-center justify-between gap-4 mb-4">
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-1">Current Plan</div>
+                                <div class="text-lg font-['Unbounded'] font-semibold text-white">VIP MINES INJECTOR</div>
+                                <div id="dashboardStakeUsername" class="text-[11px] text-gray-400 mt-1"></div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-gray-400">Time Remaining</div>
+                                <div id="dashboardTimeRemaining" class="text-sm font-mono text-[#8B5CF6]">--</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            <div class="space-y-1">
+                                <div class="text-gray-400">Status</div>
+                                <div id="dashboardStatus" class="font-semibold text-white"></div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="text-gray-400">Last Web Login</div>
+                                <div id="dashboardLastLogin" class="font-mono text-gray-300">--</div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="text-gray-400">Last Script Used</div>
+                                <div id="dashboardLastScript" class="font-mono text-gray-300">--</div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                            <div class="text-[10px] text-gray-500 max-w-xs">
+                                Script deactivates instantly if access is revoked or expires.
+                            </div>
+                            <button id="dashboardRefreshBtn" class="px-3 py-2 rounded-full border border-white/10 text-[11px] text-gray-200 hover:bg-white hover:text-black transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                                Refresh Status
+                            </button>
+                        </div>
+                    </div>
+                    <div class="premium-glass rounded-2xl p-5 premium-card space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-1">Request More Time</div>
+                                <div class="text-sm text-gray-200">Up to 60 days</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input id="timeRequestValue" type="number" min="1" max="60" value="1" class="w-20 key-input px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-xs text-white">
+                            <select id="timeRequestUnit" class="key-input px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-xs text-white">
+                                <option value="d">Days</option>
+                                <option value="h">Hours</option>
+                                <option value="m">Minutes</option>
+                            </select>
+                        </div>
+                        <textarea id="timeRequestNote" rows="2" class="w-full key-input px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-xs text-white" placeholder="Optional note for admin"></textarea>
+                        <button id="timeRequestBtn" class="w-full px-3 py-2 rounded-full bg-gradient-to-r from-[#8B5CF6] to-[#06B6D4] text-black text-[11px] font-semibold tracking-[0.16em] flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-clock text-[10px]"></i>
+                            REQUEST TIME
+                        </button>
+                        <div id="timeRequestMessage" class="key-status-result mt-1 text-xs rounded-lg hidden"></div>
+                    </div>
+                </div>
+                <div class="premium-glass rounded-2xl p-5 premium-card support-tickets-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-1">Support Tickets</div>
+                            <div class="text-sm text-gray-200">Talk directly with admin</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 tickets-grid">
+                        <div class="space-y-3 md:col-span-1">
+                            <button id="ticketNewBtn" class="w-full px-3 py-2 rounded-full bg-white/10 border border-white/20 text-[11px] text-gray-100 hover:bg-[#8B5CF6] hover:text-black transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                                NEW TICKET
+                            </button>
+                            <div class="space-y-2 max-h-56 overflow-y-auto text-xs" id="ticketList">
+                                <div class="text-gray-500 text-[11px]">No tickets yet. Create one to contact support.</div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 md:col-span-2">
+                            <div id="ticketActiveHeader" class="flex items-center justify-between text-[11px] text-gray-300 hidden">
+                                <div class="font-semibold" id="ticketActiveSubject"></div>
+                                <div id="ticketActiveStatus" class="text-xs px-2 py-1 rounded-full border border-white/10 bg-white/5"></div>
+                            </div>
+                            <div id="ticketConversation" class="space-y-2 max-h-56 overflow-y-auto text-xs border border-white/10 rounded-lg p-3 bg-black/20">
+                                <div class="text-gray-500 text-[11px]">Select a ticket or create new to start chat.</div>
+                            </div>
+                            <div id="ticketComposer" class="space-y-2 hidden">
+                                <input id="ticketSubject" type="text" class="key-input w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-xs text-white" placeholder="Subject for new ticket">
+                                <textarea id="ticketMessage" rows="3" class="key-input w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-xs text-white" placeholder="Type your message..."></textarea>
+                                <div class="flex items-center justify-between gap-2">
+                                    <button id="ticketSubmitBtn" class="flex-1 px-3 py-2 rounded-full bg-white/10 border border-white/20 text-[11px] text-gray-100 hover:bg-[#8B5CF6] hover:text-black transition-colors flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                                        SEND
+                                    </button>
+                                </div>
+                                <div id="ticketMessageStatus" class="key-status-result mt-1 text-xs rounded-lg hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Status Modal -->
+    <div id="keyStatusModal" class="modal">
+        <div class="glass-card modal-content max-w-md w-full mx-4 p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-white/[0.01]">
+            <button class="close-key-modal absolute right-5 top-5 text-gray-500 hover:text-white transition-colors text-xl leading-none">&times;</button>
+            <div class="mb-6 flex items-center gap-3">
+                <div class="w-20 h-10 rounded-full bg-[#8B5CF6]/10 flex items-center justify-center border border-[#8B5CF6]/40">
+                    <i class="fa-solid fa-key text-[#8B5CF6]"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-['Unbounded'] font-semibold text-white">Check Key Status</h2>
+                    <p class="text-xs text-gray-400 mt-1">Verify your SoulAI access key directly against the prediction API.</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label for="keyInput" class="block text-xs uppercase tracking-[0.18em] text-gray-400 mb-2">Access Key</label>
+                    <input id="keyInput" type="text" class="key-input w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-sm text-white font-mono" placeholder="soulai_xxx_xxx_key">
+                </div>
+                <button id="checkKeyBtn" class="check-key-btn shiny-cta w-full py-3 text-white text-sm font-bold uppercase tracking-[0.16em] flex items-center justify-center gap-2">
+                    <span>Check Status</span>
+                    <i class="fa-solid fa-arrow-right-long text-[11px]"></i>
+                </button>
+                <div id="keyStatusResult" class="key-status-result mt-3 text-sm rounded-lg hidden"></div>
+                    <div class="mt-4 space-y-3">
+                        <div id="planSummary" class="hidden key-status-result mt-1 text-xs rounded-lg">
+                        </div>
+                        <p class="text-[10px] text-gray-500 leading-relaxed">
+                            We only send your key to the official <span class="text-[#8B5CF6]">soulpredictor.xyz</span> to validate its status and remaining time.
+                        </p>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // API Configuration - Define base URL
+        window.API_BASE_URL = 'https://api.soulpredictor.xyz'; // Change this to your backend URL if running locally
+
+        // Product Data
+        const projects = [
+            {
+                title: "Soul Predictor",
+                year: "Premium",
+                client: "AI-Powered",
+                role: "Real-time Analysis",
+                desc: "<p>Experience the future of prediction with SoulAI's flagship product. Our advanced AI algorithms analyze patterns in real-time to deliver highly accurate predictions across multiple games.</p><p>With a proven 95% accuracy rate, Soul Predictor has helped thousands of users worldwide transform their gaming experience. The system continuously learns and adapts to provide the most reliable predictions possible.</p>"
+            },
+            {
+                title: "What We Offer",
+                year: "Features",
+                client: "Complete Suite",
+                role: "Multi-Platform",
+                desc: "<p>SoulAI offers a comprehensive prediction ecosystem designed for serious players:</p><ul class='list-disc list-inside space-y-2 mt-2'><li>Advanced AI prediction engines for multiple games</li><li>Real-time pattern recognition and analysis</li><li>Extension-based scripts for seamless integration</li><li>Professional login system with user dashboard</li><li>Access via website and Telegram bot</li><li>24/7 support and regular updates</li><li>Secure payment processing with multiple options</li></ul>"
+            },
+            {
+                title: "Mines Predictor",
+                year: "Popular",
+                client: "95% Accuracy",
+                role: "Strategic Analysis",
+                desc: "<p>Our Mines Predictor uses sophisticated algorithms to analyze game patterns and predict safe tiles with remarkable accuracy.</p><p>Features include:</p><ul class='list-disc list-inside space-y-2 mt-2'><li>Real-time tile probability calculations</li><li>Pattern recognition from historical data</li><li>Risk assessment for each move</li><li>Customizable difficulty settings</li><li>Works with all major Mines platforms</li></ul>"
+            },
+            {
+                title: "Crash Predictor",
+                year: "High Demand",
+                client: "Live Analysis",
+                role: "Instant Predictions",
+                desc: "<p>The Crash Predictor analyzes multiplier patterns and market behavior to predict crash points with exceptional precision.</p><p>Key capabilities:</p><ul class='list-disc list-inside space-y-2 mt-2'><li>Live multiplier trend analysis</li><li>Statistical probability calculations</li><li>Multi-round pattern tracking</li><li>Auto-cashout recommendations</li><li>Historical data insights</li></ul>"
+            },
+            {
+                title: "Moles Predictor",
+                year: "Advanced",
+                client: "Hole Analysis",
+                role: "Round Pattern Learning",
+                desc: "<p>Our Moles Predictor specializes in reading recent round behavior and transition patterns to identify the strongest hole candidate.</p><p>Includes:</p><ul class='list-disc list-inside space-y-2 mt-2'><li>Latest rounds weighted analysis</li><li>Hole transition modeling</li><li>Adaptive confidence scoring</li><li>Live API state synchronization</li><li>Fast recommendation refresh on new rounds</li></ul>"
+            },
+            {
+                title: "Blackjack Predictor",
+                year: "New",
+                client: "Card Analysis",
+                role: "Probability Engine",
+                desc: "<p>The Blackjack Predictor uses advanced probability calculations to provide optimal play recommendations.</p><p>Features:</p><ul class='list-disc list-inside space-y-2 mt-2'><li>Real-time odds calculation</li><li>Optimal move suggestions (Hit/Stand/Double/Split)</li><li>Card counting assistance</li><li>Bankroll management tips</li><li>Strategy optimization</li></ul>"
+            },
+            {
+                title: "How To Access",
+                year: "Easy Setup",
+                client: "Multi-Platform",
+                role: "Instant Access",
+                desc: "<p>Access SoulAI predictions through multiple convenient methods:</p><ul class='list-disc list-inside space-y-2 mt-2'><li><strong>Website Dashboard:</strong> Login to your personal dashboard to view predictions, manage your account, and access all features</li><li><strong>Telegram Bot:</strong> Get instant predictions directly in Telegram with our dedicated bot</li><li><strong>Browser Extensions:</strong> Install our extension-based scripts for seamless integration with gaming platforms</li><li><strong>API Access:</strong> Advanced users can access predictions via our API</li></ul><p>Simply purchase a plan, login with your credentials, and start receiving predictions immediately.</p>"
+            },
+            {
+                title: "Security",
+                year: "Protected",
+                client: "Enterprise Grade",
+                role: "Privacy First",
+                desc: "<p>At SoulAI, security is our top priority. We implement multiple layers of protection:</p><ul class='list-disc list-inside space-y-2 mt-2'><li><strong>Encrypted Connections:</strong> All data transmitted via SSL/TLS encryption</li><li><strong>Secure Authentication:</strong> Multi-factor authentication and secure token-based sessions</li><li><strong>Data Privacy:</strong> Your data is never shared or sold to third parties</li><li><strong>Regular Audits:</strong> Continuous security monitoring and vulnerability assessments</li><li><strong>Secure Payments:</strong> PCI-compliant payment processing</li><li><strong>Account Protection:</strong> Advanced fraud detection and prevention systems</li></ul><p>Your trust is valuable to us, and we work tirelessly to maintain the highest security standards.</p>"
+            }
+        ];
+
+        // Functions
+        function switchView(viewId) {
+            const homeView = document.getElementById('home-view');
+            const projectsView = document.getElementById('projects-view');
+            const body = document.body;
+            
+            if (viewId === 'projects-view') {
+                // Add fade-out effect to current view
+                homeView.classList.add('fade-out');
+                setTimeout(() => {
+                    homeView.classList.add('hidden');
+                    projectsView.classList.remove('hidden');
+                    // Add fade-in effect to new view
+                    projectsView.classList.add('fade-in');
+                    projectsView.classList.add('flex');
+                    body.style.overflow = 'hidden'; // Lock scroll for projects view
+                    
+                    // Remove animation classes after animation completes
+                    setTimeout(() => {
+                        homeView.classList.remove('fade-out');
+                        projectsView.classList.remove('fade-in');
+                    }, 500);
+                }, 500);
+            } else {
+                // Add fade-out effect to current view
+                projectsView.classList.add('fade-out');
+                setTimeout(() => {
+                    projectsView.classList.remove('flex');
+                    projectsView.classList.add('hidden');
+                    homeView.classList.remove('hidden');
+                    // Add fade-in effect to new view
+                    homeView.classList.add('fade-in');
+                    // Trigger reflow
+                    void homeView.offsetWidth;
+                    homeView.classList.remove('opacity-0');
+                    body.style.overflow = '';
+                    
+                    // Remove animation classes after animation completes
+                    setTimeout(() => {
+                        projectsView.classList.remove('fade-out');
+                        homeView.classList.remove('fade-in');
+                    }, 500);
+                }, 500);
+            }
+        }
+
+        function updateProject(index) {
+            const project = projects[index];
+            const display = document.getElementById('project-display');
+            
+            // Fade out
+            display.classList.add('fade-out');
+            
+            setTimeout(() => {
+                // Update content
+                document.getElementById('project-title').innerText = project.title;
+                document.getElementById('project-year').innerText = project.year;
+                document.getElementById('project-desc').innerHTML = project.desc;
+                document.getElementById('project-client').innerText = project.client;
+                document.getElementById('project-role').innerText = project.role;
+                
+                // Highlight active list item
+                document.querySelectorAll('.active-project').forEach(el => {
+                    el.classList.remove('text-[#8B5CF6]', 'pl-2', 'active-project');
+                    el.classList.add('text-white/50');
+                });
+                
+                const activeItem = document.querySelector(`li[data-index="${index}"]`);
+                if(activeItem) {
+                    activeItem.classList.remove('text-white/50');
+                    activeItem.classList.add('text-[#8B5CF6]', 'pl-2', 'active-project');
+                }
+
+                // Fade in
+                display.classList.remove('fade-out');
+                display.classList.add('fade-in');
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    display.classList.remove('fade-in');
+                }, 500);
+            }, 500);
+        }
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const body = document.body;
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                // Add fade-in effect to modal
+                modal.classList.add('fade-in');
+                modal.classList.add('flex');
+                body.style.overflow = 'hidden';
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    modal.classList.remove('fade-in');
+                }, 500);
+            } else {
+                // Add fade-out effect to modal before hiding
+                modal.classList.add('fade-out');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    modal.classList.remove('fade-out');
+                    if (document.getElementById('projects-view').classList.contains('hidden')) {
+                         body.style.overflow = '';
+                    }
+                }, 500);
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const body = document.body;
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('hidden');
+                body.style.overflow = '';
+            }
+        }
+        
+        (function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            }
+        })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const fbiToggle = document.getElementById('toggle-fbi');
+            const standardToggle = document.getElementById('toggle-standard');
+            const fbiPanel = document.getElementById('pricing-fbi');
+            const standardPanel = document.getElementById('pricing-standard');
+
+            if (fbiToggle && standardToggle && fbiPanel && standardPanel) {
+                fbiToggle.addEventListener('click', function() {
+                    fbiToggle.classList.add('pricing-toggle-active');
+                    standardToggle.classList.remove('pricing-toggle-active');
+                    standardToggle.classList.add('text-gray-400');
+
+                    fbiPanel.classList.remove('pricing-panel-inactive');
+                    fbiPanel.classList.add('pricing-panel-active');
+                    standardPanel.classList.remove('pricing-panel-active');
+                    standardPanel.classList.add('pricing-panel-inactive');
+                });
+
+                standardToggle.addEventListener('click', function() {
+                    standardToggle.classList.add('pricing-toggle-active');
+                    standardToggle.classList.remove('text-gray-400');
+                    fbiToggle.classList.remove('pricing-toggle-active');
+
+                    standardPanel.classList.remove('pricing-panel-inactive');
+                    standardPanel.classList.add('pricing-panel-active');
+                    fbiPanel.classList.remove('pricing-panel-active');
+                    fbiPanel.classList.add('pricing-panel-inactive');
+                });
+            }
+
+            const keyStatusBtn = document.getElementById('keyStatusBtn');
+
+            if (keyStatusBtn) {
+                keyStatusBtn.addEventListener('click', function() {
+                    window.open('https://t.me/soulpredictor_bot', '_blank');
+                });
+            }
+
+            const userDashboardModal = document.getElementById('userDashboardModal');
+            const userDashboardBtn = document.querySelector('[data-open-user-dashboard]');
+            const closeUserDashboard = document.querySelector('.close-user-dashboard');
+            const userLoginSection = document.getElementById('userLoginSection');
+            const userDashboardSection = document.getElementById('userDashboardSection');
+            const userLoginUsername = document.getElementById('userLoginUsername');
+            const userLoginBtn = document.getElementById('userLoginBtn');
+            const userRegisterBtn = document.getElementById('userRegisterBtn');
+            const userLoginMessage = document.getElementById('userLoginMessage');
+            const userStatusBadge = document.getElementById('userStatusBadge');
+            const dashboardStatus = document.getElementById('dashboardStatus');
+            const dashboardTimeRemaining = document.getElementById('dashboardTimeRemaining');
+            const dashboardLastLogin = document.getElementById('dashboardLastLogin');
+            const dashboardLastScript = document.getElementById('dashboardLastScript');
+            const dashboardRefreshBtn = document.getElementById('dashboardRefreshBtn');
+            const timeRequestValue = document.getElementById('timeRequestValue');
+            const timeRequestUnit = document.getElementById('timeRequestUnit');
+            const timeRequestNote = document.getElementById('timeRequestNote');
+            const timeRequestBtn = document.getElementById('timeRequestBtn');
+            const timeRequestMessage = document.getElementById('timeRequestMessage');
+            const dashboardStakeUsername = document.getElementById('dashboardStakeUsername');
+            const ticketSubject = document.getElementById('ticketSubject');
+            const ticketMessage = document.getElementById('ticketMessage');
+            const ticketSubmitBtn = document.getElementById('ticketSubmitBtn');
+            const ticketMessageStatus = document.getElementById('ticketMessageStatus');
+            const ticketList = document.getElementById('ticketList');
+            const ticketNewBtn = document.getElementById('ticketNewBtn');
+            const ticketConversation = document.getElementById('ticketConversation');
+            const ticketActiveHeader = document.getElementById('ticketActiveHeader');
+            const ticketActiveSubject = document.getElementById('ticketActiveSubject');
+            const ticketActiveStatus = document.getElementById('ticketActiveStatus');
+            const ticketComposer = document.getElementById('ticketComposer');
+
+            let dashboardTimer = null;
+            let currentUser = null;
+            let currentTicketId = null;
+            let ticketButtonResetTimeout = null;
+            let timeButtonResetTimeout = null;
+            const ticketSubmitBtnInitialText = ticketSubmitBtn ? ticketSubmitBtn.innerHTML : '';
+            const ticketSubmitBtnInitialClass = ticketSubmitBtn ? ticketSubmitBtn.className : '';
+            const timeRequestBtnInitialText = timeRequestBtn ? timeRequestBtn.innerHTML : '';
+            const timeRequestBtnInitialClass = timeRequestBtn ? timeRequestBtn.className : '';
+            const homeDashboardLabel = document.getElementById('homeDashboardLabel');
+
+            function hasSavedSession() {
+                try {
+                    return !!(localStorage.getItem('soulai_email') || localStorage.getItem('soulai_user_token'));
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function syncHomeDashboardCta() {
+                if (!homeDashboardLabel) return;
+                homeDashboardLabel.textContent = hasSavedSession() ? 'Dashboard' : 'Login';
+            }
+
+            function resetTicketButtonImmediate() {
+                if (!ticketSubmitBtn) return;
+                if (ticketButtonResetTimeout) {
+                    clearTimeout(ticketButtonResetTimeout);
+                    ticketButtonResetTimeout = null;
+                }
+                ticketSubmitBtn.disabled = false;
+                ticketSubmitBtn.className = ticketSubmitBtnInitialClass;
+                ticketSubmitBtn.innerHTML = ticketSubmitBtnInitialText;
+            }
+
+            function setTicketButtonLoading() {
+                if (!ticketSubmitBtn) return;
+                if (ticketButtonResetTimeout) {
+                    clearTimeout(ticketButtonResetTimeout);
+                    ticketButtonResetTimeout = null;
+                }
+                ticketSubmitBtn.disabled = true;
+                ticketSubmitBtn.className = ticketSubmitBtnInitialClass;
+                ticketSubmitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-[10px]"></i>';
+            }
+
+            function showTicketButtonResult() {
+                if (!ticketSubmitBtn) return;
+                ticketSubmitBtn.disabled = false;
+                ticketSubmitBtn.className = ticketSubmitBtnInitialClass + ' bg-red-600 border-red-500 text-white';
+                ticketSubmitBtn.textContent = 'X';
+                ticketButtonResetTimeout = setTimeout(function() {
+                    if (!ticketSubmitBtn) return;
+                    ticketSubmitBtn.disabled = false;
+                    ticketSubmitBtn.className = ticketSubmitBtnInitialClass;
+                    ticketSubmitBtn.innerHTML = ticketSubmitBtnInitialText;
+                    ticketButtonResetTimeout = null;
+                }, 3000);
+            }
+
+            function resetTimeRequestButtonImmediate() {
+                if (!timeRequestBtn) return;
+                if (timeButtonResetTimeout) {
+                    clearTimeout(timeButtonResetTimeout);
+                    timeButtonResetTimeout = null;
+                }
+                timeRequestBtn.disabled = false;
+                timeRequestBtn.className = timeRequestBtnInitialClass;
+                timeRequestBtn.innerHTML = timeRequestBtnInitialText;
+            }
+
+            function setTimeRequestButtonLoading() {
+                if (!timeRequestBtn) return;
+                if (timeButtonResetTimeout) {
+                    clearTimeout(timeButtonResetTimeout);
+                    timeButtonResetTimeout = null;
+                }
+                timeRequestBtn.disabled = true;
+                timeRequestBtn.className = timeRequestBtnInitialClass;
+                timeRequestBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-[10px]"></i>';
+            }
+
+            function showTimeRequestButtonResult() {
+                if (!timeRequestBtn) return;
+                timeRequestBtn.disabled = false;
+                timeRequestBtn.className = timeRequestBtnInitialClass + ' bg-red-600 border-red-500 text-white';
+                timeRequestBtn.textContent = 'X';
+                timeButtonResetTimeout = setTimeout(function() {
+                    if (!timeRequestBtn) return;
+                    timeRequestBtn.disabled = false;
+                    timeRequestBtn.className = timeRequestBtnInitialClass;
+                    timeRequestBtn.innerHTML = timeRequestBtnInitialText;
+                    timeButtonResetTimeout = null;
+                }, 3000);
+            }
+
+            function getClientInfo() {
+                try {
+                    const nav = navigator || {};
+                    const screenObj = window.screen || {};
+                    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    return {
+                        user_agent: nav.userAgent || '',
+                        language: nav.language || '',
+                        platform: nav.platform || '',
+                        timezone: tz || '',
+                        viewport: window.innerWidth + 'x' + window.innerHeight,
+                        screen: screenObj.width && screenObj.height ? screenObj.width + 'x' + screenObj.height : ''
+                    };
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            function formatDateSafe(value) {
+                if (!value) return '--';
+                try {
+                    return new Date(value).toLocaleString();
+                } catch (e) {
+                    return String(value);
+                }
+            }
+
+            function startDashboardTimer(expiresAt, status) {
+                if (dashboardTimer) {
+                    clearInterval(dashboardTimer);
+                    dashboardTimer = null;
+                }
+                if (!expiresAt || status !== 'approved') {
+                    dashboardTimeRemaining.textContent = '--';
+                    return;
+                }
+                function updateTimer() {
+                    const now = new Date().getTime();
+                    const target = new Date(expiresAt).getTime();
+                    const diff = target - now;
+                    if (diff <= 0) {
+                        clearInterval(dashboardTimer);
+                        dashboardTimer = null;
+                        dashboardTimeRemaining.textContent = 'Expired';
+                        dashboardStatus.textContent = 'REVOKED';
+                        userStatusBadge.textContent = 'Access revoked';
+                        userStatusBadge.className = 'text-xs px-3 py-1 rounded-full border border-red-500/40 bg-red-500/10 text-red-300';
+                        return;
+                    }
+                    const totalSeconds = Math.floor(diff / 1000);
+                    const days = Math.floor(totalSeconds / 86400);
+                    const hours = Math.floor((totalSeconds % 86400) / 3600);
+                    const minutes = Math.floor((totalSeconds % 3600) / 60);
+                    const seconds = totalSeconds % 60;
+                    let label = '';
+                    if (days > 0) {
+                        label = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+                    } else if (hours > 0) {
+                        label = hours + 'h ' + minutes + 'm ' + seconds + 's';
+                    } else {
+                        label = minutes + 'm ' + seconds + 's';
+                    }
+                    dashboardTimeRemaining.textContent = label;
+                }
+                updateTimer();
+                dashboardTimer = setInterval(updateTimer, 1000);
+            }
+
+            function renderTickets(username) {
+                if (!ticketList) return;
+                ticketList.innerHTML = '<div class="text-gray-500 text-[11px]">Loading tickets...</div>';
+                fetch('https://api.soulpredictor.xyz/user-tickets/' + encodeURIComponent(username))
+                    .then(r => r.json())
+                    .then(result => {
+                        if (result.status !== 'success' || !Array.isArray(result.tickets) || result.tickets.length === 0) {
+                            ticketList.innerHTML = '<div class="text-gray-500 text-[11px]">No tickets yet.</div>';
+                            ticketConversation.innerHTML = '<div class="text-gray-500 text-[11px]">Select a ticket or create new to start chat.</div>';
+                            ticketActiveHeader.classList.add('hidden');
+                            ticketComposer.classList.add('hidden');
+                            currentTicketId = null;
+                            return;
+                        }
+                        ticketList.innerHTML = '';
+                        result.tickets
+                            .slice()
+                            .sort((a, b) => (b.updated_at || b.created_at || '').localeCompare(a.updated_at || a.created_at || ''))
+                            .forEach(t => {
+                                const statusClass = t.status === 'open' ? 'text-[#8B5CF6]' : (t.status === 'paused' ? 'text-yellow-400' : 'text-gray-400');
+                                const lastMessage = Array.isArray(t.messages) && t.messages.length ? t.messages[t.messages.length - 1].text : '';
+                                const el = document.createElement('button');
+                                el.type = 'button';
+                                el.className = 'w-full text-left border border-white/10 rounded-lg p-2 space-y-1 hover:bg-white/5 transition-colors';
+                                el.innerHTML = '<div class="flex items-center justify-between text-[11px]"><span class="font-semibold text-gray-100">' +
+                                    (t.subject || 'No subject') +
+                                    '</span><span class="' + statusClass + '">' +
+                                    (t.status || 'open').toUpperCase() +
+                                    '</span></div><div class="text-[11px] text-gray-300 line-clamp-2">' +
+                                    (lastMessage || '') +
+                                    '</div><div class="text-[10px] text-gray-500">' +
+                                    formatDateSafe(t.updated_at || t.created_at) +
+                                    '</div>';
+                                el.addEventListener('click', function() {
+                                    openTicketThread(t);
+                                });
+                                ticketList.appendChild(el);
+                            });
+                    })
+                    .catch(() => {
+                        ticketList.innerHTML = '<div class="text-red-400 text-[11px]">Failed to load tickets.</div>';
+                    });
+            }
+
+            function renderTicketMessages(ticket) {
+                if (!ticketConversation) return;
+                const messages = Array.isArray(ticket.messages) ? ticket.messages : [];
+                if (!messages.length) {
+                    ticketConversation.innerHTML = '<div class="text-gray-500 text-[11px]">No messages yet.</div>';
+                    return;
+                }
+                ticketConversation.innerHTML = '';
+                messages.forEach(msg => {
+                    const isUser = msg.sender === 'user';
+                    const wrap = document.createElement('div');
+                    wrap.className = 'flex mb-1 ' + (isUser ? 'justify-end' : 'justify-start');
+                    const bubble = document.createElement('div');
+                    bubble.className = 'max-w-[80%] rounded-xl px-3 py-2 text-[11px] ' + (isUser ? 'bg-[#8B5CF6] text-black rounded-br-sm' : 'bg-white/5 text-gray-100 rounded-bl-sm');
+                    bubble.innerHTML = '<div>' + (msg.text || '') + '</div><div class="mt-1 text-[9px] opacity-70">' + formatDateSafe(msg.created_at) + '</div>';
+                    wrap.appendChild(bubble);
+                    ticketConversation.appendChild(wrap);
+                });
+                ticketConversation.scrollTop = ticketConversation.scrollHeight;
+            }
+
+            function openTicketThread(ticket) {
+                currentTicketId = ticket.id;
+                if (ticketActiveHeader) {
+                    ticketActiveHeader.classList.remove('hidden');
+                    ticketActiveSubject.textContent = ticket.subject || 'No subject';
+                    const statusLabel = (ticket.status || 'open').toUpperCase();
+                    let statusClass = 'text-xs px-2 py-1 rounded-full border bg-white/5 ';
+                    if (ticket.status === 'closed') {
+                        statusClass += 'border-gray-500 text-gray-300';
+                    } else if (ticket.status === 'paused') {
+                        statusClass += 'border-yellow-400 text-yellow-300';
+                    } else {
+                        statusClass += 'border-[#8B5CF6]/40 text-[#8B5CF6]';
+                    }
+                    ticketActiveStatus.className = statusClass;
+                    ticketActiveStatus.textContent = statusLabel;
+                }
+                if (ticketComposer) {
+                    ticketComposer.classList.remove('hidden');
+                    if (ticketSubject) {
+                        ticketSubject.classList.add('hidden');
+                        ticketSubject.disabled = true;
+                    }
+                    if (ticket.status === 'closed') {
+                        ticketMessage.disabled = true;
+                        ticketSubmitBtn.disabled = true;
+                        ticketSubmitBtn.textContent = 'TICKET CLOSED';
+                    } else {
+                        ticketMessage.disabled = false;
+                        resetTicketButtonImmediate();
+                    }
+                }
+                renderTicketMessages(ticket);
+            }
+
+            function showUserMessage(element, message, type) {
+                if (!element) return;
+                element.textContent = message;
+                element.className = 'key-status-result mt-3 text-sm rounded-lg ' + (type || '');
+                element.style.display = 'block';
+            }
+
+            function maskEmail(email) {
+                if (!email || typeof email !== 'string' || !email.includes('@')) return email || '';
+                const parts = email.split('@');
+                const local = parts[0] || '';
+                const domain = parts[1] || '';
+                const prefix = local.slice(0, 3) || local.slice(0, 1);
+                return prefix + 'xxxx@' + domain;
+            }
+
+            function formatDisplayIdentity(username) {
+                if (!username) return '';
+                if (String(username).includes('@')) return maskEmail(String(username));
+                return '@' + username;
+            }
+
+            function updateDashboard(user) {
+                currentUser = user;
+                if (!userDashboardSection || !userLoginSection) return;
+                userLoginSection.classList.add('hidden');
+                userDashboardSection.classList.remove('hidden');
+                if (userStatusBadge) {
+                    userStatusBadge.style.display = 'inline-flex';
+                    if (user.active) {
+                        userStatusBadge.textContent = 'Access active';
+                        userStatusBadge.className = 'text-xs px-3 py-1 rounded-full border border-[#8B5CF6]/40 bg-[#8B5CF6]/10 text-[#8B5CF6]';
+                    } else {
+                        userStatusBadge.textContent = user.status === 'pending' ? 'Pending approval' : 'Access inactive';
+                        userStatusBadge.className = 'text-xs px-3 py-1 rounded-full border border-yellow-500/40 bg-yellow-500/10 text-yellow-300';
+                    }
+                }
+                if (dashboardStakeUsername) {
+                    dashboardStakeUsername.textContent = formatDisplayIdentity(user.username);
+                }
+                if (dashboardStatus) {
+                    if (user.active && user.status === 'approved') {
+                        dashboardStatus.textContent = 'ACTIVE';
+                    } else {
+                        dashboardStatus.textContent = (user.status || '').toUpperCase();
+                    }
+                }
+                if (dashboardLastLogin) {
+                    dashboardLastLogin.textContent = formatDateSafe(user.last_web_login_at);
+                }
+                if (dashboardLastScript) {
+                    dashboardLastScript.textContent = formatDateSafe(user.last_script_used_at);
+                }
+                if (user.expires_at && user.status === 'approved') {
+                    startDashboardTimer(user.expires_at, user.status);
+                } else {
+                    dashboardTimeRemaining.textContent = user.time_remaining || '--';
+                }
+                renderTickets(user.username);
+            }
+
+            function openUserDashboardModal() {
+                if (!userDashboardModal) return;
+                userDashboardModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeUserDashboardModal() {
+                if (!userDashboardModal) return;
+                userDashboardModal.style.display = 'none';
+                document.body.style.overflow = '';
+                if (dashboardTimer) {
+                    clearInterval(dashboardTimer);
+                    dashboardTimer = null;
+                }
+            }
+
+            if (userDashboardBtn && userDashboardModal) {
+                userDashboardBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    if (hasSavedSession()) {
+                        window.location.href = '/user';
+                        return;
+                    }
+                    openUserDashboardModal();
+                });
+            }
+
+            if (closeUserDashboard && userDashboardModal) {
+                closeUserDashboard.addEventListener('click', closeUserDashboardModal);
+            }
+
+            if (userDashboardModal) {
+                window.addEventListener('click', function(event) {
+                    if (event.target === userDashboardModal) {
+                        closeUserDashboardModal();
+                    }
+                });
+            }
+
+            let emailVerificationPending = false;
+            let currentEmail = null;
+
+            if (userLoginBtn && userLoginUsername && userLoginMessage) {
+                userLoginBtn.addEventListener('click', function() {
+                    const email = userLoginUsername.value.trim();
+                    if (!emailVerificationPending) {
+                        if (!email || !email.includes('@')) {
+                            showUserMessage(userLoginMessage, 'Please enter a valid email address', 'error');
+                            return;
+                        }
+                        showUserMessage(userLoginMessage, 'Sending verification code...', '');
+                        fetch(window.API_BASE_URL + '/auth/request-code', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ email })
+                        })
+                            .then(r => r.json())
+                            .then(result => {
+                                if (result.status === 'success') {
+                                    currentEmail = email;
+                                    emailVerificationPending = true;
+                                    const codeInput = document.getElementById('userLoginCode');
+                                    if (codeInput) {
+                                        codeInput.classList.remove('hidden');
+                                    }
+                                    userLoginBtn.querySelector('span').textContent = 'Verify & Continue';
+                                    showUserMessage(userLoginMessage, 'Verification code sent. Check your email and enter the code below.', 'success');
+                                } else {
+                                    const message = result.message || 'Unable to send verification code';
+                                    showUserMessage(userLoginMessage, message, 'error');
+                                }
+                            })
+                            .catch(() => {
+                                showUserMessage(userLoginMessage, 'Connection failed', 'error');
+                            });
+                    } else {
+                        const codeInput = document.getElementById('userLoginCode');
+                        const code = codeInput ? codeInput.value.trim() : '';
+                        if (!code) {
+                            showUserMessage(userLoginMessage, 'Enter the 6 digit verification code', 'error');
+                            return;
+                        }
+                        showUserMessage(userLoginMessage, 'Verifying code...', '');
+                        fetch(window.API_BASE_URL + '/auth/verify-code', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ email: currentEmail, code })
+                        })
+                            .then(r => r.json())
+                            .then(result => {
+                                if (result.status === 'success' && result.user) {
+                                    try {
+                                        localStorage.setItem('soulai_email', currentEmail);
+                                        if (result.user.user_token) {
+                                            localStorage.setItem('soulai_user_token', result.user.user_token);
+                                        }
+                                    } catch (e) {}
+                                    window.location.href = '/user';
+                                } else {
+                                    const message = result.message || 'Verification failed';
+                                    showUserMessage(userLoginMessage, message, 'error');
+                                }
+                            })
+                            .catch(() => {
+                                showUserMessage(userLoginMessage, 'Connection failed', 'error');
+                            });
+                    }
+                });
+            }
+            
+            // Close registration modal
+            if (dashboardRefreshBtn) {
+                dashboardRefreshBtn.addEventListener('click', function() {
+                    const storedEmail = (function() {
+                        try {
+                            return localStorage.getItem('soulai_email');
+                        } catch (e) {
+                            return null;
+                        }
+                    })();
+                    const storedToken = (function() {
+                        try {
+                            return localStorage.getItem('soulai_user_token');
+                        } catch (e) {
+                            return null;
+                        }
+                    })();
+                    if (!storedEmail && !storedToken) return;
+                    fetch(window.API_BASE_URL + '/auth/profile', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: storedEmail || null,
+                            user_token: storedToken || null
+                        })
+                    })
+                        .then(r => r.json())
+                        .then(result => {
+                            if (result.status === 'success' && result.user) {
+                                updateDashboard(result.user);
+                            }
+                        })
+                        .catch(() => {});
+                });
+            }
+
+            syncHomeDashboardCta();
+
+            if (timeRequestBtn && timeRequestValue && timeRequestUnit && timeRequestMessage) {
+                timeRequestBtn.addEventListener('click', function() {
+                    if (!currentUser || !currentUser.username) {
+                        showUserMessage(timeRequestMessage, 'Login first to request time', 'error');
+                        return;
+                    }
+                    const value = parseInt(timeRequestValue.value || '0', 10);
+                    const unit = timeRequestUnit.value;
+                    if (!value || value < 1 || value > 60) {
+                        showUserMessage(timeRequestMessage, 'Duration must be between 1 and 60', 'error');
+                        return;
+                    }
+                    const note = timeRequestNote ? timeRequestNote.value : '';
+                    setTimeRequestButtonLoading();
+                    fetch('https://api.soulpredictor.xyz/request-more-time', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: currentUser.username,
+                            duration: value,
+                            unit: unit,
+                            note: note
+                        })
+                    })
+                        .then(r => r.json())
+                        .then(result => {
+                            if (result.status !== 'success') {
+                                console.error('Failed to send time request', result);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error sending time request', error);
+                        })
+                        .finally(() => {
+                            showTimeRequestButtonResult();
+                        });
+                });
+            }
+
+            if (ticketNewBtn && ticketSubject && ticketMessage && ticketSubmitBtn && ticketMessageStatus) {
+                ticketNewBtn.addEventListener('click', function() {
+                    if (!currentUser || !currentUser.username) {
+                        showUserMessage(ticketMessageStatus, 'Login first to create tickets', 'error');
+                        return;
+                    }
+                    currentTicketId = null;
+                    ticketSubject.value = '';
+                    ticketMessage.value = '';
+                    ticketComposer.classList.remove('hidden');
+                    ticketSubject.classList.remove('hidden');
+                    ticketSubject.disabled = false;
+                    ticketConversation.innerHTML = '<div class="text-gray-500 text-[11px]">Start a new ticket by typing your message.</div>';
+                    ticketActiveHeader.classList.add('hidden');
+                    ticketMessage.disabled = false;
+                    resetTicketButtonImmediate();
+                });
+
+                ticketSubmitBtn.addEventListener('click', function() {
+                    if (!currentUser || !currentUser.username) {
+                        showUserMessage(ticketMessageStatus, 'Login first to chat with admin', 'error');
+                        return;
+                    }
+                    const message = ticketMessage.value.trim();
+                    if (!message) {
+                        showUserMessage(ticketMessageStatus, 'Message is required', 'error');
+                        return;
+                    }
+
+                    setTicketButtonLoading();
+
+                    if (!currentTicketId) {
+                        const subject = ticketSubject.value.trim() || 'Support ticket';
+                        fetch('https://api.soulpredictor.xyz/user-ticket', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                username: currentUser.username,
+                                subject: subject,
+                                message: message,
+                                client_info: getClientInfo()
+                            })
+                        })
+                            .then(r => r.json())
+                            .then(result => {
+                                if (result.status === 'success' && result.ticket) {
+                                    ticketMessage.value = '';
+                                    renderTickets(currentUser.username);
+                                    openTicketThread(result.ticket);
+                                } else {
+                                    console.error('Failed to create ticket', result);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error creating ticket', error);
+                            })
+                            .finally(() => {
+                                showTicketButtonResult();
+                            });
+                    } else {
+                        fetch('https://api.soulpredictor.xyz/user-ticket-reply', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                ticket_id: currentTicketId,
+                                sender: 'user',
+                                message: message,
+                                username: currentUser.username,
+                                client_info: getClientInfo()
+                            })
+                        })
+                            .then(r => r.json())
+                            .then(result => {
+                                if (result.status === 'success' && result.ticket) {
+                                    ticketMessage.value = '';
+                                    renderTickets(currentUser.username);
+                                    openTicketThread(result.ticket);
+                                } else {
+                                    console.error('Failed to send message', result);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error sending message', error);
+                            })
+                            .finally(() => {
+                                showTicketButtonResult();
+                            });
+                    }
+                });
+            }
+            
+            // Currency Toggle Functionality
+            const usdCurrencyBtn = document.getElementById('currency-usd');
+            const inrCurrencyBtn = document.getElementById('currency-inr');
+            
+            if (usdCurrencyBtn && inrCurrencyBtn) {
+                usdCurrencyBtn.addEventListener('click', function() {
+                    usdCurrencyBtn.classList.add('currency-toggle-active');
+                    inrCurrencyBtn.classList.remove('currency-toggle-active');
+                    inrCurrencyBtn.classList.add('text-gray-400');
+                    
+                    // Update prices to USD
+                    updatePrices('usd');
+                });
+                
+                inrCurrencyBtn.addEventListener('click', function() {
+                    inrCurrencyBtn.classList.add('currency-toggle-active');
+                    inrCurrencyBtn.classList.remove('text-gray-400');
+                    usdCurrencyBtn.classList.remove('currency-toggle-active');
+                    
+                    // Update prices to INR
+                    updatePrices('inr');
+                });
+            }
+            
+            // Initialize with USD as default
+            function updatePrices(currency) {
+                // Update Balance Injector
+                if (currency === 'usd') {
+                    document.querySelector('#pricing-fbi .text-3xl').textContent = '$6';
+                    document.querySelector('#pricing-fbi .text-3xl + span').textContent = '/ 30 days';
+                } else {
+                    document.querySelector('#pricing-fbi .text-3xl').textContent = '₹400';
+                    document.querySelector('#pricing-fbi .text-3xl + span').textContent = '/ 30 days';
+                }
+                
+                // Update Balance Injector Pro
+                if (currency === 'usd') {
+                    document.querySelectorAll('#pricing-fbi .text-3xl')[1].textContent = '$12';
+                    document.querySelectorAll('#pricing-fbi .text-3xl + span')[1].textContent = '/ 60 days';
+                } else {
+                    document.querySelectorAll('#pricing-fbi .text-3xl')[1].textContent = '₹600';
+                    document.querySelectorAll('#pricing-fbi .text-3xl + span')[1].textContent = '/ 60 days';
+                }
+                
+                // Update MinesAI Plans
+                if (currency === 'usd') {
+                    document.querySelectorAll('#pricing-standard .text-3xl')[0].textContent = '$7';
+                    document.querySelectorAll('#pricing-standard .text-3xl')[1].textContent = '$10';
+                    document.querySelectorAll('#pricing-standard .text-3xl + span')[0].textContent = '/ 25 days';
+                    document.querySelectorAll('#pricing-standard .text-3xl + span')[1].textContent = '/ 35 days';
+                } else {
+                    document.querySelectorAll('#pricing-standard .text-3xl')[0].textContent = '₹300';
+                    document.querySelectorAll('#pricing-standard .text-3xl')[1].textContent = '₹400';
+                    document.querySelectorAll('#pricing-standard .text-3xl + span')[0].textContent = '/ 25 days';
+                    document.querySelectorAll('#pricing-standard .text-3xl + span')[1].textContent = '/ 35 days';
+                }
+            }
+            
+            // Global variables for QR code functionality
+            let currentAmount = 0;
+            let currentPlan = '';
+            let timerInterval = null;
+            
+            // Add click listeners to all payment buttons (Pay Now buttons)
+            document.querySelectorAll('#pricing-fbi .shiny-cta, #pricing-standard .shiny-cta').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Extract price information from the parent container
+                    const parentCard = this.closest('.premium-glass, .glass-card');
+                    if (parentCard) {
+                        // Extract the plan name and price
+                        const planNameHeader = parentCard.querySelector('h3');
+                        const planName = planNameHeader?.textContent || 'Unknown Plan';
+                        const priceElement = parentCard.querySelector('.text-3xl');
+                        
+                        if (priceElement) {
+                            const priceText = priceElement.textContent.trim();
+                            const currencySymbol = priceText.charAt(0);
+                            let priceValue = parseFloat(priceText.substring(1)); // Remove currency symbol and parse number
+                            
+                            // Check if currency is INR to show QR code
+                            const inrActive = document.getElementById('currency-inr')?.classList.contains('currency-toggle-active');
+                            
+                            if (inrActive && currencySymbol === '₹') {
+                                e.preventDefault(); // Prevent navigation for INR
+                                
+                                currentAmount = priceValue;
+                                currentPlan = planName;
+                                
+                                // Show QR modal
+                                const modal = document.getElementById('qrModal');
+                                if (modal) {
+                                    modal.style.display = 'flex';
+                                    generateQR(currentAmount, currentPlan);
+                                } else {
+                                    console.error('QR Modal not found');
+                                    showNotification('Payment modal not found. Please refresh the page.');
+                                }
+                            }
+                            // If USD, let the navigation proceed normally to OxaPay
+                        }
+                    }
+                });
+            });
+            
+            // QR Code Generation Function
+            function generateQR(amount, plan) {
+                console.log('Generating QR for amount:', amount, 'Plan:', plan);
+                
+                // Reset previous states
+                const qrCode = document.getElementById('qrCode');
+                const qrCodeContainer = document.getElementById('qrCodeContainer');
+                const paymentConfirmation = document.getElementById('paymentConfirmation');
+                const qrPlaceholder = document.getElementById('qrPlaceholder');
+                
+                if (!qrCode || !qrCodeContainer) {
+                    console.error('QR code elements not found');
+                    showNotification('QR code elements not found. Please refresh the page.');
+                    return;
+                }
+                
+                // Clear previous QR code
+                qrCode.innerHTML = '';
+                qrCodeContainer.classList.remove('hidden');
+                qrCodeContainer.style.display = 'block';
+                paymentConfirmation.classList.add('hidden');
+                paymentConfirmation.style.display = 'none';
+                qrPlaceholder.classList.add('hidden');
+                qrPlaceholder.style.display = 'none';
+                
+                // Show loader
+                const loader = qrCodeContainer.querySelector('.loader');
+                if (loader) loader.style.display = 'block';
+                
+                // Create amount display
+                const qrWrapper = document.querySelector('.qr-wrapper');
+                let amountDisplay = qrWrapper.querySelector('.amount-display');
+                if (!amountDisplay) {
+                    amountDisplay = document.createElement('div');
+                    amountDisplay.className = 'amount-display';
+                    amountDisplay.style.cssText = 'color: white; text-align: center; margin-bottom: 20px; font-size: 18px; font-weight: 600;';
+                    qrWrapper.insertBefore(amountDisplay, qrWrapper.firstChild);
+                }
+                amountDisplay.textContent = `Amount: ₹${amount} - ${plan}`;
+                
+                // Generate QR after delay
+                setTimeout(() => {
+                    try {
+                        const upiId = "7014961692@omni"; // UPI ID for payments
+                        const merchantName = "SoulPayGate";
+                        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&am=${amount}&cu=INR`;
+                        
+                        console.log('Generating QR with URL:', upiUrl);
+                        
+                        // Check if QRCode is available
+                        if (typeof QRCode === 'undefined') {
+                            console.error('QRCode library not loaded');
+                            showNotification('QR Code library not loaded. Please refresh the page.');
+                            return;
+                        }
+                        
+                        // Clear previous QR code
+                        qrCode.innerHTML = '';
+                        
+                        // Generate QR
+                        new QRCode(qrCode, {
+                            text: upiUrl,
+                            width: 200,
+                            height: 200,
+                            colorDark: "#000000",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                        
+                        console.log('QR Code generated successfully');
+                        
+                        // Show download button
+                        const downloadBtn = document.getElementById('downloadQR');
+                        if (downloadBtn) {
+                            downloadBtn.classList.remove('hidden');
+                            downloadBtn.style.display = 'block';
+                        }
+                        
+                        // Hide loader
+                        if (loader) loader.style.display = 'none';
+                        
+                        // Start timer
+                        startTimer(300); // 5 minutes
+                        
+                        // Show payment confirmation after delay
+                        setTimeout(() => {
+                            paymentConfirmation.classList.remove('hidden');
+                            paymentConfirmation.style.display = 'block';
+                        }, 3000);
+                    } catch (error) {
+                        console.error('Error generating QR code:', error);
+                        showNotification('Error generating QR code: ' + error.message);
+                        if (loader) loader.style.display = 'none';
+                    }
+                }, 500);
+            }
+            
+            // Timer function for QR code validity
+            function startTimer(duration) {
+                let timer = duration, minutes, seconds;
+                const timerElement = document.getElementById('timer');
+                if (timerElement) {
+                    timerElement.classList.remove('hidden');
+                    timerElement.style.display = 'block';
+                    
+                    clearInterval(timerInterval);
+                    
+                    timerInterval = setInterval(function () {
+                        minutes = parseInt(timer / 60, 10);
+                        seconds = parseInt(timer % 60, 10);
+
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                        timerElement.textContent = `QR Valid for: ${minutes}:${seconds}`;
+
+                        if (--timer < 0) {
+                            clearInterval(timerInterval);
+                            handlePaymentConfirmation(false);
+                        }
+                    }, 1000);
+                }
+            }
+            
+            // Handle payment confirmation
+            function handlePaymentConfirmation(confirmed) {
+                clearInterval(timerInterval);
+                
+                if (confirmed) {
+                    document.getElementById('paymentConfirmation').innerHTML = '<div class="loader w-6 h-6 border-2 border-[#8B5CF6]/30 border-t-[#8B5CF6] rounded-full animate-spin mx-auto"></div><p class="text-white text-center mt-4">Processing payment...</p>';
+                    
+                    setTimeout(() => {
+                        showNotification('Payment verified! Redirecting...');
+                        setTimeout(() => {
+                            window.location.href = 'https://t.me/veilchief';
+                        }, 2000);
+                    }, 2000);
+                } else {
+                    resetPaymentUI();
+                    showNotification(`Payment of ₹${currentAmount} was cancelled.`);
+                }
+            }
+            
+            // Reset payment UI
+            function resetPaymentUI() {
+                document.getElementById('qrCodeContainer').classList.add('hidden');
+                document.getElementById('qrCodeContainer').style.display = 'none';
+                document.getElementById('paymentConfirmation').classList.add('hidden');
+                document.getElementById('paymentConfirmation').style.display = 'none';
+                document.getElementById('qrPlaceholder').classList.remove('hidden');
+                document.getElementById('qrPlaceholder').style.display = 'block';
+                
+                const downloadBtn = document.getElementById('downloadQR');
+                if (downloadBtn) {
+                    downloadBtn.classList.add('hidden');
+                    downloadBtn.style.display = 'none';
+                }
+                
+                const amountDisplay = document.querySelector('.amount-display');
+                if (amountDisplay) {
+                    amountDisplay.remove();
+                }
+            }
+            
+            // Show notification function
+            function showNotification(message) {
+                // Create a simple notification popup
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-[#08080f] border border-[#8B5CF6]/30 text-white px-4 py-3 rounded-lg shadow-lg z-[10001] max-w-xs';
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 5000);
+            }
+            
+            // Close modal functionality
+            document.querySelector('.close-modal')?.addEventListener('click', function() {
+                document.getElementById('qrModal').style.display = 'none';
+                resetPaymentUI();
+            });
+            
+            // Close modal when clicking outside
+            document.getElementById('qrModal')?.addEventListener('click', function(event) {
+                if (event.target === this) {
+                    this.style.display = 'none';
+                    resetPaymentUI();
+                }
+            });
+            
+            // Confirm Yes/No buttons
+            document.getElementById('confirmYes')?.addEventListener('click', function() {
+                handlePaymentConfirmation(true);
+            });
+            
+            document.getElementById('confirmNo')?.addEventListener('click', function() {
+                handlePaymentConfirmation(false);
+            });
+            
+            // Download QR button
+            document.getElementById('downloadQR')?.addEventListener('click', function() {
+                // Convert QR code to image and download
+                const qrCanvas = document.querySelector('#qrCode canvas');
+                if (qrCanvas) {
+                    const imageURL = qrCanvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = `soulai_payment_${currentAmount}.png`;
+                    link.href = imageURL;
+                    link.click();
+                }
+            });
+        });
+    </script>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="modal">
+        <div class="glass-card modal-content max-w-md w-full mx-4 p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-white/[0.01]">
+            <span class="close-modal absolute right-5 top-5 text-gray-500 hover:text-white transition-colors text-xl leading-none cursor-pointer">&times;</span>
+            <div class="mb-6 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#8B5CF6]/10 flex items-center justify-center border border-[#8B5CF6]/40">
+                    <i class="fa-solid fa-qrcode text-[#8B5CF6]"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl md:text-2xl font-['Unbounded'] font-semibold text-white">Complete Your Payment</h2>
+                    <p class="text-xs text-gray-400 mt-1">Scan the QR code to complete your payment</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="qr-wrapper text-center">
+                    <div id="qrPlaceholder" class="p-10">
+                        <i class="fa-solid fa-qrcode text-5xl text-gray-600 mb-4"></i>
+                        <p class="text-sm text-gray-500">Click a payment button to generate QR code</p>
+                    </div>
+                    <div id="qrCodeContainer" class="hidden">
+                        <div class="loader w-12 h-12 border-4 border-[#8B5CF6]/30 border-t-[#8B5CF6] border-r-[#8B5CF6] rounded-full animate-spin mx-auto my-4"></div>
+                        <div id="qrCode" class="mx-auto inline-block p-4 bg-white border rounded-lg shadow-lg"></div>
+                        <div id="timer" class="hidden text-[#8B5CF6] mt-4 font-semibold"></div>
+                        <button id="downloadQR" class="hidden glass-card w-full py-3 mt-4 text-sm font-bold uppercase">Download QR</button>
+                    </div>
+                    <div id="paymentConfirmation" class="hidden mt-6 pt-6 border-t border-white/10">
+                        <p class="text-white mb-4">Have you completed the payment?</p>
+                        <div class="flex gap-3">
+                            <button id="confirmYes" class="glass-card flex-1 py-3 text-sm font-bold uppercase">Yes, I've Paid</button>
+                            <button id="confirmNo" class="glass-card flex-1 py-3 text-sm font-bold uppercase">No, Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loader {
+            border-style: solid;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+</body></html>
