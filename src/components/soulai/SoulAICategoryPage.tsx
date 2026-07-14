@@ -407,17 +407,19 @@ function PlansSection({
                 <div className="flex items-center gap-2">
                   {(p.priceWeeklyInr || p.priceMonthlyInr) && (
                     <div className="relative inline-flex items-center rounded-xl border border-border bg-surface/40 p-0.5 backdrop-blur shrink-0 w-[110px]">
-                      <motion.div
-                        className="absolute inset-y-0.5 rounded-lg bg-accent"
-                        initial={false}
-                        animate={{ left: currency === "global" ? 2 : "calc(50% + 1px)" }}
-                        style={{ width: "calc(50% - 3px)" }}
-                        transition={{ type: "spring", stiffness: 420, damping: 36 }}
-                      />
+                      <AnimatePresence initial={false}>
+                        <motion.div
+                          key={currency}
+                          layoutId={`curr-pill-${p.uiKey}`}
+                          className="absolute inset-y-0.5 rounded-lg bg-accent"
+                          style={{ width: "calc(50% - 3px)", left: currency === "global" ? 2 : "calc(50% + 1px)" }}
+                          transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                        />
+                      </AnimatePresence>
                       <button
                         type="button"
                         onClick={() => setCurrency("global")}
-                        className={`relative z-10 w-1/2 text-center py-1 text-[9px] font-bold tracking-widest transition-all ${
+                        className={`relative z-10 w-1/2 text-center py-1 text-[9px] font-bold tracking-widest transition-all active:scale-[0.95] ${
                           currency === "global" ? "text-accent-foreground" : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
@@ -426,7 +428,7 @@ function PlansSection({
                       <button
                         type="button"
                         onClick={() => setCurrency("inr")}
-                        className={`relative z-10 w-1/2 text-center py-1 text-[9px] font-bold tracking-widest transition-all ${
+                        className={`relative z-10 w-1/2 text-center py-1 text-[9px] font-bold tracking-widest transition-all active:scale-[0.95] ${
                           currency === "inr" ? "text-accent-foreground" : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
