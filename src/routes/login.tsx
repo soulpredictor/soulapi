@@ -153,23 +153,37 @@ function LoginPage() {
             <div className="mt-10 rounded-2xl border border-border bg-surface/40 backdrop-blur-xl p-6 sm:p-8 shadow-elegant">
               
               {(step === "login" || step === "register") && (
-                <div className="mb-6 flex p-1 bg-background/50 rounded-lg">
+                <div className="mb-6 flex p-1 bg-background/50 rounded-lg relative">
                   <button 
                     onClick={() => { setStep("login"); setMessage(null); }}
                     className={cn(
-                      "flex-1 py-2 text-sm font-semibold rounded-md transition-all",
-                      step === "login" ? "bg-accent text-accent-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                      "relative z-10 flex-1 py-2 text-sm font-semibold transition-all",
+                      step === "login" ? "text-accent-foreground" : "text-muted-foreground hover:text-foreground"
                     )}
                   >
+                    {step === "login" && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 bg-accent rounded-md -z-10 shadow-sm"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
                     Login
                   </button>
                   <button 
                     onClick={() => { setStep("register"); setMessage(null); }}
                     className={cn(
-                      "flex-1 py-2 text-sm font-semibold rounded-md transition-all",
-                      step === "register" ? "bg-accent text-accent-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                      "relative z-10 flex-1 py-2 text-sm font-semibold transition-all",
+                      step === "register" ? "text-accent-foreground" : "text-muted-foreground hover:text-foreground"
                     )}
                   >
+                    {step === "register" && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 bg-accent rounded-md -z-10 shadow-sm"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
                     Register
                   </button>
                 </div>
