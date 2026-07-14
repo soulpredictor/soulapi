@@ -1087,7 +1087,7 @@ function Contact() {
                 </AccordionItem>
               ))}
             </Accordion>
-          </div>>
+          </div>
         </div>
       </Container>
     </section>
